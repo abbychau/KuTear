@@ -4,8 +4,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import me.imid.swipebacklayout.lib.SwipeBackLayout;
-import me.imid.swipebacklayout.lib.app.SwipeBackActivity;
+import com.kutear.app.swipebacklayout.SwipeBackActivity;
+import com.kutear.app.swipebacklayout.SwipeBackLayout;
+
 
 public abstract class BaseActivity extends SwipeBackActivity {
 
