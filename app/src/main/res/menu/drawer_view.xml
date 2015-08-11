@@ -6,4 +6,10 @@
             android:icon="@mipmap/ic_launcher"
             android:title="测试" />
     </group>
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_setting"
+            android:icon="@mipmap/ic_launcher"
+            android:title="设置" />
+    </group>
 </menu>

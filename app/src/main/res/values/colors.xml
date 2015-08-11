@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="action_bar_background">#ff009688</color>
-    <color name="blue">#ff03A9F4</color>
-    <color name="gray">#ff9E9E9E</color>
-    <color name="green">#FF4CAF50</color>
-    <color name="red">#ffF44336</color>
+    <color name="teal_500">#ff009688</color>
+    <color name="teal_900">#ff00796B</color>
+    <color name="blue_500">#ff03A9F4</color>
+    <color name="gray_500">#ff9E9E9E</color>
+    <color name="green_500">#FF4CAF50</color>
+    <color name="red_500">#ffF44336</color>
 </resources>

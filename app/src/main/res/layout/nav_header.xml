@@ -8,7 +8,7 @@
         android:id="@+id/nav_bg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/action_bar_background" />
+        android:background="@color/teal_500" />
 
     <RelativeLayout
         android:layout_width="match_parent"
