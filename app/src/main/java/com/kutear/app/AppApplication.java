@@ -42,7 +42,7 @@ public class AppApplication extends Application {
             intent.putExtras(bundle);
         }
         activity.startActivity(intent);
-//        activity.overridePendingTransition();
+        activity.overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
 }
