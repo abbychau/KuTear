@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 
 import com.kutear.app.R;
 import com.kutear.app.fragment.DetailsFragment;
@@ -20,7 +19,6 @@ public class CommonActivity extends BaseActivity {
     private FragmentManager mManager;
     private int mFragmentType;
     private Fragment mFragment;
-    private Toolbar mToolBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +30,6 @@ public class CommonActivity extends BaseActivity {
 
     @SuppressWarnings("ConstantConditions")
     private void initView() {
-        mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolBar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void startFragment() {
