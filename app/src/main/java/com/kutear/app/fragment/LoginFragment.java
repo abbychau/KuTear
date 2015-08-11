@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import com.kutear.app.R;
 
 
-public class LoginFragment extends Fragment {
+public class LoginFragment extends BaseFragment {
     private AppCompatActivity mActivity;
 
     public static LoginFragment newInstance() {
