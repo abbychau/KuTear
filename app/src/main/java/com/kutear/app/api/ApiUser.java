@@ -7,6 +7,11 @@ import com.kutear.app.netutils.KStringRequest;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,18 +51,23 @@ public class ApiUser {
 
     private static final String TAG = ApiUser.class.getSimpleName();
 
-    public static boolean login(String user, String password, final ICallBack callBack) {
-        Map<String, String> params = new HashMap<>();
-        params.put("name", user);
-        params.put("password", password);
 
-        KStringRequest request = new KStringRequest(Constant.URI_LOGIN, params, new Response.Listener<String>() {
+    public static void login(final String user, final String password, final ICallBack callBack) {
+        //获取登录URL部分
+        KStringRequest request = new KStringRequest(Constant.URI_ADMIN, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                L.v(TAG, s);
-                if (callBack != null) {
-                    //TODO 解析数据
-
+                Document doc = Jsoup.parse(s);
+                Elements forms = doc.getElementsByAttribute("action");
+                if (forms.size() > 0) {
+                    Element form = forms.get(0);
+                    String loginUrl = form.attr("action");
+                    L.v(TAG, "URI=" + loginUrl);
+                    onLogin(loginUrl, user, password, callBack);
+                } else {
+                    if (callBack != null) {
+                        callBack.onError("can't get Url");
+                    }
                 }
             }
         }, new Response.ErrorListener() {
@@ -68,8 +78,34 @@ public class ApiUser {
                 }
             }
         });
+        request.setShouldCache(false);
         AppApplication.startRequest(request);
-        return false;
+    }
+
+    /**
+     * @author kutear.guo
+     */
+    private static void onLogin(final String url, final String user, final String password, final ICallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", user);
+        params.put("password", password);
+        params.put("referer", Constant.URI_HOST);
+
+        KStringRequest request = new KStringRequest(url, params, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                L.v(TAG,s);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (callBack != null) {
+                    callBack.onError(volleyError.getMessage());
+                }
+            }
+        });
+        request.setShouldCache(false);
+        AppApplication.startRequest(request);
     }
 
     public static boolean logout() {
