@@ -8,4 +8,9 @@
     <string name="password">密码</string>
     <string name="login_forget_password">忘记密码?</string>
     <string name="tips_not_support_find_password">暂时不支持找回密码</string>
+    <string name="menu_string_archive">归档</string>
+    <string name="menu_string_tab">标签</string>
+    <string name="menu_string_category">分类</string>
+    <string name="menu_string_about">关于</string>
+    <string name="menu_string_setting">设置</string>
 </resources>

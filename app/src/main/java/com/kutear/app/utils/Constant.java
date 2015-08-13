@@ -15,7 +15,13 @@ public class Constant {
      *************************************/
     public static final String URI_HOST = "http://www.kutear.com";
     //登陆接口 post
-    public static final String URI_LOGIN = URI_HOST + "/index.php/action/login?_=7ab6643d63f58092e0199fdf86ec1353";
+    public static final String URI_LOGIN = URI_HOST + "/index.php/action/login";
+    //归档接口
+    public static final String URI_ARCHIVE = URI_HOST + "/index.php/archive.html";
+    //App接口
+    public static final String URI_APP = URI_HOST + "/index.php/app.html";
+    //关于接口
+    public static final String URI_ABOUT = URI_HOST + "/index.php/about.html";
 
     /*************************************
      * 配置 相关

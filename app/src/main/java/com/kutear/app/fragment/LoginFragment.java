@@ -11,8 +11,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.commonsware.cwac.anddown.AndDown;
 import com.kutear.app.R;
 import com.kutear.app.activity.BaseActivity;
+import com.kutear.app.api.ApiUser;
 
 
 @SuppressWarnings("ConstantConditions")
@@ -59,7 +61,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.login_btn_login:
-
+                ApiUser.login(mEtUserName.getText().toString().trim(), mEtPassWord.getText().toString().trim(), null);
                 break;
             case R.id.login_tv_forget_password:
                 Snackbar.make(mTvForgetPass, R.string.tips_not_support_find_password, Snackbar.LENGTH_SHORT).show();

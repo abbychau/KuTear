@@ -1,5 +1,15 @@
 package com.kutear.app.api;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.kutear.app.AppApplication;
+import com.kutear.app.netutils.KStringRequest;
+import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
+
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by kutear.guo on 2015/8/4.
  */
@@ -34,7 +44,35 @@ public class ApiUser {
      * name = admin & password = *******&referer=http%3A%2F%2Fwww.kutear.com%2Fadmin%2F
      */
 
-    public static boolean login(String user, String password) {
+    private static final String TAG = ApiUser.class.getSimpleName();
+
+    public static boolean login(String user, String password, final ICallBack callBack) {
+        Map<String, String> params = new HashMap<>();
+        params.put("name", user);
+        params.put("password", password);
+
+        KStringRequest request = new KStringRequest(Constant.URI_LOGIN, params, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String s) {
+                L.v(TAG, s);
+                if (callBack != null) {
+                    //TODO 解析数据
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (callBack != null) {
+                    callBack.onError(volleyError.getMessage());
+                }
+            }
+        });
+        AppApplication.startRequest(request);
+        return false;
+    }
+
+    public static boolean logout() {
         return false;
     }
 }

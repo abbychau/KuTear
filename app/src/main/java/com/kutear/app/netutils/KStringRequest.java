@@ -44,10 +44,6 @@ public class KStringRequest extends StringRequest {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
-            Map<String, String> responseHeaders = response.headers;
-            L.v(TAG, responseHeaders.toString());
-            String rawCookies = responseHeaders.get("Set-Cookie");
-            SaveData.saveString("cookies", rawCookies);
             String dataString = new String(response.data, "UTF-8");
             return Response.success(dataString, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {

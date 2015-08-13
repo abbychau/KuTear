@@ -10,9 +10,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.netutils.KStringRequest;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
+
+import java.net.CookieStore;
+import java.net.HttpCookie;
+import java.util.List;
 
 
 /**
@@ -74,12 +83,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int type = 0;
         Bundle bundle = null;
         switch (menuItem.getItemId()) {
-            case R.id.menu_test:
+            case R.id.menu_archive:
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
                 type = Constant.ACTIVITY_DETAILS;
                 break;
             case R.id.menu_setting:
+                menuItem.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                type = Constant.ACTIVITY_LOGIN;
+                break;
+            case R.id.menu_about:
+                menuItem.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                type = Constant.ACTIVITY_DETAILS;
+                break;
+            case R.id.menu_tab:
+                menuItem.setChecked(true);
+                mDrawerLayout.closeDrawers();
+                type = Constant.ACTIVITY_LOGIN;
+                break;
+            case R.id.menu_category:
                 menuItem.setChecked(true);
                 mDrawerLayout.closeDrawers();
                 type = Constant.ACTIVITY_LOGIN;

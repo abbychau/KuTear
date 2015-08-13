@@ -11,12 +11,18 @@ import com.android.volley.toolbox.Volley;
 import com.kutear.app.activity.CommonActivity;
 import com.kutear.app.utils.Constant;
 
+import java.net.CookieHandler;
+import java.net.CookieManager;
+import java.net.CookiePolicy;
+import java.net.CookieStore;
+
 /**
  * Created by kutear.guo on 2015/8/3.
  */
 public class AppApplication extends Application {
     private static AppApplication app;
     private static RequestQueue mQueue;
+    private static CookieManager mCookieManager;
 
     public static AppApplication getApplication() {
         return app;
@@ -26,14 +32,18 @@ public class AppApplication extends Application {
         mQueue.add(request);
     }
 
-
     @Override
     public void onCreate() {
         super.onCreate();
         app = this;
+        mCookieManager = new CookieManager(null, CookiePolicy.ACCEPT_ALL);
+        CookieHandler.setDefault(mCookieManager);
         mQueue = Volley.newRequestQueue(this);
     }
 
+    public static CookieManager getCookieManager() {
+        return mCookieManager;
+    }
 
     public static void startActivity(Activity activity, int type, Bundle bundle) {
         Intent intent = new Intent(activity, CommonActivity.class);

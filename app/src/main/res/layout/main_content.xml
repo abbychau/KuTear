@@ -27,19 +27,6 @@
                 android:id="@+id/toolbar"
                 layout="@layout/toolbar" />
         </android.support.design.widget.AppBarLayout>
-
-        <!--<android.support.design.widget.FloatingActionButton-->
-        <!--android:id="@+id/float_btn"-->
-        <!--android:layout_width="wrap_content"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="bottom|end"-->
-        <!--android:layout_marginBottom="@dimen/btn_fab_margins"-->
-        <!--android:layout_marginEnd="@dimen/btn_fab_margins"-->
-        <!--android:layout_marginRight="@dimen/btn_fab_margins"-->
-        <!--android:src="@drawable/ic_action_content_add"-->
-        <!--app:borderWidth="0dp"-->
-        <!--app:elevation="6dp"-->
-        <!--app:pressedTranslationZ="12dp" />-->
     </android.support.design.widget.CoordinatorLayout>
 
 </RelativeLayout>
