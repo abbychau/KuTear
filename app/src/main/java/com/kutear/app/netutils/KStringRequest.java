@@ -11,6 +11,7 @@ import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -47,6 +48,7 @@ public class KStringRequest extends StringRequest {
     @Override
     protected Response<String> parseNetworkResponse(NetworkResponse response) {
         try {
+            NetConfig.checkSessionCookie(response.headers);
             String dataString = new String(response.data, "UTF-8");
             return Response.success(dataString, HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {
@@ -56,7 +58,14 @@ public class KStringRequest extends StringRequest {
 
     @Override
     public Map<String, String> getHeaders() throws AuthFailureError {
-        return NetConfig.getRequestHeader();
+        Map<String, String> headers = super.getHeaders();
+
+        if (headers == null
+                || headers.equals(Collections.emptyMap())) {
+            headers = new HashMap<String, String>();
+        }
+        headers.putAll(NetConfig.getRequestHeader());
+        return headers;
     }
 
     @Override

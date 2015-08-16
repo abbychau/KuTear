@@ -16,4 +16,8 @@ public class SaveData {
         return mPreferences.edit().putString(key, value).commit();
     }
 
+    public static String getString(String key) {
+        return mPreferences.getString(key, "");
+    }
+
 }

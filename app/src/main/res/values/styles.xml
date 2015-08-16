@@ -8,7 +8,7 @@
 
     <!-- 用于主页面-->
     <style name="AppTheme.Main" parent="AppTheme">
-        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowIsTranslucent">false</item>
     </style>
 
     <!-- ToolBar -->

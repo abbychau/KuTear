@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/ui_activity_vertical_margin"
+    android:paddingLeft="@dimen/ui_activity_horizontal_margin"
+    android:paddingRight="@dimen/ui_activity_horizontal_margin"
+    android:paddingTop="@dimen/ui_activity_vertical_margin">
+    <!--Title-->
+
+    <!--加载对话框-->
+    <LinearLayout
+        android:id="@+id/dialog_loding"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ProgressBar
+            android:id="@+id/dialog_loding_progressBar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminate="false" />
+
+        <TextView
+            android:id="@+id/dialog_loading_text"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/loading" />
+    </LinearLayout>
+
+    <!--Bottom-->
+
+</LinearLayout>

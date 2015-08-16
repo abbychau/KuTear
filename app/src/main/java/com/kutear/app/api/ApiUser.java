@@ -1,8 +1,11 @@
 package com.kutear.app.api;
 
+import android.text.TextUtils;
+
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.kutear.app.AppApplication;
+import com.kutear.app.R;
 import com.kutear.app.netutils.KStringRequest;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
@@ -58,15 +61,23 @@ public class ApiUser {
             @Override
             public void onResponse(String s) {
                 Document doc = Jsoup.parse(s);
-                Elements forms = doc.getElementsByAttribute("action");
-                if (forms.size() > 0) {
-                    Element form = forms.get(0);
-                    String loginUrl = form.attr("action");
-                    L.v(TAG, "URI=" + loginUrl);
-                    onLogin(loginUrl, user, password, callBack);
-                } else {
+                String title = doc.title();
+                //表示已经登陆到后台
+                if (title.startsWith(AppApplication.getKString(R.string.web_admin_title))) {
                     if (callBack != null) {
-                        callBack.onError("can't get Url");
+                        callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_succeed));
+                    }
+                    //根据URI来登录
+                } else {
+                    Elements forms = doc.getElementsByAttribute(AppApplication.getKString(R.string.web_form_attribute));
+                    if (forms.size() > 0) {
+                        Element form = forms.get(0);
+                        String loginUrl = form.attr(AppApplication.getKString(R.string.web_form_attribute));
+                        onLogin(loginUrl, user, password, callBack);
+                    } else {
+                        if (callBack != null) {
+                            callBack.onError(ICallBack.RESPONE_NO_URI, AppApplication.getKString(R.string.get_url_failed));
+                        }
                     }
                 }
             }
@@ -74,7 +85,7 @@ public class ApiUser {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (callBack != null) {
-                    callBack.onError(volleyError.getMessage());
+                    callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
                 }
             }
         });
@@ -94,13 +105,24 @@ public class ApiUser {
         KStringRequest request = new KStringRequest(url, params, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                L.v(TAG,s);
+                // TODO: 2015/8/16 这里会被重定向到首页 可以通过判断是不是首页来确定是否登陆
+                Document doc = Jsoup.parse(s);
+                String title = doc.title();
+                if (TextUtils.equals(title, AppApplication.getKString(R.string.web_title))) {
+                    if (callBack != null) {
+                        callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_success));
+                    }
+                } else if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
+                    if (callBack != null) {
+                        callBack.onError(ICallBack.RESPONE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
+                    }
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 if (callBack != null) {
-                    callBack.onError(volleyError.getMessage());
+                    callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
                 }
             }
         });

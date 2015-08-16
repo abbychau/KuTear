@@ -13,4 +13,15 @@
     <string name="menu_string_category">分类</string>
     <string name="menu_string_about">关于</string>
     <string name="menu_string_setting">设置</string>
+    <string name="loading">等待中</string>
+    <string name="username_or_password_is_error">用户名或密码错误</string>
+    <string name="username_not_null">用户名不能为空</string>
+    <string name="password_not_null">密码不能为空</string>
+    <string name="web_title">KuTear</string>
+    <string name="login_success">登陆成功</string>
+    <string name="login_succeed">已经登陆了</string>
+    <string name="web_login_title">登录到</string>
+    <string name="web_admin_title">网站概要</string>
+    <string name="web_form_attribute">action</string>
+    <string name="get_url_failed">获取登录链接失败</string>
 </resources>

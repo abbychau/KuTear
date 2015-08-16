@@ -28,6 +28,10 @@ public class Constant {
      *************************************/
     public static final String CACHE_DIR_NAME = "kutear";
     public static final String PREFERENCES_NAME = "kutear";
+    public static final String USER = "user";
+    public static final String PASS = "pass";
+    public static final String COOKIES = "cookies";
+
 
     /**************************************
      * 根据Type加载Fragment到CommonActivity

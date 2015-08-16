@@ -3,6 +3,7 @@ package com.kutear.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import com.android.volley.Request;
@@ -14,7 +15,10 @@ import com.kutear.app.utils.Constant;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
-import java.net.CookieStore;
+import java.net.URI;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by kutear.guo on 2015/8/3.
@@ -30,6 +34,15 @@ public class AppApplication extends Application {
 
     public static void startRequest(Request request) {
         mQueue.add(request);
+    }
+
+    /**
+     * @param resId
+     * @return
+     * @see Application#getString
+     */
+    public static String getKString(int resId) {
+        return app.getString(resId);
     }
 
     @Override
