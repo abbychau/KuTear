@@ -10,18 +10,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
-import com.kutear.app.netutils.KStringRequest;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
-
-import java.net.CookieStore;
-import java.net.HttpCookie;
-import java.util.List;
 
 
 /**

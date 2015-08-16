@@ -6,6 +6,11 @@
         <item name="android:windowIsTranslucent">true</item>
     </style>
 
+    <!-- 用于主页面-->
+    <style name="AppTheme.Main" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
     <!-- ToolBar -->
     <style name="ToolBarStyle" parent="Theme.AppCompat">
         <item name="colorPrimary">@color/teal_500</item>
