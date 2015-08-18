@@ -2,6 +2,7 @@ package com.kutear.app.api;
 
 import android.text.TextUtils;
 
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.kutear.app.AppApplication;
@@ -21,7 +22,7 @@ import java.util.Map;
 /**
  * Created by kutear.guo on 2015/8/4.
  */
-public class ApiUser {
+public class ApiUser extends BaseRequest {
     /**
      * @param user
      * @param password
@@ -56,42 +57,59 @@ public class ApiUser {
 
 
     public static void login(final String user, final String password, final ICallBack callBack) {
-        //获取登录URL部分
-        KStringRequest request = new KStringRequest(Constant.URI_ADMIN, new Response.Listener<String>() {
+        getRequest(Constant.URI_ADMIN, new ICallBack() {
             @Override
-            public void onResponse(String s) {
-                Document doc = Jsoup.parse(s);
-                String title = doc.title();
-                //表示已经登陆到后台
-                if (title.startsWith(AppApplication.getKString(R.string.web_admin_title))) {
-                    if (callBack != null) {
-                        callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_succeed));
-                    }
-                    //根据URI来登录
-                } else {
-                    Elements forms = doc.getElementsByAttribute(AppApplication.getKString(R.string.web_form_attribute));
-                    if (forms.size() > 0) {
-                        Element form = forms.get(0);
-                        String loginUrl = form.attr(AppApplication.getKString(R.string.web_form_attribute));
-                        onLogin(loginUrl, user, password, callBack);
-                    } else {
-                        if (callBack != null) {
-                            callBack.onError(ICallBack.RESPONE_NO_URI, AppApplication.getKString(R.string.get_url_failed));
-                        }
-                    }
-                }
+            public void onSuccess(int statusCode, String str) {
+                getLoginUrl(str, callBack, user, password);
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onError(int statusCode, String str) {
                 if (callBack != null) {
-                    callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
+                    callBack.onError(statusCode, str);
                 }
             }
         });
-        request.setShouldCache(false);
-        AppApplication.startRequest(request);
     }
+
+    private static void getLoginUrl(String str, ICallBack callBack, String user, String password) {
+        Document doc = Jsoup.parse(str);
+        String title = doc.title();
+        //表示已经登陆到后台
+        if (title.startsWith(AppApplication.getKString(R.string.web_admin_title))) {
+            if (callBack != null) {
+                callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_succeed));
+            }
+            //根据URI来登录
+        } else {
+            Elements forms = doc.getElementsByAttribute(AppApplication.getKString(R.string.web_form_attribute));
+            if (forms.size() > 0) {
+                Element form = forms.get(0);
+                String loginUrl = form.attr(AppApplication.getKString(R.string.web_form_attribute));
+                onLogin(loginUrl, user, password, callBack);
+            } else {
+                if (callBack != null) {
+                    callBack.onError(ICallBack.RESPONE_NO_URI, AppApplication.getKString(R.string.get_url_failed));
+                }
+            }
+        }
+    }
+
+    private static void parseHtml(String str, ICallBack callBack) {
+        // TODO: 2015/8/16 这里会被重定向到首页 可以通过判断是不是首页来确定是否登陆
+        Document doc = Jsoup.parse(str);
+        String title = doc.title();
+        if (TextUtils.equals(title, AppApplication.getKString(R.string.web_title))) {
+            if (callBack != null) {
+                callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_success));
+            }
+        } else if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
+            if (callBack != null) {
+                callBack.onError(ICallBack.RESPONE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
+            }
+        }
+    }
+
 
     /**
      * @author kutear.guo
@@ -102,32 +120,19 @@ public class ApiUser {
         params.put("password", password);
         params.put("referer", Constant.URI_HOST);
 
-        KStringRequest request = new KStringRequest(url, params, new Response.Listener<String>() {
+        postRequest(url, params, new ICallBack() {
             @Override
-            public void onResponse(String s) {
-                // TODO: 2015/8/16 这里会被重定向到首页 可以通过判断是不是首页来确定是否登陆
-                Document doc = Jsoup.parse(s);
-                String title = doc.title();
-                if (TextUtils.equals(title, AppApplication.getKString(R.string.web_title))) {
-                    if (callBack != null) {
-                        callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_success));
-                    }
-                } else if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
-                    if (callBack != null) {
-                        callBack.onError(ICallBack.RESPONE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
-                    }
-                }
+            public void onSuccess(int statusCode, String str) {
+                parseHtml(str, callBack);
             }
-        }, new Response.ErrorListener() {
+
             @Override
-            public void onErrorResponse(VolleyError volleyError) {
+            public void onError(int statusCode, String str) {
                 if (callBack != null) {
-                    callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
+                    callBack.onError(statusCode, str);
                 }
             }
         });
-        request.setShouldCache(false);
-        AppApplication.startRequest(request);
     }
 
     public static boolean logout() {

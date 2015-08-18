@@ -12,5 +12,10 @@
     <dimen name="ui_global_menu_avatar_size">64dp</dimen>
     <dimen name="ui_publish_photo_thumbnail_size">96dp</dimen>
     <dimen name="ui_radius">2dp</dimen>
+    <dimen name="ui_cardview_radius">5dp</dimen>
+    <dimen name="ui_cardview_padding">5dp</dimen>
+    <dimen name="ui_division_height">1dp</dimen>
     <dimen name="text_login_btn_size">18sp</dimen>
+    <dimen name="text_article_item_title">24sp</dimen>
+    <dimen name="text_article_item_content">16sp</dimen>
 </resources>

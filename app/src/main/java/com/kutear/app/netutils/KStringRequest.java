@@ -25,15 +25,13 @@ public class KStringRequest extends StringRequest {
 
 
     /**
-     * Just For Method.POST
-     *
      * @param url
      * @param params
      * @param listener
      * @param errorListener
      */
-    public KStringRequest(String url, Map<String, String> params, Response.Listener<String> listener, Response.ErrorListener errorListener) {
-        this(Method.POST, url, listener, errorListener);
+    public KStringRequest(int type, String url, Map<String, String> params, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        this(type, url, listener, errorListener);
         this.params = params;
     }
 

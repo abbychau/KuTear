@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="teal_500">#ff009688</color>
+    <color name="teal_300">#FF4DB6AC</color>
     <color name="teal_900">#ff00796B</color>
     <color name="blue_500">#ff03A9F4</color>
     <color name="gray_500">#ff9E9E9E</color>

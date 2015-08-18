@@ -22,6 +22,9 @@ public class Constant {
     public static final String URI_APP = URI_HOST + "/index.php/app.html";
     //关于接口
     public static final String URI_ABOUT = URI_HOST + "/index.php/about.html";
+    //文章列表接口
+    public static final String URI_ARTICLE = URI_HOST + "/index.php/page/%d/";
+
 
     /*************************************
      * 配置 相关

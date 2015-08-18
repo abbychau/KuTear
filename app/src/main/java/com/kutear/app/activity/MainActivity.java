@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.fragment.MainFragment;
 import com.kutear.app.utils.Constant;
 
 
@@ -37,6 +38,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         initToolBar();
         initNavigationView();
+        initFragment();
+    }
+
+    private void initFragment() {
+        getSupportFragmentManager().beginTransaction().add(R.id.main_fragment, MainFragment.newInstance()).commit();
     }
 
     private void initToolBar() {

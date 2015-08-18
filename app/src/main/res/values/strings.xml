@@ -24,4 +24,9 @@
     <string name="web_admin_title">网站概要</string>
     <string name="web_form_attribute">action</string>
     <string name="get_url_failed">获取登录链接失败</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="article_title">文章标题</string>
+    <string name="no_more_article">没有更多文章</string>
 </resources>
