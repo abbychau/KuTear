@@ -1,5 +1,7 @@
 package com.kutear.app.utils;
 
+import java.net.URI;
+
 /**
  * Created by kutear.guo on 2015/8/4.
  */
@@ -24,7 +26,13 @@ public class Constant {
     public static final String URI_ABOUT = URI_HOST + "/index.php/about.html";
     //文章列表接口
     public static final String URI_ARTICLE = URI_HOST + "/index.php/page/%d/";
+    //用户信息主页
+    public static final String URI_USER_CENTER = URI_HOST + "/admin/profile.php";
 
+    /*************************************
+     * 广播 相关
+     *************************************/
+    public static final String BROADCAST_LOGIN = "login_broadcast";
 
     /*************************************
      * 配置 相关
@@ -42,5 +50,10 @@ public class Constant {
     public static final String ACTIVITY_TYPE = "activity_type";
     public static final int ACTIVITY_LOGIN = 0x00001;
     public static final int ACTIVITY_DETAILS = 0x00002;
-    public static final int ACTIVITY_PREVIEW = 0x00003;
+    public static final int ACTIVITY_ARCHIVE = 0x00003;
+    public static final int ACTIVITY_PREVIEW = 0x00004;
+    public static final int ACTIVITY_MANAGER = 0x00005;
+    public static final int ACTIVITY_USER_CENTER = 0x00006;
+    public static final int ACTIVITY_SETTING = 0x00007;
+    public static final int ACTIVITY_ABOUT = 0x00008;
 }

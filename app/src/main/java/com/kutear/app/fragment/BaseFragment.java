@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -43,7 +44,9 @@ public class BaseFragment extends Fragment {
     }
 
     protected void showSnack(View hook, String msg) {
-        Snackbar.make(hook, msg, Snackbar.LENGTH_SHORT).show();
+        if(!TextUtils.isEmpty(msg)){
+            Snackbar.make(hook, msg, Snackbar.LENGTH_SHORT).show();
+        }
     }
 
     protected void showSnack(View hook, int msgRes) {

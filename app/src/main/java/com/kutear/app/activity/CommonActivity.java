@@ -7,8 +7,14 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
 import com.kutear.app.R;
+import com.kutear.app.fragment.AboutFragment;
+import com.kutear.app.fragment.ArchiveFragment;
 import com.kutear.app.fragment.DetailsFragment;
 import com.kutear.app.fragment.LoginFragment;
+import com.kutear.app.fragment.ManageFragment;
+import com.kutear.app.fragment.PreviewFragment;
+import com.kutear.app.fragment.SettingFragment;
+import com.kutear.app.fragment.UserCenterFragment;
 import com.kutear.app.utils.Constant;
 
 /**
@@ -44,17 +50,38 @@ public class CommonActivity extends BaseActivity {
     }
 
     private void chooseFragment(int type) {
+        Bundle bundle = getIntent().getExtras();
         switch (type) {
             case Constant.ACTIVITY_LOGIN:
                 mFragment = LoginFragment.newInstance();
                 break;
+            case Constant.ACTIVITY_ARCHIVE:
+                mFragment = ArchiveFragment.newInstance(bundle);
+                break;
             case Constant.ACTIVITY_DETAILS:
-                mFragment = DetailsFragment.newInstance();
+                mFragment = DetailsFragment.newInstance(bundle);
+                break;
+            case Constant.ACTIVITY_MANAGER:
+                mFragment = ManageFragment.newInstance();
+                break;
+            case Constant.ACTIVITY_USER_CENTER:
+                mFragment = UserCenterFragment.newInstance();
+                break;
+            case Constant.ACTIVITY_PREVIEW:
+                mFragment = PreviewFragment.newInstance();
+                break;
+            case Constant.ACTIVITY_SETTING:
+                mFragment = SettingFragment.newInstance();
+                break;
+            case Constant.ACTIVITY_ABOUT:
+                mFragment = AboutFragment.newInstance();
                 break;
             default:
                 break;
         }
         mManager = getSupportFragmentManager();
-        mManager.beginTransaction().replace(R.id.common_fragment, mFragment).commit();
+        if (mFragment != null) {
+            mManager.beginTransaction().replace(R.id.common_fragment, mFragment).commit();
+        }
     }
 }

@@ -6,6 +6,14 @@ import android.os.Bundle;
  * Created by kutear.guo on 2015/8/13.
  */
 public class PreviewFragment extends BaseFragment {
+
+    public static PreviewFragment newInstance() {
+        Bundle args = new Bundle();
+        PreviewFragment fragment = new PreviewFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         String str1 = "";

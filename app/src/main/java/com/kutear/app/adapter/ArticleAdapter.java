@@ -17,15 +17,17 @@ import java.util.List;
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
     private List<Article> lists;
+    private OnItemClickListener mListener;
 
-    public ArticleAdapter(List<Article> lists) {
+    public ArticleAdapter(List<Article> lists, OnItemClickListener mListener) {
         this.lists = lists;
+        this.mListener = mListener;
     }
 
     @Override
     public ArticleViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.article_item, parent, false);
-        return new ArticleViewHolder(v);
+        return new ArticleViewHolder(v, this.mListener);
     }
 
     @Override
@@ -39,13 +41,17 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
         return lists.size();
     }
 
-    public class ArticleViewHolder extends RecyclerView.ViewHolder {
+
+    public class ArticleViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView tvTitle;
         public TextView tvContent;
+        private OnItemClickListener mListener;
 
-        public ArticleViewHolder(View itemView) {
+        public ArticleViewHolder(View itemView, OnItemClickListener listener) {
             super(itemView);
+            itemView.setOnClickListener(this);
+            this.mListener = listener;
             tvContent = (TextView) itemView.findViewById(R.id.article_item_content);
             tvTitle = (TextView) itemView.findViewById(R.id.article_item_title);
         }
@@ -54,5 +60,16 @@ public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleV
             tvContent.setText(article.getContent());
             tvTitle.setText(article.getTitle());
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mListener != null) {
+                mListener.onClick(v, getAdapterPosition());
+            }
+        }
+    }
+
+    public interface OnItemClickListener {
+        void onClick(View v, int position);
     }
 }

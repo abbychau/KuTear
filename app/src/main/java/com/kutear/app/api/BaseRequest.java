@@ -36,13 +36,13 @@ public class BaseRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                L.v(TAG, "请求失败(URL:" + url + "):" + volleyError.getMessage());
+                L.v(TAG, "请求失败(URL:" + url + "):" + volleyError.getMessage()+" "+volleyError.toString());
                 if (callBack != null) {
                     callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
                 }
             }
         });
-        request.setShouldCache(false);
+        request.setShouldCache(true);
         AppApplication.startRequest(request);
     }
 }

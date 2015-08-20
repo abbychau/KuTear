@@ -18,4 +18,5 @@
     <dimen name="text_login_btn_size">18sp</dimen>
     <dimen name="text_article_item_title">24sp</dimen>
     <dimen name="text_article_item_content">16sp</dimen>
+    <dimen name="text_article_detail_title">16sp</dimen>
 </resources>

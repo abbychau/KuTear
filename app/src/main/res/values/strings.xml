@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">KuTear</string>
-    <string name="user">USER</string>
+    <string name="user">用户名</string>
     <string name="login">登陆</string>
     <string name="openDrawer">打开</string>
     <string name="closeDrawer">关闭</string>
@@ -9,6 +9,8 @@
     <string name="login_forget_password">忘记密码?</string>
     <string name="tips_not_support_find_password">暂时不支持找回密码</string>
     <string name="menu_string_archive">归档</string>
+    <string name="menu_string_main">主页</string>
+    <string name="menu_string_manager">管理</string>
     <string name="menu_string_tab">标签</string>
     <string name="menu_string_category">分类</string>
     <string name="menu_string_about">关于</string>
@@ -24,9 +26,14 @@
     <string name="web_admin_title">网站概要</string>
     <string name="web_form_attribute">action</string>
     <string name="get_url_failed">获取登录链接失败</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="article_title">文章标题</string>
     <string name="no_more_article">没有更多文章</string>
+    <string name="share">分享</string>
+    <string name="can_not_find_archive_list">找不到归档列表</string>
+    <string name="can_not_get_category_info">不能获取到分类</string>
+    <string name="can_not_read_tab_list">不能读取标签列表</string>
+    <string name="get_user_info_error">获取用户信息失败</string>
+    <string name="main_pager">主页</string>
+    <string name="email">邮箱</string>
+    <string name="nickname">昵称</string>
 </resources>

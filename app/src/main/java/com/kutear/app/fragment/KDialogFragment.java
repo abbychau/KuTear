@@ -35,6 +35,9 @@ public class KDialogFragment extends DialogFragment {
     }
 
     public static void hiddenDialog(FragmentManager manager) {
+        if (manager == null) {
+            return;
+        }
         KDialogFragment dialogFragment = (KDialogFragment) manager.findFragmentByTag(TAG);
         if (dialogFragment != null) {
             dialogFragment.dismiss();

@@ -96,7 +96,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             public void onSuccess(int statusCode, String str) {
                 KDialogFragment.hiddenDialog(getFragmentManager());
                 showSnack(mEtPassWord, str);
-                //mActivity.finish();
+                mActivity.finish();
             }
 
             @Override
