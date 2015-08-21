@@ -72,7 +72,7 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
         mTabLayout.setOnTabSelectedListener(this);
     }
 
-    private void initView(View v) {
+    protected void initView(View v) {
         mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mActivity.setSupportActionBar(mToolBar);
         //noinspection ConstantConditions
@@ -80,7 +80,8 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
         mActivity.setTitle(R.string.menu_string_archive);
         mTabLayout = (TabLayout) v.findViewById(R.id.tabs);
         mRecycleView = (RecyclerView) v.findViewById(R.id.recyclerView);
-        StaggeredGridLayoutManager mStaggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);//表示两列，并且是竖直方向的瀑布流
+        StaggeredGridLayoutManager mStaggeredGridLayoutManager =
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);//表示两列，并且是竖直方向的瀑布流
         mRecycleView.setLayoutManager(mStaggeredGridLayoutManager);
     }
 
@@ -99,7 +100,6 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
     @Override
     public void onTabSelected(TabLayout.Tab tab) {
-        KDialogFragment.showDialog(getFragmentManager());
         type = tab.getPosition();
         doRequest();
     }
@@ -116,6 +116,7 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
     private void doRequest() {
         //根据Tab选择不同的请求
+        KDialogFragment.showDialog(getFragmentManager());
         switch (type) {
             case TAB:
                 requestTab();

@@ -7,6 +7,8 @@ public interface ICallBack {
     static final int RESPONE_OK = 200;
     static final int RESPONE_FAILED = 404;
     static final int RESPONE_NO_URI = 0x0000;
+    static final int NOT_LOGIN = 0x0001;
+    static final int HAS_LOGIN = 0x0002;
 
     void onSuccess(int statusCode, String str);
 

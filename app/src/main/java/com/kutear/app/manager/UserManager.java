@@ -37,6 +37,11 @@ public class UserManager implements ICallBack {
         });
     }
 
+    public void setUserInfo(UserInfo mUserInfo) {
+        this.mUserInfo = mUserInfo;
+        this.isLogin = true;
+    }
+
     @Override
     public void onError(int statusCode, String str) {
         isLogin = false;

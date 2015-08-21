@@ -1,5 +1,7 @@
 package com.kutear.app.bean;
 
+import android.os.Parcel;
+
 /**
  * Created by kutear.guo on 2015/8/20.
  */
@@ -37,7 +39,52 @@ public class UserInfo extends BaseBean {
         return eMail;
     }
 
+    @Override
+    public String toString() {
+        return "UserInfo{" +
+                "nickName='" + nickName + '\'' +
+                ", avater='" + avater + '\'' +
+                ", mainPager='" + mainPager + '\'' +
+                ", eMail='" + eMail + '\'' +
+                '}';
+    }
+
     public void setEMail(String eMail) {
         this.eMail = eMail;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.nickName);
+        dest.writeString(this.avater);
+        dest.writeString(this.mainPager);
+        dest.writeString(this.eMail);
+    }
+
+    public UserInfo() {
+    }
+
+    protected UserInfo(Parcel in) {
+        super(in);
+        this.nickName = in.readString();
+        this.avater = in.readString();
+        this.mainPager = in.readString();
+        this.eMail = in.readString();
+    }
+
+    public static final Creator<UserInfo> CREATOR = new Creator<UserInfo>() {
+        public UserInfo createFromParcel(Parcel source) {
+            return new UserInfo(source);
+        }
+
+        public UserInfo[] newArray(int size) {
+            return new UserInfo[size];
+        }
+    };
 }

@@ -14,7 +14,6 @@ import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.api.ApiUser;
 import com.kutear.app.bean.UserInfo;
-import com.kutear.app.utils.L;
 
 /**
  * Created by kutear.guo on 2015/8/19.
@@ -53,7 +52,7 @@ public class UserCenterFragment extends BaseFragment implements ApiUser.IUserInf
         return view;
     }
 
-    private void initView(View v) {
+    protected void initView(View v) {
         Toolbar mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mActivity.setSupportActionBar(mToolBar);
         //noinspection ConstantConditions
@@ -80,7 +79,7 @@ public class UserCenterFragment extends BaseFragment implements ApiUser.IUserInf
     }
 
     private void bindData() {
-        mImageView.setImageUrl(mUserInfo.getAvater(), AppApplication.getImagerLoader());
+        mImageView.setImageUrl(mUserInfo.getAvater(), AppApplication.getImageLoader());
         mCollapsingToolbarLayout.setTitle(mUserInfo.getNickName());
         mMainPager.setText(mUserInfo.getMainPager());
         mMail.setText(mUserInfo.getEMail());

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/ui_bottom_margin">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/manager_site_name_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_activity_vertical_margin">
+
+            <EditText
+                android:id="@+id/manager_site_name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/site_name"
+                android:inputType="textPersonName|textCapWords" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/manager_site_address_url_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_activity_vertical_margin">
+
+            <EditText
+                android:id="@+id/manager_site_address_url"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/site_address"
+                android:inputType="textUri" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/manager_site_description_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_activity_vertical_margin">
+
+            <EditText
+                android:id="@+id/manager_site_description"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/site_description"
+                android:inputType="textUri" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:id="@+id/manager_site_keyword_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_activity_vertical_margin">
+
+            <EditText
+                android:id="@+id/manager_site_keyword"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/site_keyword"
+                android:inputType="textUri" />
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:id="@+id/manager_site_post"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_activity_vertical_margin"
+            android:background="@drawable/drawable_login_button_btn"
+            android:text="@string/submit"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/text_login_btn_size" />
+    </LinearLayout>
+</ScrollView>

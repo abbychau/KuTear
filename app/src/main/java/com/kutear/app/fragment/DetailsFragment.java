@@ -58,6 +58,7 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
         initView(mBodyView);
         bindData();
         loadDefaultBackground();
+        KDialogFragment.showDialog(getFragmentManager());
         return mBodyView;
     }
 
@@ -111,7 +112,7 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
     }
 
     @SuppressWarnings("ConstantConditions")
-    private void initView(View v) {
+    protected void initView(View v) {
         mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mActivity.setSupportActionBar(mToolBar);
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -134,11 +135,13 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
         setFirstImage(str);
         str += getCssFromAsset();
         mTvContent.setText(Html.fromHtml(str));
+        KDialogFragment.hiddenDialog(getFragmentManager());
     }
 
     @Override
     public void onError(String str) {
         showSnack(mTvContent, str);
+        KDialogFragment.hiddenDialog(getFragmentManager());
     }
 
     private String getCssFromAsset() {
@@ -148,7 +151,7 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
 
     private void loadDefaultBackground() {
         //TODO 需要添加自己的图片
-        mIvTitleBg.setImageUrl("http://kutearforte-uploads.stor.sinaapp.com/2802316513.png", AppApplication.getImagerLoader());
+        mIvTitleBg.setImageUrl("http://kutearforte-uploads.stor.sinaapp.com/2802316513.png", AppApplication.getImageLoader());
     }
 
     private void setFirstImage(String str) {
@@ -157,7 +160,7 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
         if (elements.first() != null) {
             String url = elements.first().attr("src");
             if (!TextUtils.isEmpty(url)) {
-                mIvTitleBg.setImageUrl(url, AppApplication.getImagerLoader());
+                mIvTitleBg.setImageUrl(url, AppApplication.getImageLoader());
             }
         }
     }

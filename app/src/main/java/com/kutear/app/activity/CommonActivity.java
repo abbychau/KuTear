@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.AboutFragment;
 import com.kutear.app.fragment.ArchiveFragment;
@@ -62,7 +63,11 @@ public class CommonActivity extends BaseActivity {
                 mFragment = DetailsFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_MANAGER:
-                mFragment = ManageFragment.newInstance();
+                if (AppApplication.getUserManager().isLogin()) {
+                    mFragment = ManageFragment.newInstance();
+                } else {
+                    mFragment = LoginFragment.newInstance();
+                }
                 break;
             case Constant.ACTIVITY_USER_CENTER:
                 mFragment = UserCenterFragment.newInstance();

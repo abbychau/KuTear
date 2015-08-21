@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -17,11 +18,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.ArchiveFragment;
 import com.kutear.app.fragment.MainFragment;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 import com.kutear.app.view.CircleImageView;
 
 
@@ -100,6 +105,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         actionBarDrawerToggle.syncState();
         View headerView = mNavigationView.inflateHeaderView(R.layout.nav_header);
         headerView.setOnClickListener(this);
+        if (AppApplication.getUserManager().getUserInfo() != null) {
+            if (mAvater == null) {
+                mAvater = (CircleImageView) findViewById(R.id.nav_avatar);
+            }
+            if (mTvNickName == null) {
+                mTvNickName = (TextView) findViewById(R.id.nav_name);
+            }
+            // TODO: 2015/8/21 为什么会空指针
+            mAvater.setImageURI(Uri.parse(AppApplication.getUserManager().getUserInfo().getAvater()));
+            mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+        }
     }
 
     @Override
@@ -168,10 +184,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private BroadcastReceiver loginBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constant.BROADCAST_LOGIN)) {
-                mAvater.setImageURI(Uri.parse(AppApplication.getUserManager().getUserInfo().getAvater()));
-                mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+            if (intent.getAction().equals(Constant.BROADCAST_LOGIN) && AppApplication.getUserManager().getUserInfo() != null) {
+                if (mAvater == null) {
+                    mAvater = (CircleImageView) findViewById(R.id.nav_avatar);
+                }
+                if (mTvNickName == null) {
+                    mTvNickName = (TextView) findViewById(R.id.nav_name);
+                }
+                if (mAvater != null && mTvNickName != null) {
+                    loadImage(AppApplication.getUserManager().getUserInfo().getAvater());
+                    mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+                }
             }
         }
     };
+
+    /**
+     * 加载头像
+     *
+     * @param url 头像URL
+     */
+    private void loadImage(String url) {
+        ImageRequest imgRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap arg0) {
+                mAvater.setImageBitmap(arg0);
+            }
+        }, 300, 200, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError arg0) {
+
+            }
+        });
+        AppApplication.startRequest(imgRequest);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(loginBroadcastReceiver);
+    }
 }

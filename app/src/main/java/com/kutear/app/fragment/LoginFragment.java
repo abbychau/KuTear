@@ -11,16 +11,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.api.ApiUser;
 import com.kutear.app.api.ICallBack;
+import com.kutear.app.bean.UserInfo;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.SaveData;
 
 
 @SuppressWarnings("ConstantConditions")
-public class LoginFragment extends BaseFragment implements View.OnClickListener {
+public class LoginFragment extends BaseFragment implements View.OnClickListener, ApiUser.IUserInfo {
     private BaseActivity mActivity;
     private Toolbar mToolBar;
     private EditText mEtUserName;
@@ -41,7 +43,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         return mBodyView;
     }
 
-    private void initView(View v) {
+    protected void initView(View v) {
         mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mActivity.setTitle(R.string.login);
         mEtPassWord = (EditText) v.findViewById(R.id.login_et_password);
@@ -94,9 +96,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         ApiUser.login(user, pass, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
-                KDialogFragment.hiddenDialog(getFragmentManager());
-                showSnack(mEtPassWord, str);
-                mActivity.finish();
+                ApiUser.getUserInfo(LoginFragment.this);
             }
 
             @Override
@@ -110,5 +110,18 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     private void saveUserAndPass(String user, String pass) {
         SaveData.saveString(Constant.USER, user);
         SaveData.saveString(Constant.PASS, pass);
+    }
+
+    @Override
+    public void onSuccess(UserInfo user) {
+        KDialogFragment.hiddenDialog(getFragmentManager());
+        AppApplication.getUserManager().setUserInfo(user);
+        mActivity.finish();
+    }
+
+    @Override
+    public void onError(String msg) {
+        KDialogFragment.hiddenDialog(getFragmentManager());
+        showSnack(mEtPassWord, msg);
     }
 }

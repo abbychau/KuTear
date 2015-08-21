@@ -10,11 +10,10 @@ import com.kutear.app.utils.L;
 import java.util.Map;
 
 /**
- * Created by kutear.guo on 2015/8/16.
- * 所有的请求都在这个类里面做
+ * Created by kutear.guo on 2015/8/21.
  */
-public class BaseRequest {
-    private static final String TAG = BaseRequest.class.getSimpleName();
+public class ApiAdmin {
+    private static final String TAG = ApiAdmin.class.getSimpleName();
 
     protected static void getRequest(String url, final ICallBack callBack) {
         baseRequest(Request.Method.GET, url, null, callBack);
@@ -36,7 +35,7 @@ public class BaseRequest {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                L.v(TAG, "请求失败(URL:" + url + "):" + volleyError.getMessage()+" "+volleyError.toString());
+                L.v(TAG, "请求失败(URL:" + url + "):" + volleyError.getMessage() + " " + volleyError.toString());
                 if (callBack != null) {
                     callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
                 }

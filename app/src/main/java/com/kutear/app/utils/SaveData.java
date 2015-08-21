@@ -7,7 +7,8 @@ import com.kutear.app.AppApplication;
 
 /**
  * Created by kutear.guo on 2015/8/4.
- */
+ *
+ **/
 public class SaveData {
     private static AppApplication app = AppApplication.getApplication();
     private static SharedPreferences mPreferences = app.getSharedPreferences(Constant.PREFERENCES_NAME, Context.MODE_PRIVATE);

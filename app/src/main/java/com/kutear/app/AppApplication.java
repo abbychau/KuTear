@@ -28,6 +28,7 @@ import java.util.Map;
 
 /**
  * Created by kutear.guo on 2015/8/3.
+ * Application
  */
 public class AppApplication extends Application {
     private static AppApplication app;
@@ -53,7 +54,7 @@ public class AppApplication extends Application {
         return app.getString(resId);
     }
 
-    public static ImageLoader getImagerLoader() {
+    public static ImageLoader getImageLoader() {
         return mImageLoader;
     }
 

@@ -30,7 +30,7 @@ public class ApiUser extends BaseRequest {
      * @param user
      * @param password
      * @return boolean
-     * <p>
+     * <p/>
      * 请求格式
      * POST /index.php/action/login?_=7ab6643d63f58092e0199fdf86ec1353
      * Host: www.kutear.com
@@ -52,7 +52,7 @@ public class ApiUser extends BaseRequest {
      * Cookie:
      * saeut=45.78.13.119.1436173538419585;
      * PHPSESSID=59a45cb2f8af1132b88af1a086abe2db
-     * <p>
+     * <p/>
      * name = admin & password = *******&referer=http%3A%2F%2Fwww.kutear.com%2Fadmin%2F
      */
 
@@ -69,7 +69,10 @@ public class ApiUser extends BaseRequest {
      * App启动时登陆
      */
     public static void autoLogin(ICallBack callBack) {
-        login(SaveData.getString(Constant.USER), SaveData.getString(Constant.PASS), callBack);
+        if (!TextUtils.isEmpty(SaveData.getString(Constant.USER)) &&
+                !TextUtils.isEmpty(SaveData.getString(Constant.PASS))) {
+            login(SaveData.getString(Constant.USER), SaveData.getString(Constant.PASS), callBack);
+        }
     }
 
 
@@ -208,7 +211,27 @@ public class ApiUser extends BaseRequest {
         if (callBack != null) {
             callBack.onSuccess(info);
         }
-        //f
+        //发送登录成功的广播
         AppApplication.startBroadcast(Constant.BROADCAST_LOGIN);
+    }
+
+    public static void checkUserLogin(final ICallBack callBack) {
+        getRequest(Constant.URI_ADMIN, new ICallBack() {
+            @Override
+            public void onSuccess(int statusCode, String str) {
+                Document doc = Jsoup.parse(str);
+                String title = doc.title();
+                if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
+                    callBack.onError(NOT_LOGIN, AppApplication.getKString(R.string.not_login));
+                } else if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
+                    callBack.onSuccess(HAS_LOGIN, "");
+                }
+            }
+
+            @Override
+            public void onError(int statusCode, String str) {
+                callBack.onError(RESPONE_FAILED, AppApplication.getKString(R.string.not_login));
+            }
+        });
     }
 }

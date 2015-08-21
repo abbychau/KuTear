@@ -15,7 +15,7 @@ import com.kutear.app.activity.BaseActivity;
 /**
  * Created by Kutear on 2015/8/10 in KuTear.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
     protected BaseActivity mActivity;
 
     @Override
@@ -44,7 +44,7 @@ public class BaseFragment extends Fragment {
     }
 
     protected void showSnack(View hook, String msg) {
-        if(!TextUtils.isEmpty(msg)){
+        if (!TextUtils.isEmpty(msg)) {
             Snackbar.make(hook, msg, Snackbar.LENGTH_SHORT).show();
         }
     }
@@ -52,4 +52,6 @@ public class BaseFragment extends Fragment {
     protected void showSnack(View hook, int msgRes) {
         Snackbar.make(hook, msgRes, Snackbar.LENGTH_SHORT).show();
     }
+
+    protected abstract void initView(View v);
 }
