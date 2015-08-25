@@ -31,8 +31,6 @@ public class ManagerLinkFragment extends BaseNoBarFragment implements View.OnCli
     protected void initView(View v) {
         mTvPager = (TextView) v.findViewById(R.id.manager_link_pager);
         mTvCategory = (TextView) v.findViewById(R.id.manager_link_category);
-        loadingLayout = (ViewGroup) v.findViewById(R.id.loading_layout);
-        contentLayout = (ViewGroup) v.findViewById(R.id.content_layout);
         v.findViewById(R.id.manager_link_post).setOnClickListener(this);
     }
 
@@ -41,8 +39,12 @@ public class ManagerLinkFragment extends BaseNoBarFragment implements View.OnCli
     protected View setContentView() {
         View view = inflate(R.layout.fragment_manager_link);
         initView(view);
-        ApiLinkManager.getLink(this);
+        doRequest();
         return view;
+    }
+
+    private void doRequest() {
+        ApiLinkManager.getLink(this);
     }
 
     @Override

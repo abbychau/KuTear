@@ -1,5 +1,7 @@
 package com.kutear.app.bean;
 
+import android.os.Parcel;
+
 /**
  * Created by kutear.guo on 2015/8/19.
  */
@@ -50,4 +52,32 @@ public class Tab extends BaseBean {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.url);
+        dest.writeInt(this.count);
+    }
+
+    protected Tab(Parcel in) {
+        this.name = in.readString();
+        this.url = in.readString();
+        this.count = in.readInt();
+    }
+
+    public static final Creator<Tab> CREATOR = new Creator<Tab>() {
+        public Tab createFromParcel(Parcel source) {
+            return new Tab(source);
+        }
+
+        public Tab[] newArray(int size) {
+            return new Tab[size];
+        }
+    };
 }

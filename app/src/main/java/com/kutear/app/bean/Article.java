@@ -81,21 +81,6 @@ public class Article extends BaseBean {
                 TextUtils.equals(o.getTitle(), getTitle()) && TextUtils.equals(o.getUrl(), getUrl());
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.day);
-        dest.writeString(this.time);
-        dest.writeString(this.year);
-        dest.writeString(this.title);
-        dest.writeString(this.content);
-        dest.writeString(this.url);
-    }
-
     public Article() {
     }
 
@@ -111,6 +96,22 @@ public class Article extends BaseBean {
                 '}';
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.day);
+        dest.writeString(this.time);
+        dest.writeString(this.year);
+        dest.writeString(this.title);
+        dest.writeString(this.content);
+        dest.writeString(this.url);
+        dest.writeString(this.detail);
+    }
+
     protected Article(Parcel in) {
         this.day = in.readString();
         this.time = in.readString();
@@ -118,9 +119,10 @@ public class Article extends BaseBean {
         this.title = in.readString();
         this.content = in.readString();
         this.url = in.readString();
+        this.detail = in.readString();
     }
 
-    public static final Parcelable.Creator<Article> CREATOR = new Parcelable.Creator<Article>() {
+    public static final Creator<Article> CREATOR = new Creator<Article>() {
         public Article createFromParcel(Parcel source) {
             return new Article(source);
         }

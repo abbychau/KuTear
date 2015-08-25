@@ -18,6 +18,7 @@ import com.kutear.app.api.ApiArchive;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,20 +160,28 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
     private void onItemClickArchive(View v, int position) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(DetailsFragment.KEY, mlist.get(position));
+        bundle.putParcelable(ArticleListFragment.KEY, mlist.get(position));
         AppApplication.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
     }
 
     private void onItemClickTab(View v, int position) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ArticleListFragment.KEY, mlist.get(position));
+        AppApplication.startActivity(mActivity, Constant.ACTIVITY_ARTICLE_LIST, bundle);
     }
 
     private void onItemClickCategory(View v, int position) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ArticleListFragment.KEY, mlist.get(position));
+        AppApplication.startActivity(mActivity, Constant.ACTIVITY_ARTICLE_LIST, bundle);
     }
 
 
     private void resetData(List<? extends BaseBean> lists) {
+        for( BaseBean bean:lists){
+            L.v(TAG,bean.toString());
+        }
+
         mlist.clear();
         mlist.addAll(lists);
         mAdapter.notifyDataSetChanged();
