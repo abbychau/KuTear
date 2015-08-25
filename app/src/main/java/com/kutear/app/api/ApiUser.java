@@ -2,16 +2,12 @@ package com.kutear.app.api;
 
 import android.text.TextUtils;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.bean.UserInfo;
-import com.kutear.app.manager.UserManager;
-import com.kutear.app.netutils.KStringRequest;
+import com.kutear.app.callback.ICallBack;
+import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;
 
 import org.jsoup.Jsoup;
@@ -58,12 +54,6 @@ public class ApiUser extends BaseRequest {
 
     private static final String TAG = ApiUser.class.getSimpleName();
 
-    public interface IUserInfo {
-        void onSuccess(UserInfo user);
-
-        void onError(String msg);
-    }
-
 
     /**
      * App启动时登陆
@@ -98,7 +88,7 @@ public class ApiUser extends BaseRequest {
         //表示已经登陆到后台
         if (title.startsWith(AppApplication.getKString(R.string.web_admin_title))) {
             if (callBack != null) {
-                callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_succeed));
+                callBack.onSuccess(ICallBack.RESPONSE_OK, AppApplication.getKString(R.string.login_succeed));
             }
             //根据URI来登录
         } else {
@@ -109,7 +99,7 @@ public class ApiUser extends BaseRequest {
                 onLogin(loginUrl, user, password, callBack);
             } else {
                 if (callBack != null) {
-                    callBack.onError(ICallBack.RESPONE_NO_URI, AppApplication.getKString(R.string.get_url_failed));
+                    callBack.onError(ICallBack.RESPONSE_NO_URI, AppApplication.getKString(R.string.get_url_failed));
                 }
             }
         }
@@ -121,11 +111,11 @@ public class ApiUser extends BaseRequest {
         String title = doc.title();
         if (TextUtils.equals(title, AppApplication.getKString(R.string.web_title))) {
             if (callBack != null) {
-                callBack.onSuccess(ICallBack.RESPONE_OK, AppApplication.getKString(R.string.login_success));
+                callBack.onSuccess(ICallBack.RESPONSE_OK, AppApplication.getKString(R.string.login_success));
             }
         } else if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
             if (callBack != null) {
-                callBack.onError(ICallBack.RESPONE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
+                callBack.onError(ICallBack.RESPONSE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
             }
         }
     }
@@ -162,7 +152,7 @@ public class ApiUser extends BaseRequest {
     /**
      * @param callBack 回调
      */
-    public static void getUserInfo(final IUserInfo callBack) {
+    public static void getUserInfo(final IGetCallBack callBack) {
         getRequest(Constant.URI_USER_CENTER, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -174,7 +164,7 @@ public class ApiUser extends BaseRequest {
             @Override
             public void onError(int statusCode, String str) {
                 if (callBack != null) {
-                    callBack.onError(AppApplication.getKString(R.string.get_user_info_error));
+                    callBack.onGetError(AppApplication.getKString(R.string.get_user_info_error));
                 }
             }
         });
@@ -189,7 +179,7 @@ public class ApiUser extends BaseRequest {
      * @param str      html
      * @param callBack 回调
      */
-    private static void parseUserInfo(String str, IUserInfo callBack) {
+    private static void parseUserInfo(String str, IGetCallBack callBack) {
         UserInfo info = new UserInfo();
         Document document = Jsoup.parse(str);
         Elements elements = document.getElementsByClass("profile-avatar");
@@ -209,7 +199,7 @@ public class ApiUser extends BaseRequest {
             info.setEMail(elementMail.attr("value"));
         }
         if (callBack != null) {
-            callBack.onSuccess(info);
+            callBack.onGetSuccess(info);
         }
         //发送登录成功的广播
         AppApplication.startBroadcast(Constant.BROADCAST_LOGIN);
@@ -230,7 +220,7 @@ public class ApiUser extends BaseRequest {
 
             @Override
             public void onError(int statusCode, String str) {
-                callBack.onError(RESPONE_FAILED, AppApplication.getKString(R.string.not_login));
+                callBack.onError(RESPONSE_FAILED, AppApplication.getKString(R.string.not_login));
             }
         });
     }

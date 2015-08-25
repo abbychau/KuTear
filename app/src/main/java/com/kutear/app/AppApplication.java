@@ -3,7 +3,6 @@ package com.kutear.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v4.util.LruCache;
@@ -13,18 +12,12 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.kutear.app.activity.CommonActivity;
-import com.kutear.app.api.ApiUser;
-import com.kutear.app.api.ICallBack;
 import com.kutear.app.manager.UserManager;
 import com.kutear.app.utils.Constant;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by kutear.guo on 2015/8/3.

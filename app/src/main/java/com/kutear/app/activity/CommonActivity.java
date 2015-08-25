@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v7.widget.Toolbar;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
@@ -15,7 +14,7 @@ import com.kutear.app.fragment.LoginFragment;
 import com.kutear.app.fragment.ManageFragment;
 import com.kutear.app.fragment.PreviewFragment;
 import com.kutear.app.fragment.SettingFragment;
-import com.kutear.app.fragment.UserCenterFragment;
+import com.kutear.app.fragment.UserCenterToolBarFragment;
 import com.kutear.app.utils.Constant;
 
 /**
@@ -54,7 +53,7 @@ public class CommonActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         switch (type) {
             case Constant.ACTIVITY_LOGIN:
-                mFragment = LoginFragment.newInstance();
+                mFragment = LoginFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_ARCHIVE:
                 mFragment = ArchiveFragment.newInstance(bundle);
@@ -66,11 +65,16 @@ public class CommonActivity extends BaseActivity {
                 if (AppApplication.getUserManager().isLogin()) {
                     mFragment = ManageFragment.newInstance();
                 } else {
-                    mFragment = LoginFragment.newInstance();
+                    if (bundle == null) {
+                        bundle = new Bundle();
+                    }
+                    //使得登陆后跳转到要调往的页面
+                    bundle.putInt(LoginFragment.TO_FRAGMENT, Constant.ACTIVITY_MANAGER);
+                    mFragment = LoginFragment.newInstance(bundle);
                 }
                 break;
             case Constant.ACTIVITY_USER_CENTER:
-                mFragment = UserCenterFragment.newInstance();
+                mFragment = UserCenterToolBarFragment.newInstance();
                 break;
             case Constant.ACTIVITY_PREVIEW:
                 mFragment = PreviewFragment.newInstance();

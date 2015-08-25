@@ -46,6 +46,15 @@
     <string name="submit">提交</string>
     <string name="not_login">没有登陆</string>
     <string name="other">其他</string>
+    <string name="can_not_web_admin">访问后台失败</string>
+    <string name="article_date_format">文章日期格式</string>
+    <string name="article_list_count">文章列表数目</string>
+    <string name="each_pager_article_count">每页文章数目</string>
+    <string name="date_format_tips">日期格式说明</string>
+    <string name="category_path">分类路径</string>
+    <string name="pager_path">页面路径</string>
+    <string name="article_path">文章链接</string>
+    <string name="get_category_error">获取分类失败</string>
     <array name="manager_title">
         <item>站点管理</item>
         <item>阅读设置</item>

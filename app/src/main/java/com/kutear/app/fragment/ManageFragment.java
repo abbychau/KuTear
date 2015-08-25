@@ -1,9 +1,12 @@
 package com.kutear.app.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,10 +27,11 @@ import com.kutear.app.adapter.ManagerAdapter;
  * 6.管理文章 /admin/manage-posts.php
  */
 public class ManageFragment extends BaseFragment {
-    private Toolbar mToolBar;
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ManagerAdapter mAdapter;
+    private Toolbar mToolBar;
+    private AppCompatActivity mActivity;
 
     public static ManageFragment newInstance() {
         Bundle args = new Bundle();
@@ -36,9 +40,15 @@ public class ManageFragment extends BaseFragment {
         return fragment;
     }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.mActivity = (AppCompatActivity) activity;
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_manager, container, false);
         initView(view);
         bindData();
@@ -46,7 +56,7 @@ public class ManageFragment extends BaseFragment {
         return view;
     }
 
-    @Override
+
     protected void initView(View v) {
         mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) v.findViewById(R.id.tabs);

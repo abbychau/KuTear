@@ -5,70 +5,58 @@
     android:orientation="vertical"
     android:padding="@dimen/ui_bottom_margin">
 
-
     <LinearLayout
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/manager_site_name_layout"
+            android:id="@+id/manager_read_article_date_format_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ui_activity_vertical_margin">
 
             <EditText
-                android:id="@+id/manager_site_name"
+                android:id="@+id/manager_read_article_date_format"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/site_name"
-                android:inputType="textPersonName|textCapWords" />
+                android:hint="@string/article_date_format"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/manager_site_address_url_layout"
+            android:id="@+id/manager_read_article_list_count_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ui_activity_vertical_margin">
 
             <EditText
-                android:id="@+id/manager_site_address_url"
+                android:id="@+id/manager_read_article_list_count"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/site_address"
-                android:inputType="textUri" />
+                android:hint="@string/article_list_count"
+                android:inputType="text" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
-            android:id="@+id/manager_site_description_layout"
+            android:id="@+id/manager_read_each_pager_article_count_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ui_activity_vertical_margin">
 
             <EditText
-                android:id="@+id/manager_site_description"
+                android:id="@+id/manager_read_each_pager_article_count"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/site_description"
-                android:inputType="textUri" />
+                android:hint="@string/each_pager_article_count"
+                android:inputType="number" />
         </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
-            android:id="@+id/manager_site_keyword_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/ui_activity_vertical_margin">
-
-            <EditText
-                android:id="@+id/manager_site_keyword"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/site_keyword"
-                android:inputType="textUri" />
-        </android.support.design.widget.TextInputLayout>
 
         <Button
-            android:id="@+id/manager_site_post"
+            android:id="@+id/manager_read_post"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/ui_activity_vertical_margin"
@@ -76,5 +64,13 @@
             android:text="@string/submit"
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_login_btn_size" />
+
+        <TextView
+            android:id="@+id/manager_read_tips"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/ui_activity_vertical_margin"
+            android:text="@string/date_format_tips"
+            android:textColor="?colorPrimary" />
     </LinearLayout>
 </ScrollView>

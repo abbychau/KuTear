@@ -1,37 +1,34 @@
 package com.kutear.app.fragment;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.adapter.ArticleAdapter;
 import com.kutear.app.api.ApiArticleList;
 import com.kutear.app.bean.Article;
+import com.kutear.app.bean.BaseBean;
+import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class MainFragment extends Fragment implements ApiArticleList.IArticleList, SwipeRefreshLayout.OnRefreshListener, ArticleAdapter.OnItemClickListener {
+public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayout.OnRefreshListener, ArticleAdapter.OnItemClickListener, IGetListCallBack {
 
     private RecyclerView mRecyclerView;
     private List<Article> mLists = new ArrayList<>();
     private ArticleAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private int pager = 0;
-    private Activity mActivity;
 
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
@@ -40,24 +37,21 @@ public class MainFragment extends Fragment implements ApiArticleList.IArticleLis
         return fragment;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.mActivity = activity;
-    }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View mBodyView = inflater.inflate(R.layout.fragment_main, container, false);
+    protected View setContentView() {
+        View mBodyView = inflate(R.layout.fragment_main);
         initView(mBodyView);
         bindData();
+        showLoadingLayout();
         return mBodyView;
     }
 
-    private void initView(View view) {
+    @Override
+    protected void initView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_layout);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        //下拉刷新
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(mActivity.getResources().getColor(R.color.teal_500));
@@ -71,20 +65,6 @@ public class MainFragment extends Fragment implements ApiArticleList.IArticleLis
 
     private void requestData() {
         ApiArticleList.getArticle(1, this);
-    }
-
-
-    @Override
-    public void onSuccess(List<Article> list) {
-        if (pager == 2) {
-            addListToHeader(list);
-        } else {
-            addListToFooter(list);
-        }
-        mAdapter.notifyDataSetChanged();
-        if (mSwipeRefreshLayout.isRefreshing()) {
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
     }
 
     /**
@@ -130,16 +110,6 @@ public class MainFragment extends Fragment implements ApiArticleList.IArticleLis
 
 
     @Override
-    public void onFailed(String str) {
-        if (mSwipeRefreshLayout.isRefreshing()) {
-            mSwipeRefreshLayout.setRefreshing(false);
-        }
-        if (!TextUtils.isEmpty(str)) {
-            Snackbar.make(mSwipeRefreshLayout, str, Snackbar.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
     public void onRefresh() {
         ApiArticleList.getArticle(++pager, this);
     }
@@ -149,5 +119,30 @@ public class MainFragment extends Fragment implements ApiArticleList.IArticleLis
         Bundle bundle = new Bundle();
         bundle.putParcelable(DetailsFragment.KEY, mLists.get(position));
         AppApplication.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
+    }
+
+    @Override
+    public void onSuccess(List<? extends BaseBean> lists) {
+        ArrayList<Article> list = (ArrayList<Article>) lists;
+        if (pager == 2) {
+            addListToHeader(list);
+        } else {
+            addListToFooter(list);
+        }
+        mAdapter.notifyDataSetChanged();
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        hiddenLoadingLayout();
+    }
+
+    @Override
+    public void onError(String msg) {
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+        }
+        if (!TextUtils.isEmpty(msg)) {
+            Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_SHORT).show();
+        }
     }
 }

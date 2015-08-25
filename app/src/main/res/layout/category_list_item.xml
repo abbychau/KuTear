@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/category_list_item_bg"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/ui_activity_horizontal_margin">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/ui_list_padding"
+        android:paddingTop="@dimen/ui_list_padding">
+
+        <TextView
+            android:id="@+id/manager_category_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/gray_800"
+            android:textSize="@dimen/text_article_item_title" />
+
+        <TextView
+            android:id="@+id/manager_category_item_simple_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="@dimen/ui_activity_horizontal_margin"
+            android:layout_toRightOf="@id/manager_category_item_title" />
+
+        <TextView
+            android:id="@+id/manager_category_item_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingRight="@dimen/ui_activity_horizontal_margin" />
+
+
+    </RelativeLayout>
+
+    <View
+        android:id="@+id/manager_category_item_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_division_height"
+        android:background="@color/gray_300" />
+</LinearLayout>

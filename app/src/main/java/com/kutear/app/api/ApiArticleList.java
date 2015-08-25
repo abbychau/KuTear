@@ -3,6 +3,8 @@ package com.kutear.app.api;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.bean.Article;
+import com.kutear.app.callback.ICallBack;
+import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
 
@@ -22,17 +24,12 @@ public class ApiArticleList extends BaseRequest {
 
     private static final String TAG = ApiArticleList.class.getSimpleName();
 
-    public interface IArticleList {
-        void onSuccess(List<Article> list);
-
-        void onFailed(String str);
-    }
 
     /**
      * @param pager    当前的页码
      * @param callBack 回调
      */
-    public static void getArticle(int pager, final IArticleList callBack) {
+    public static void getArticle(int pager, final IGetListCallBack callBack) {
         getRequest(String.format(Constant.URI_ARTICLE, pager), new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -43,7 +40,7 @@ public class ApiArticleList extends BaseRequest {
             public void onError(int statusCode, String str) {
                 L.v(TAG, statusCode + "");
                 if (callBack != null) {
-                    callBack.onFailed(str);
+                    callBack.onError(str);
                 }
             }
         });
@@ -55,18 +52,17 @@ public class ApiArticleList extends BaseRequest {
      * @param str      html
      * @param callBack 回调
      */
-    private static void parseArticle(String str, IArticleList callBack) {
+    private static void parseArticle(String str, IGetListCallBack callBack) {
         Document document = Jsoup.parse(str);
         Elements elements = document.getElementsByTag("article");
         ArrayList<Article> lists = new ArrayList<>();
-        L.v(TAG, "parseArticle");
         for (Element element : elements) {
             lists.add(getArticleFromHtml(element));
         }
         //后面的页面已经没有文章
         if (lists.size() == 0) {
             if (callBack != null) {
-                callBack.onFailed(AppApplication.getKString(R.string.no_more_article));
+                callBack.onError(AppApplication.getKString(R.string.no_more_article));
             }
             return;
         }

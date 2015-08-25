@@ -1,7 +1,6 @@
 package com.kutear.app.fragment;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
@@ -16,12 +15,9 @@ import com.kutear.app.R;
 import com.kutear.app.adapter.ArchiveAdapter;
 import com.kutear.app.adapter.ArticleAdapter;
 import com.kutear.app.api.ApiArchive;
-import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.BaseBean;
-import com.kutear.app.bean.Category;
-import com.kutear.app.bean.Tab;
+import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +26,7 @@ import java.util.List;
  * Created by kutear.guo on 2015/8/18.
  * 归档页面
  */
-public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, ArticleAdapter.OnItemClickListener {
+public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSelectedListener, ArticleAdapter.OnItemClickListener, IGetListCallBack {
     private static final String TAG = ArchiveFragment.class.getSimpleName();
     private Toolbar mToolBar;
     private TabLayout mTabLayout;
@@ -57,8 +53,8 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mBodyView = inflater.inflate(R.layout.fragment_archive, null);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View mBodyView = inflater.inflate(R.layout.fragment_archive, container, false);
         initView(mBodyView);
         initTabs();
         initData();
@@ -116,7 +112,7 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
     private void doRequest() {
         //根据Tab选择不同的请求
-        KDialogFragment.showDialog(getFragmentManager());
+        showLoading("");
         switch (type) {
             case TAB:
                 requestTab();
@@ -133,45 +129,15 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
     }
 
     private void requestTab() {
-        ApiArchive.getTabs(new ApiArchive.ITab() {
-            @Override
-            public void onSuccess(List<Tab> lists) {
-                resetData(lists);
-            }
-
-            @Override
-            public void onError(String msg) {
-                showError(msg);
-            }
-        });
+        ApiArchive.getTabs(this);
     }
 
     private void requestArchive() {
-        ApiArchive.getArchive(new ApiArchive.IArchive() {
-            @Override
-            public void onSuccess(List<Archive> lists) {
-                resetData(lists);
-            }
-
-            @Override
-            public void onError(String msg) {
-                showError(msg);
-            }
-        });
+        ApiArchive.getArchive(this);
     }
 
     private void requestCategory() {
-        ApiArchive.getCategory(new ApiArchive.ICategory() {
-            @Override
-            public void onSuccess(List<Category> lists) {
-                resetData(lists);
-            }
-
-            @Override
-            public void onError(String msg) {
-                showError(msg);
-            }
-        });
+        ApiArchive.getCategory(this);
     }
 
     @Override
@@ -210,13 +176,23 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
         mlist.clear();
         mlist.addAll(lists);
         mAdapter.notifyDataSetChanged();
-        KDialogFragment.hiddenDialog(getFragmentManager());
+        hiddenLoad();
     }
 
     private void showError(String msg) {
         mlist.clear();
         mAdapter.notifyDataSetChanged();
         showSnack(mRecycleView, msg);
-        KDialogFragment.hiddenDialog(getFragmentManager());
+        hiddenLoad();
+    }
+
+    @Override
+    public void onSuccess(List<? extends BaseBean> lists) {
+        resetData(lists);
+    }
+
+    @Override
+    public void onError(String msg) {
+        showError(msg);
     }
 }

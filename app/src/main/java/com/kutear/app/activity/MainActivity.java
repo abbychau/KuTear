@@ -24,16 +24,18 @@ import com.android.volley.toolbox.ImageRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.ArchiveFragment;
+import com.kutear.app.fragment.BaseFragment;
 import com.kutear.app.fragment.MainFragment;
+import com.kutear.app.swipebacklayout.SwipeBackLayout;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 import com.kutear.app.view.CircleImageView;
 
 
 /**
  * Created by kutear.guo on 2015/8/4.
+ * 首页视图
  */
-public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
+public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener, View.OnClickListener {
     private static final String TAG = MainActivity.class.getSimpleName();
     private Toolbar mToolBar;
     private NavigationView mNavigationView;
@@ -47,8 +49,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.main_activity);
         initView();
         createBroadCast();
+        mSwipeBackLayout = getSwipeBackLayout();
+        //禁用滑动
+        mSwipeBackLayout.setEnableGesture(false);
     }
 
+    /**
+     * 注册登录监听广播
+     */
     private void createBroadCast() {
         IntentFilter filter = new IntentFilter();
         filter.addAction(Constant.BROADCAST_LOGIN);

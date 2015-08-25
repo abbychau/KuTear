@@ -24,6 +24,8 @@ import com.kutear.app.R;
 import com.kutear.app.api.ApiArticleDetails;
 import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.Article;
+import com.kutear.app.bean.BaseBean;
+import com.kutear.app.callback.IGetCallBack;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -33,7 +35,7 @@ import org.jsoup.select.Elements;
  * Created by kutear.guo on 2015/8/5.
  * 文章详情
  */
-public class DetailsFragment extends BaseFragment implements ApiArticleDetails.IArticleDetails {
+public class DetailsFragment extends BaseFragment implements IGetCallBack {
     public static final String KEY = "Article";
     private static final String TAG = DetailsFragment.class.getSimpleName();
     private Toolbar mToolBar;
@@ -54,11 +56,11 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mBodyView = inflater.inflate(R.layout.fragment_details, null);
+        View mBodyView = inflater.inflate(R.layout.fragment_details, container, false);
         initView(mBodyView);
         bindData();
         loadDefaultBackground();
-        KDialogFragment.showDialog(getFragmentManager());
+        showLoading("");
         return mBodyView;
     }
 
@@ -131,17 +133,18 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
     }
 
     @Override
-    public void onSuccess(String str) {
+    public void onGetSuccess(BaseBean result) {
+        super.onGetSuccess(result);
+        String str = ((Article) result).getDetail();
         setFirstImage(str);
         str += getCssFromAsset();
         mTvContent.setText(Html.fromHtml(str));
-        KDialogFragment.hiddenDialog(getFragmentManager());
     }
 
     @Override
-    public void onError(String str) {
-        showSnack(mTvContent, str);
-        KDialogFragment.hiddenDialog(getFragmentManager());
+    public void onGetError(String error) {
+        super.onGetError(error);
+        showSnack(mTvContent, error);
     }
 
     private String getCssFromAsset() {
@@ -155,6 +158,9 @@ public class DetailsFragment extends BaseFragment implements ApiArticleDetails.I
     }
 
     private void setFirstImage(String str) {
+        if (TextUtils.isEmpty(str)) {
+            return;
+        }
         Document document = Jsoup.parse(str);
         Elements elements = document.getElementsByTag("img");
         if (elements.first() != null) {

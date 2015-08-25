@@ -7,7 +7,14 @@ import android.support.v4.app.FragmentPagerAdapter;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.AboutFragment;
+import com.kutear.app.fragment.BaseNoBarFragment;
+import com.kutear.app.fragment.ManagerCategoryFragment;
+import com.kutear.app.fragment.ManagerLinkFragment;
+import com.kutear.app.fragment.ManagerReadFragment;
 import com.kutear.app.fragment.ManagerSiteFragment;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kutear.guo on 2015/8/21.
@@ -15,14 +22,19 @@ import com.kutear.app.fragment.ManagerSiteFragment;
  */
 public class ManagerAdapter extends FragmentPagerAdapter {
     private String title[] = AppApplication.getApplication().getResources().getStringArray(R.array.manager_title);
+    private List<BaseNoBarFragment> fragments = new ArrayList<>();
 
     public ManagerAdapter(FragmentManager fm) {
         super(fm);
+        fragments.add(ManagerSiteFragment.newInstance());
+        fragments.add(ManagerReadFragment.newInstance());
+        //fragments.add(ManagerLinkFragment.newInstance());
+        //fragments.add(ManagerCategoryFragment.newInstance());
     }
 
     @Override
     public Fragment getItem(int position) {
-        return ManagerSiteFragment.newInstance();
+        return position < fragments.size() ? fragments.get(position) : AboutFragment.newInstance();
     }
 
     @Override

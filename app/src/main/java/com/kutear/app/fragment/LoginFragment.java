@@ -1,50 +1,45 @@
 package com.kutear.app.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
-import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.api.ApiUser;
-import com.kutear.app.api.ICallBack;
+import com.kutear.app.bean.BaseBean;
+import com.kutear.app.callback.ICallBack;
 import com.kutear.app.bean.UserInfo;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.SaveData;
 
 
 @SuppressWarnings("ConstantConditions")
-public class LoginFragment extends BaseFragment implements View.OnClickListener, ApiUser.IUserInfo {
-    private BaseActivity mActivity;
-    private Toolbar mToolBar;
+public class LoginFragment extends BaseToolBarFragment implements View.OnClickListener {
     private EditText mEtUserName;
     private EditText mEtPassWord;
     private TextView mTvForgetPass;
+    public static final String TO_FRAGMENT = "to_fragment";
 
-    public static LoginFragment newInstance() {
+    public static LoginFragment newInstance(Bundle bundle) {
         LoginFragment fragment = new LoginFragment();
+        fragment.setArguments(bundle);
         return fragment;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View mBodyView = inflater.inflate(R.layout.fragment_login, null);
-        mActivity = (BaseActivity) getActivity();
+    protected View setContentView() {
+        View mBodyView = inflate(R.layout.fragment_login);
         initView(mBodyView);
         return mBodyView;
     }
 
     protected void initView(View v) {
-        mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mActivity.setTitle(R.string.login);
         mEtPassWord = (EditText) v.findViewById(R.id.login_et_password);
         mEtUserName = (EditText) v.findViewById(R.id.login_et_username);
@@ -54,6 +49,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
         mTvForgetPass.setOnClickListener(this);
         initToolBar();
         initData();
+        hiddenLoadingLayout();
     }
 
     private void initData() {
@@ -92,7 +88,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
             return;
         }
         saveUserAndPass(user, pass);
-        KDialogFragment.showDialog(getFragmentManager());
+        showLoading("");
         ApiUser.login(user, pass, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -101,7 +97,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
 
             @Override
             public void onError(int statusCode, String str) {
-                KDialogFragment.hiddenDialog(getFragmentManager());
+                hiddenLoad();
                 showSnack(mEtPassWord, str);
             }
         });
@@ -113,15 +109,21 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener,
     }
 
     @Override
-    public void onSuccess(UserInfo user) {
-        KDialogFragment.hiddenDialog(getFragmentManager());
-        AppApplication.getUserManager().setUserInfo(user);
-        mActivity.finish();
+    public void onGetError(String error) {
+        super.onGetError(error);
+        showSnack(mEtPassWord, error);
     }
 
     @Override
-    public void onError(String msg) {
-        KDialogFragment.hiddenDialog(getFragmentManager());
-        showSnack(mEtPassWord, msg);
+    public void onGetSuccess(BaseBean result) {
+        super.onGetSuccess(result);
+        AppApplication.getUserManager().setUserInfo((UserInfo) result);
+        mActivity.finish();
+
+        if (getArguments() != null) {
+            int toFragment = getArguments().getInt(TO_FRAGMENT);
+            AppApplication.startActivity(mActivity, toFragment, null);
+        }
     }
+
 }

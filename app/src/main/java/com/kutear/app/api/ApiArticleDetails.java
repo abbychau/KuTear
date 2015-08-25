@@ -1,5 +1,9 @@
 package com.kutear.app.api;
 
+import com.kutear.app.bean.Article;
+import com.kutear.app.callback.ICallBack;
+import com.kutear.app.callback.IGetCallBack;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -10,7 +14,7 @@ import org.jsoup.select.Elements;
  * 获取文章详情的接口
  */
 public class ApiArticleDetails extends BaseRequest {
-    public static void getArticleDetails(String url, final IArticleDetails callBack) {
+    public static void getArticleDetails(String url, final IGetCallBack callBack) {
         getRequest(url, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -22,7 +26,7 @@ public class ApiArticleDetails extends BaseRequest {
             @Override
             public void onError(int statusCode, String str) {
                 if (callBack != null) {
-                    callBack.onError(str);
+                    callBack.onGetError(str);
                 }
             }
         });
@@ -34,17 +38,13 @@ public class ApiArticleDetails extends BaseRequest {
      * @param element  文章内容
      * @param callBack 回调
      */
-    private static void parseArticle(Element element, IArticleDetails callBack) {
+    private static void parseArticle(Element element, IGetCallBack callBack) {
         if (element == null) {
-            callBack.onError("Sorry,文章解析出错");
+            callBack.onGetError("Sorry,文章解析出错");
             return;
         }
-        callBack.onSuccess(element.html());
-    }
-
-    public interface IArticleDetails {
-        void onSuccess(String str);
-
-        void onError(String str);
+        Article article = new Article();
+        article.setDetail(element.html());
+        callBack.onGetSuccess(article);
     }
 }

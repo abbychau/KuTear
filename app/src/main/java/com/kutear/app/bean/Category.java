@@ -2,6 +2,7 @@ package com.kutear.app.bean;
 
 /**
  * Created by kutear.guo on 2015/8/19.
+ * 归档分类 管理分类看{@link ManagerCategory}
  */
 public class Category extends BaseBean {
     private String name;

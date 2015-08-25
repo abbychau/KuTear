@@ -1,28 +1,25 @@
 package com.kutear.app.fragment;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.kutear.app.R;
 import com.kutear.app.api.ApiSiteManager;
-import com.kutear.app.api.ApiUser;
+import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.SiteInfo;
 
 /**
  * Created by kutear.guo on 2015/8/21.
  * 站点管理页面
  **/
-public class ManagerSiteFragment extends BaseManagerFragment implements ApiSiteManager.ISiteManager, View.OnClickListener {
+public class ManagerSiteFragment extends BaseNoBarFragment implements View.OnClickListener {
     private Button mBtnPost;
     private TextView mTvSiteName;
     private TextView mTvSiteAddress;
-    private TextView mTvSiteDesription;
+    private TextView mTvSiteDescription;
     private TextView mTvSiteKeyWord;
     private SiteInfo mInfo;
 
@@ -33,13 +30,14 @@ public class ManagerSiteFragment extends BaseManagerFragment implements ApiSiteM
         return fragment;
     }
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_manager_site, container, false);
+    protected View setContentView() {
+        View view = inflate(R.layout.fragment_manager_site);
         initView(view);
         hiddenInputMethod();
         doRequest();
+        showLoadingLayout();
         return view;
     }
 
@@ -51,7 +49,7 @@ public class ManagerSiteFragment extends BaseManagerFragment implements ApiSiteM
     protected void initView(View v) {
         mBtnPost = (Button) v.findViewById(R.id.manager_site_post);
         mTvSiteAddress = (TextView) v.findViewById(R.id.manager_site_address_url);
-        mTvSiteDesription = (TextView) v.findViewById(R.id.manager_site_description);
+        mTvSiteDescription = (TextView) v.findViewById(R.id.manager_site_description);
         mTvSiteName = (TextView) v.findViewById(R.id.manager_site_name);
         mTvSiteKeyWord = (TextView) v.findViewById(R.id.manager_site_keyword);
         mBtnPost.setOnClickListener(this);
@@ -61,34 +59,44 @@ public class ManagerSiteFragment extends BaseManagerFragment implements ApiSiteM
         ApiSiteManager.getSiteInfo(this);
     }
 
-    @Override
-    public void onSuccess(SiteInfo info) {
-        mInfo = info;
-        bindData();
-    }
-
-    @Override
-    public void onError(String msg) {
-
-    }
-
-    @Override
     protected void bindData() {
         if (mInfo != null) {
             mTvSiteName.setText(mInfo.getSiteName());
             mTvSiteKeyWord.setText(mInfo.getSiteKeyWord());
-            mTvSiteDesription.setText(mInfo.getSiteDescription());
+            mTvSiteDescription.setText(mInfo.getSiteDescription());
             mTvSiteAddress.setText(mInfo.getSiteAddress());
         }
     }
 
     @Override
     public void onClick(View v) {
+        showLoading("");
         mInfo.setSiteAddress(mTvSiteAddress.getText().toString());
-        mInfo.setSiteDescription(mTvSiteDesription.getText().toString());
+        mInfo.setSiteDescription(mTvSiteDescription.getText().toString());
         mInfo.setSiteKeyWord(mTvSiteKeyWord.getText().toString());
         mInfo.setSiteName(mTvSiteName.getText().toString());
-        ApiSiteManager.postSiteInfo(mInfo);
-        ApiSiteManager.getSiteInfo(this);
+        ApiSiteManager.postSiteInfo(mInfo, this);
+    }
+
+    @Override
+    public void onGetError(String error) {
+        super.onGetError(error);
+    }
+
+    @Override
+    public void onGetSuccess(BaseBean result) {
+        super.onGetSuccess(result);
+        mInfo = (SiteInfo) result;
+        bindData();
+    }
+
+    @Override
+    public void onPostError(String msg) {
+        super.onPostError(msg);
+    }
+
+    @Override
+    public void onPostSuccess(String msg) {
+        super.onPostSuccess(msg);
     }
 }

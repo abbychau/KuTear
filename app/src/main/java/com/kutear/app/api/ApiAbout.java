@@ -2,6 +2,9 @@ package com.kutear.app.api;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.bean.About;
+import com.kutear.app.callback.ICallBack;
+import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.utils.Constant;
 
 import org.jsoup.Jsoup;
@@ -13,13 +16,7 @@ import org.jsoup.nodes.Element;
  * 关于页面的请求
  */
 public class ApiAbout extends BaseRequest {
-    public interface IAbout {
-        void onSuccess(String string);
-
-        void onError(String string);
-    }
-
-    public static void getAbout(final IAbout callBack) {
+    public static void getAbout(final IGetCallBack callBack) {
         getRequest(Constant.URI_ABOUT, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -29,7 +26,7 @@ public class ApiAbout extends BaseRequest {
             @Override
             public void onError(int statusCode, String str) {
                 if (callBack != null) {
-                    callBack.onError(AppApplication.getKString(R.string.get_about_info_error));
+                    callBack.onGetError(AppApplication.getKString(R.string.get_about_info_error));
                 }
             }
         });
@@ -41,11 +38,13 @@ public class ApiAbout extends BaseRequest {
      * @param str      Doc
      * @param callBack 回调
      */
-    private static void parseHtml(String str, IAbout callBack) {
+    private static void parseHtml(String str, IGetCallBack callBack) {
         Document document = Jsoup.parse(str);
         Element element = document.getElementById("content");
         if (callBack != null && element != null) {
-            callBack.onSuccess(element.html());
+            About about = new About();
+            about.setContent(element.html());
+            callBack.onGetSuccess(about);
         }
     }
 }

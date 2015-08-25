@@ -1,12 +1,12 @@
 package com.kutear.app.api;
 
-import android.text.TextUtils;
-
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.Category;
 import com.kutear.app.bean.Tab;
+import com.kutear.app.callback.ICallBack;
+import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
 
 import org.jsoup.Jsoup;
@@ -25,30 +25,16 @@ public class ApiArchive extends BaseRequest {
 
     private static final String TAG = ApiArchive.class.getSimpleName();
     private static String mResult;
+    private static final int TAB = 0x001;
+    private static final int ARCHIVE = 0x002;
+    private static final int CATEGORY = 0x003;
 
-    public interface IArchive {
-        void onSuccess(List<Archive> lists);
 
-        void onError(String msg);
+    public static void getArchive(final IGetListCallBack callBack) {
+        doRequest(ARCHIVE, callBack);
     }
 
-    public interface ICategory {
-        void onSuccess(List<Category> lists);
-
-        void onError(String msg);
-    }
-
-    public interface ITab {
-        void onSuccess(List<Tab> lists);
-
-        void onError(String msg);
-    }
-
-    public static void getArchive(final IArchive callBack) {
-        doRequest(callBack);
-    }
-
-    private static void parseArchive(final IArchive callBack) {
+    private static void parseArchive(final IGetListCallBack callBack) {
         List<Archive> lists = new ArrayList<>();
         Document document = Jsoup.parse(mResult);
         Element element = document.getElementById("archives");
@@ -75,42 +61,40 @@ public class ApiArchive extends BaseRequest {
     /**
      * 三个页面的数据是一致的,只需要同样的数据做不同的处理
      *
-     * @param o interface
+     * @param callBack interface
      */
-    private static void doRequest(final Object o) {
+    private static void doRequest(final int type, final IGetListCallBack callBack) {
         getRequest(Constant.URI_ARCHIVE, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
-                if (statusCode == ICallBack.RESPONE_OK) {
+                if (statusCode == ICallBack.RESPONSE_OK) {
                     mResult = str;
-                    if (o instanceof IArchive) {
-                        parseArchive((IArchive) o);
-                    } else if (o instanceof ITab) {
-                        parseTabs((ITab) o);
-                    } else if (o instanceof ICategory) {
-                        parseCategory((ICategory) o);
+                    switch (type) {
+                        case TAB:
+                            parseTabs(callBack);
+                            break;
+                        case CATEGORY:
+                            parseCategory(callBack);
+                            break;
+                        case ARCHIVE:
+                            parseArchive(callBack);
+                            break;
                     }
                 }
             }
 
             @Override
             public void onError(int statusCode, String str) {
-                if (o instanceof IArchive) {
-                    ((IArchive) o).onError(str + "");
-                } else if (o instanceof ITab) {
-                    ((ITab) o).onError(str + "");
-                } else if (o instanceof ICategory) {
-                    ((ICategory) o).onError(str + "");
-                }
+                callBack.onError("" + str);
             }
         });
     }
 
-    public static void getTabs(ITab callBack) {
-        doRequest(callBack);
+    public static void getTabs(IGetListCallBack callBack) {
+        doRequest(TAB, callBack);
     }
 
-    private static void parseTabs(ITab callBack) {
+    private static void parseTabs(IGetListCallBack callBack) {
         List<Tab> lists = new ArrayList<>();
         Document document = Jsoup.parse(mResult);
         Element element = document.getElementById("tags");
@@ -136,11 +120,11 @@ public class ApiArchive extends BaseRequest {
         callBack.onError(AppApplication.getKString(R.string.can_not_read_tab_list));
     }
 
-    public static void getCategory(ICategory callBack) {
-        doRequest(callBack);
+    public static void getCategory(IGetListCallBack callBack) {
+        doRequest(CATEGORY, callBack);
     }
 
-    private static void parseCategory(ICategory callBack) {
+    private static void parseCategory(IGetListCallBack callBack) {
         List<Category> lists = new ArrayList<>();
         Document document = Jsoup.parse(mResult);
         Element element = document.getElementById("category");

@@ -4,6 +4,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.kutear.app.AppApplication;
+import com.kutear.app.callback.ICallBack;
 import com.kutear.app.netutils.KStringRequest;
 import com.kutear.app.utils.L;
 
@@ -28,17 +29,17 @@ public class BaseRequest {
         KStringRequest request = new KStringRequest(requestType, url, params, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
-                L.v(TAG, "请求成功(URL:" + url + "):" + s);
+                L.v(TAG, "请求成功(URL:" + url + "):");
                 if (callBack != null) {
-                    callBack.onSuccess(ICallBack.RESPONE_OK, s);
+                    callBack.onSuccess(ICallBack.RESPONSE_OK, s);
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
-                L.v(TAG, "请求失败(URL:" + url + "):" + volleyError.getMessage()+" "+volleyError.toString());
+                L.v(TAG, "请求失败(URL:" + url + "):");
                 if (callBack != null) {
-                    callBack.onError(ICallBack.RESPONE_FAILED, volleyError.getMessage());
+                    callBack.onError(ICallBack.RESPONSE_FAILED, volleyError.getMessage());
                 }
             }
         });

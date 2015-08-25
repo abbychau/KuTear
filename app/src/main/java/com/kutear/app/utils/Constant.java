@@ -1,8 +1,10 @@
 package com.kutear.app.utils;
 
+import java.net.URI;
+
 /**
  * Created by kutear.guo on 2015/8/4.
- *
+ * <p/>
  * 常量
  */
 public class Constant {
@@ -30,6 +32,12 @@ public class Constant {
     public static final String URI_USER_CENTER = URI_HOST + "/admin/profile.php";
     //基本设置
     public static final String URI_BASE_SETTING = URI_HOST + "/admin/options-general.php";
+    //阅读设置
+    public static final String URI_READ_SETTING = URI_HOST + "/admin/options-reading.php";
+    //链接设置
+    public static final String URI_LINKS_SETTING = URI_HOST + "/admin/options-permalink.php";
+    //分类管理
+    public static final String URI_CATEGORY_MANAGER = URI_HOST + "/admin/manage-categories.php";
 
     /*************************************
      * 广播 相关

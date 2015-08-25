@@ -13,14 +13,15 @@ import com.android.volley.toolbox.NetworkImageView;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.api.ApiUser;
+import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.UserInfo;
 
 /**
  * Created by kutear.guo on 2015/8/19.
  * 用户中心
  */
-public class UserCenterFragment extends BaseFragment implements ApiUser.IUserInfo {
-    private static final String TAG = UserCenterFragment.class.getSimpleName();
+public class UserCenterToolBarFragment extends BaseFragment {
+    private static final String TAG = UserCenterToolBarFragment.class.getSimpleName();
     private NetworkImageView mImageView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private UserInfo mUserInfo;
@@ -28,9 +29,9 @@ public class UserCenterFragment extends BaseFragment implements ApiUser.IUserInf
     private TextView mMail;
     private TextView mUserName;
 
-    public static UserCenterFragment newInstance() {
+    public static UserCenterToolBarFragment newInstance() {
         Bundle args = new Bundle();
-        UserCenterFragment fragment = new UserCenterFragment();
+        UserCenterToolBarFragment fragment = new UserCenterToolBarFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -47,7 +48,7 @@ public class UserCenterFragment extends BaseFragment implements ApiUser.IUserInf
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_user_center, container, false);
+        View view = inflater.inflate(R.layout.fragment_user_center,container,false);
         initView(view);
         return view;
     }
@@ -68,14 +69,15 @@ public class UserCenterFragment extends BaseFragment implements ApiUser.IUserInf
     }
 
     @Override
-    public void onSuccess(UserInfo user) {
-        this.mUserInfo = user;
+    public void onGetSuccess(BaseBean result) {
+        super.onGetSuccess(result);
+        this.mUserInfo = (UserInfo) result;
         bindData();
     }
 
     @Override
-    public void onError(String msg) {
-
+    public void onGetError(String error) {
+        super.onGetError(error);
     }
 
     private void bindData() {

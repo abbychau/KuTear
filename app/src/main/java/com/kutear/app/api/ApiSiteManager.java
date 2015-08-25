@@ -2,7 +2,11 @@ package com.kutear.app.api;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.SiteInfo;
+import com.kutear.app.callback.ICallBack;
+import com.kutear.app.callback.IGetCallBack;
+import com.kutear.app.callback.IPostCallBack;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
 
@@ -15,17 +19,13 @@ import java.util.HashMap;
 
 /**
  * Created by kutear.guo on 2015/8/21.
+ * 站点管理
  */
 public class ApiSiteManager extends ApiAdmin {
     private static final String TAG = ApiSiteManager.class.getSimpleName();
 
-    public interface ISiteManager {
-        void onSuccess(SiteInfo info);
 
-        void onError(String msg);
-    }
-
-    public static void getSiteInfo(final ISiteManager callBack) {
+    public static void getSiteInfo(final IGetCallBack callBack) {
         getRequest(Constant.URI_BASE_SETTING, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -35,7 +35,7 @@ public class ApiSiteManager extends ApiAdmin {
             @Override
             public void onError(int statusCode, String str) {
                 if (callBack != null) {
-                    callBack.onError(AppApplication.getKString(R.string.can_not_get_site_info));
+                    callBack.onGetError(AppApplication.getKString(R.string.can_not_get_site_info));
                 }
             }
         });
@@ -47,7 +47,7 @@ public class ApiSiteManager extends ApiAdmin {
      * @param str      doc
      * @param callBack 回调
      */
-    private static void praseHtml(String str, ISiteManager callBack) {
+    private static void praseHtml(String str, IGetCallBack callBack) {
         SiteInfo info = new SiteInfo();
         Document document = Jsoup.parse(str);
         Elements elements = document.getElementsByTag("form");
@@ -72,7 +72,7 @@ public class ApiSiteManager extends ApiAdmin {
             info.setSiteAddress(addressElement.attr("value"));
         }
         if (callBack != null) {
-            callBack.onSuccess(info);
+            callBack.onGetSuccess(info);
         }
     }
 
@@ -89,28 +89,46 @@ public class ApiSiteManager extends ApiAdmin {
      * attachmentTypes[]=@other@&
      * attachmentTypesOther=mp4,cpp,java,h
      */
-    public static void postSiteInfo(SiteInfo info) {
-        HashMap<String, String> params = new HashMap<>();
-        params.put("title", info.getSiteName());
-        params.put("siteUrl", info.getSiteAddress());
-        params.put("description", info.getSiteDescription());
-        params.put("keywords", info.getSiteKeyWord());
-        params.put("allowRegister", "0");
-        params.put("timezone", "28800");
-        params.put("attachmentTypes[]", "@image@");
-        params.put("attachmentTypes[]", "@media@");
-        params.put("attachmentTypes[]", "@doc@");
-        params.put("attachmentTypes[]", "@other@");
-        params.put("attachmentTypesOther", "mp4,cpp,java,h");
-        postRequest(info.getSitePostUrl(), params, new ICallBack() {
+    public static void postSiteInfo(final SiteInfo custominfo, final IPostCallBack callBack) {
+        getSiteInfo(new IGetCallBack() {
             @Override
-            public void onSuccess(int statusCode, String str) {
-                L.v(TAG, str);
+            public void onGetSuccess(BaseBean result) {
+                SiteInfo info = (SiteInfo) result;
+                HashMap<String, String> params = new HashMap<>();
+                params.put("title", custominfo.getSiteName());
+                params.put("siteUrl", custominfo.getSiteAddress());
+                params.put("description", custominfo.getSiteDescription());
+                params.put("keywords", custominfo.getSiteKeyWord());
+                params.put("allowRegister", "0");
+                params.put("timezone", "28800");
+                params.put("attachmentTypes[]", "@image@");
+                params.put("attachmentTypes[]", "@media@");
+                params.put("attachmentTypes[]", "@doc@");
+                params.put("attachmentTypes[]", "@other@");
+                params.put("attachmentTypesOther", "mp4,cpp,java,h");
+                postRequest(info.getSitePostUrl(), params, new ICallBack() {
+                    @Override
+                    public void onSuccess(int statusCode, String str) {
+                        L.v(TAG, str);
+                        if (callBack != null) {
+                            callBack.onPostSuccess(str);
+                        }
+                    }
+
+                    @Override
+                    public void onError(int statusCode, String str) {
+                        if (callBack != null) {
+                            callBack.onPostError(str);
+                        }
+                    }
+                });
             }
 
             @Override
-            public void onError(int statusCode, String str) {
-
+            public void onGetError(String msg) {
+                if (callBack != null) {
+                    callBack.onPostError(msg);
+                }
             }
         });
     }
