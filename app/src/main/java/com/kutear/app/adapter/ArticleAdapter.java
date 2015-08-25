@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by kutear.guo on 2015/8/16.
+ * 文章适配
  */
 public class ArticleAdapter extends RecyclerView.Adapter<ArticleAdapter.ArticleViewHolder> {
 
