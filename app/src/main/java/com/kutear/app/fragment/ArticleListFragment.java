@@ -2,6 +2,7 @@ package com.kutear.app.fragment;
 
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -67,6 +68,7 @@ public class ArticleListFragment extends BaseToolBarFragment implements IGetList
     @Override
     protected void initView(View v) {
         mRecycleView = (RecyclerView) v.findViewById(R.id.recycle_layout);
+        mRecycleView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (mTab != null) {
             mActivity.setTitle(mTab.getName());
         } else if (mCategory != null) {
@@ -81,17 +83,9 @@ public class ArticleListFragment extends BaseToolBarFragment implements IGetList
     public void onSuccess(List<? extends BaseBean> lists) {
         ArrayList<Article> list = (ArrayList<Article>) lists;
         list.remove(0);
-        for (Article ar : list) {
-            L.v(TAG, ar.toString());
-        }
-
         mLists.addAll(getNotRepeatList(list));
         mAdapter.notifyDataSetChanged();
         hiddenLoadingLayout();
-        L.v(TAG,"------------------"+mLists.size());
-        for (Article ar : mLists) {
-            L.v(TAG, ar.toString());
-        }
     }
 
     @Override
@@ -101,8 +95,6 @@ public class ArticleListFragment extends BaseToolBarFragment implements IGetList
             Snackbar.make(mRecycleView, msg, Snackbar.LENGTH_SHORT).show();
         }
     }
-
-
 
 
     private List<Article> getNotRepeatList(List<Article> list) {
