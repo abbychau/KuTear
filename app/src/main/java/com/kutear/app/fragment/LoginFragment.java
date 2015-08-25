@@ -15,6 +15,7 @@ import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.bean.UserInfo;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;
 
 
@@ -23,6 +24,7 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
     private EditText mEtUserName;
     private EditText mEtPassWord;
     private TextView mTvForgetPass;
+    private static final String TAG = LoginFragment.class.getSimpleName();
     public static final String TO_FRAGMENT = "to_fragment";
 
     public static LoginFragment newInstance(Bundle bundle) {
@@ -92,6 +94,7 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
         ApiUser.login(user, pass, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
+                L.v(TAG, str);
                 ApiUser.getUserInfo(LoginFragment.this);
             }
 
@@ -121,8 +124,10 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
         mActivity.finish();
 
         if (getArguments() != null) {
-            int toFragment = getArguments().getInt(TO_FRAGMENT);
-            AppApplication.startActivity(mActivity, toFragment, null);
+            int toFragment = getArguments().getInt(TO_FRAGMENT, 0);
+            if (toFragment != 0) {
+                AppApplication.startActivity(mActivity, toFragment, null);
+            }
         }
     }
 

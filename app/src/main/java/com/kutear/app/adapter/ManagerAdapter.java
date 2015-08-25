@@ -8,8 +8,10 @@ import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.AboutFragment;
 import com.kutear.app.fragment.BaseNoBarFragment;
+import com.kutear.app.fragment.ManagerArticleFragment;
 import com.kutear.app.fragment.ManagerCategoryFragment;
 import com.kutear.app.fragment.ManagerLinkFragment;
+import com.kutear.app.fragment.ManagerPagerFragment;
 import com.kutear.app.fragment.ManagerReadFragment;
 import com.kutear.app.fragment.ManagerSiteFragment;
 
@@ -28,8 +30,10 @@ public class ManagerAdapter extends FragmentPagerAdapter {
         super(fm);
         fragments.add(ManagerSiteFragment.newInstance());
         fragments.add(ManagerReadFragment.newInstance());
-        //fragments.add(ManagerLinkFragment.newInstance());
-        //fragments.add(ManagerCategoryFragment.newInstance());
+        fragments.add(ManagerLinkFragment.newInstance());
+        fragments.add(ManagerCategoryFragment.newInstance());
+        fragments.add(ManagerPagerFragment.newInstance());
+        fragments.add(ManagerArticleFragment.newInstance());
     }
 
     @Override

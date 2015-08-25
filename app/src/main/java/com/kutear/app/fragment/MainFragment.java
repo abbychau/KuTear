@@ -43,7 +43,6 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
         View mBodyView = inflate(R.layout.fragment_main);
         initView(mBodyView);
         bindData();
-        showLoadingLayout();
         return mBodyView;
     }
 

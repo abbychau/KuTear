@@ -17,6 +17,7 @@ public class Constant {
     /*************************************
      * URL 相关
      *************************************/
+//    public static final String URI_HOST = "http://192.168.6.121/kutear";
     public static final String URI_HOST = "http://www.kutear.com";
     //登陆接口 post
     public static final String URI_ADMIN = URI_HOST + "/admin";
@@ -27,7 +28,7 @@ public class Constant {
     //关于接口
     public static final String URI_ABOUT = URI_HOST + "/index.php/about.html";
     //文章列表接口
-    public static final String URI_ARTICLE = URI_HOST + "/index.php/page/%d/";
+    public static final String URI_ARTICLE = URI_HOST + "/index.php/page/1/";
     //用户信息主页
     public static final String URI_USER_CENTER = URI_HOST + "/admin/profile.php";
     //基本设置
@@ -66,4 +67,5 @@ public class Constant {
     public static final int ACTIVITY_USER_CENTER = 0x00006;
     public static final int ACTIVITY_SETTING = 0x00007;
     public static final int ACTIVITY_ABOUT = 0x00008;
+    public static final int ACTIVITY_ARTICLE_LIST = 0x00009;
 }

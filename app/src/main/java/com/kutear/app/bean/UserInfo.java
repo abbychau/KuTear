@@ -53,6 +53,9 @@ public class UserInfo extends BaseBean {
         this.eMail = eMail;
     }
 
+    public UserInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -60,18 +63,13 @@ public class UserInfo extends BaseBean {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
         dest.writeString(this.nickName);
         dest.writeString(this.avater);
         dest.writeString(this.mainPager);
         dest.writeString(this.eMail);
     }
 
-    public UserInfo() {
-    }
-
     protected UserInfo(Parcel in) {
-        super(in);
         this.nickName = in.readString();
         this.avater = in.readString();
         this.mainPager = in.readString();

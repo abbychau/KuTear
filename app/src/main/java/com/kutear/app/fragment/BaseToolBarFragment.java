@@ -84,6 +84,7 @@ public abstract class BaseToolBarFragment extends BaseFragment {
             contentLayout.removeAllViews();
             contentLayout.addView(view);
         }
+        showLoadingLayout();
         return bodyView;
     }
 

@@ -37,7 +37,6 @@ public class ManagerSiteFragment extends BaseNoBarFragment implements View.OnCli
         initView(view);
         hiddenInputMethod();
         doRequest();
-        showLoadingLayout();
         return view;
     }
 

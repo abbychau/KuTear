@@ -8,6 +8,7 @@ import com.kutear.app.bean.UserInfo;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;
 
 import org.jsoup.Jsoup;
@@ -112,11 +113,16 @@ public class ApiUser extends BaseRequest {
         if (TextUtils.equals(title, AppApplication.getKString(R.string.web_title))) {
             if (callBack != null) {
                 callBack.onSuccess(ICallBack.RESPONSE_OK, AppApplication.getKString(R.string.login_success));
+                return;
             }
         } else if (title.startsWith(AppApplication.getKString(R.string.web_login_title))) {
             if (callBack != null) {
                 callBack.onError(ICallBack.RESPONSE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
+                return;
             }
+        }
+        if (callBack != null) {
+            callBack.onError(ICallBack.RESPONSE_FAILED, AppApplication.getKString(R.string.username_or_password_is_error));
         }
     }
 
@@ -133,6 +139,7 @@ public class ApiUser extends BaseRequest {
         postRequest(url, params, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
+                L.v(TAG, "Web Title:" + str);
                 parseHtml(str, callBack);
             }
 

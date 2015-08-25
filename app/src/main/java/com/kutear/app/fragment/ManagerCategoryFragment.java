@@ -36,8 +36,6 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
     @Override
     protected void initView(View v) {
         mLvLists = (ListView) v.findViewById(R.id.manager_category_list);
-        loadingLayout = (ViewGroup) v.findViewById(R.id.loading_layout);
-        contentLayout = (ViewGroup) v.findViewById(R.id.content_layout);
         ApiCategoryManager.getCategory(this);
         mAdapter = new ManagerCategoryAdapter(mLists, mActivity);
         mLvLists.setAdapter(mAdapter);
@@ -57,10 +55,7 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
         mLists.clear();
         mLists.addAll((ArrayList<ManagerCategory>) lists);
         mAdapter.notifyDataSetChanged();
-        if (loadingLayout != null) {
-            loadingLayout.setVisibility(View.GONE);
-            contentLayout.setVisibility(View.VISIBLE);
-        }
+        hiddenLoadingLayout();
     }
 
     @Override

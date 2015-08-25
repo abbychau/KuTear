@@ -1,10 +1,8 @@
 package com.kutear.app.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -16,7 +14,6 @@ import com.kutear.app.bean.BaseBean;
  * Fragment
  */
 public abstract class BaseNoBarFragment extends BaseFragment {
-    protected View bodyView;
     protected ViewGroup loadingLayout;
     protected ViewGroup contentLayout;
 
@@ -47,7 +44,7 @@ public abstract class BaseNoBarFragment extends BaseFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        bodyView = inflater.inflate(R.layout.fragment_nobar_base, container, false);
+        View bodyView = inflater.inflate(R.layout.fragment_nobar_base, container, false);
         loadingLayout = (ViewGroup) bodyView.findViewById(R.id.loading_layout);
         contentLayout = (ViewGroup) bodyView.findViewById(R.id.content_layout);
         View view = setContentView();
@@ -58,9 +55,12 @@ public abstract class BaseNoBarFragment extends BaseFragment {
             if (view.getParent() != null) {
                 ((ViewGroup) view.getParent()).removeAllViews();
             }
-            contentLayout.removeAllViews();
-            contentLayout.addView(view);
+            if (contentLayout != null) {
+                contentLayout.removeAllViews();
+                contentLayout.addView(view);
+            }
         }
+        showLoadingLayout();
         return bodyView;
     }
 

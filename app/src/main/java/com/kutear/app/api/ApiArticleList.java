@@ -30,7 +30,13 @@ public class ApiArticleList extends BaseRequest {
      * @param callBack 回调
      */
     public static void getArticle(int pager, final IGetListCallBack callBack) {
-        getRequest(String.format(Constant.URI_ARTICLE, pager), new ICallBack() {
+        getArticle(Constant.URI_ARTICLE, pager, callBack);
+    }
+
+
+    public static void getArticle(String url, int pager, final IGetListCallBack callBack) {
+        // TODO: 2015/8/25 对于pager的url重组
+        getRequest(url, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
                 parseArticle(str, callBack);

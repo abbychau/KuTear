@@ -55,6 +55,7 @@
     <string name="pager_path">页面路径</string>
     <string name="article_path">文章链接</string>
     <string name="get_category_error">获取分类失败</string>
+    <string name="no_more_data">没有新数据啦</string>
     <array name="manager_title">
         <item>站点管理</item>
         <item>阅读设置</item>

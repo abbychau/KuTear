@@ -1,5 +1,7 @@
 package com.kutear.app.bean;
 
+import android.os.Parcel;
+
 /**
  * Created by kutear.guo on 2015/8/21.
  */
@@ -49,4 +51,39 @@ public class SiteInfo extends BaseBean {
     public void setSiteAddress(String siteAddress) {
         this.siteAddress = siteAddress;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.siteName);
+        dest.writeString(this.siteDescription);
+        dest.writeString(this.siteKeyWord);
+        dest.writeString(this.siteAddress);
+        dest.writeString(this.sitePostUrl);
+    }
+
+    public SiteInfo() {
+    }
+
+    protected SiteInfo(Parcel in) {
+        this.siteName = in.readString();
+        this.siteDescription = in.readString();
+        this.siteKeyWord = in.readString();
+        this.siteAddress = in.readString();
+        this.sitePostUrl = in.readString();
+    }
+
+    public static final Creator<SiteInfo> CREATOR = new Creator<SiteInfo>() {
+        public SiteInfo createFromParcel(Parcel source) {
+            return new SiteInfo(source);
+        }
+
+        public SiteInfo[] newArray(int size) {
+            return new SiteInfo[size];
+        }
+    };
 }

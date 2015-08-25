@@ -40,8 +40,6 @@ public class ManagerReadFragment extends BaseNoBarFragment implements View.OnCli
         mTvDateFormat = (TextView) v.findViewById(R.id.manager_read_article_date_format);
         mTvListsSize = (TextView) v.findViewById(R.id.manager_read_article_list_count);
         mTvPageSize = (TextView) v.findViewById(R.id.manager_read_each_pager_article_count);
-        loadingLayout = (ViewGroup) v.findViewById(R.id.loading_layout);
-        contentLayout = (ViewGroup) v.findViewById(R.id.content_layout);
         v.findViewById(R.id.manager_read_tips).setOnClickListener(this);
         v.findViewById(R.id.manager_read_post).setOnClickListener(this);
     }

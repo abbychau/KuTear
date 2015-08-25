@@ -47,13 +47,11 @@ public class Archive extends BaseBean{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
         dest.writeString(this.title);
         dest.writeString(this.url);
     }
 
     protected Archive(Parcel in) {
-        super(in);
         this.title = in.readString();
         this.url = in.readString();
     }

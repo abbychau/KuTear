@@ -3,12 +3,14 @@ package com.kutear.app.fragment;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.kutear.app.R;
 import com.kutear.app.activity.BaseActivity;
@@ -22,11 +24,23 @@ import com.kutear.app.callback.IPostCallBack;
  */
 public abstract class BaseFragment extends Fragment implements IGetCallBack, IPostCallBack {
     protected BaseActivity mActivity;
+    protected LayoutInflater inflater;
+    protected ViewGroup container;
+    protected Bundle savedInstanceState;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = (BaseActivity) activity;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        this.inflater = inflater;
+        this.container = container;
+        this.savedInstanceState = savedInstanceState;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -78,8 +92,12 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
 
 
     protected View inflate(int res) {
-        LayoutInflater inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        return inflater.inflate(res, null, false);
+        if (inflater != null) {
+            return inflater.inflate(res, container, false);
+        } else {
+            inflater = (LayoutInflater) mActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            return inflater.inflate(res, container, false);
+        }
     }
 
 
@@ -95,8 +113,6 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 
 
 }

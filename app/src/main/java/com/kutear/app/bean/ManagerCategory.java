@@ -73,6 +73,9 @@ public class ManagerCategory extends BaseBean {
                 '}';
     }
 
+    public ManagerCategory() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -80,7 +83,6 @@ public class ManagerCategory extends BaseBean {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        super.writeToParcel(dest, flags);
         dest.writeInt(this.index);
         dest.writeString(this.categoryName);
         dest.writeString(this.categoryUrl);
@@ -89,11 +91,7 @@ public class ManagerCategory extends BaseBean {
         dest.writeInt(this.articleCount);
     }
 
-    public ManagerCategory() {
-    }
-
     protected ManagerCategory(Parcel in) {
-        super(in);
         this.index = in.readInt();
         this.categoryName = in.readString();
         this.categoryUrl = in.readString();
