@@ -20,6 +20,7 @@ import com.kutear.app.R;
 import com.kutear.app.adapter.DialogListAdapter;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kutear.guo on 2015/8/16.
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 public class KDialogFragment extends DialogFragment {
     public static final String TAG = KDialogFragment.class.getSimpleName();
     public static final String DIALOG_TYPE = "type";
+    public static final String MSG_KEY = "msg";
+    public static final String LIST_KEY = "list";
     public static final int DIALOG_LOADING = 0x0000;
     public static final int DIALOG_LIST = 0x0001;    //显示列表
     private int mDialogType;
@@ -36,7 +39,9 @@ public class KDialogFragment extends DialogFragment {
     private LinearLayout mListLayout;
     private TextView mLoadText;
     private ListView mListView;
+    private Bundle mBundle;
     private static Activity mActivity;
+    private AdapterView.OnItemClickListener mListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -44,8 +49,10 @@ public class KDialogFragment extends DialogFragment {
         this.mActivity = activity;
     }
 
-    private static KDialogFragment newInstance(int type) {
-        Bundle args = new Bundle();
+    private static KDialogFragment newInstance(Bundle args, int type) {
+        if (args == null) {
+            args = new Bundle();
+        }
         args.putInt(DIALOG_TYPE, type);
         KDialogFragment fragment = new KDialogFragment();
         fragment.setArguments(args);
@@ -53,16 +60,19 @@ public class KDialogFragment extends DialogFragment {
     }
 
     public static void showDialog(FragmentManager manager, String msg) {
-        KDialogFragment dialogFragment = newInstance(DIALOG_LOADING);
+        Bundle bundle = new Bundle();
+        bundle.putString(MSG_KEY, msg);
+        KDialogFragment dialogFragment = newInstance(bundle, DIALOG_LOADING);
         dialogFragment.showLoading(msg);
         dialogFragment.show(manager, TAG);
     }
 
-    public static void showListDialog(FragmentManager manager, ArrayList<String> lists, AdapterView.OnItemClickListener listener) {
-        KDialogFragment dialogFragment = newInstance(DIALOG_LIST);
-        BaseAdapter adapter = new DialogListAdapter(mActivity, null, lists);
-        dialogFragment.showList(adapter, listener);
-        dialogFragment.show(manager,TAG);
+    public static void showListDialog(FragmentManager manager, String[] lists, AdapterView.OnItemClickListener listener) {
+        Bundle bundle = new Bundle();
+        bundle.putStringArray(LIST_KEY, lists);
+        KDialogFragment dialogFragment = newInstance(bundle, DIALOG_LIST);
+        dialogFragment.setOnItemClickListener(listener);
+        dialogFragment.show(manager, TAG);
     }
 
     public static void hiddenDialog(FragmentManager manager) {
@@ -83,15 +93,30 @@ public class KDialogFragment extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        Bundle bundle = getArguments();
+        mBundle = getArguments();
         getDialog().requestWindowFeature(Window.FEATURE_NO_TITLE);
-        mDialogType = bundle.getInt(DIALOG_TYPE);
+        mDialogType = mBundle.getInt(DIALOG_TYPE);
         if (mDialogType == DIALOG_LOADING) {
             getDialog().setCanceledOnTouchOutside(false);
         }
         mBodyView = inflater.inflate(R.layout.fragment_dialog, container, false);
         initView();
+        showView();
         return mBodyView;
+    }
+
+    private void showView() {
+        switch (mDialogType) {
+            case DIALOG_LIST:
+                String[] lists = mBundle.getStringArray(LIST_KEY);
+                BaseAdapter adapter = new DialogListAdapter(mActivity, null, lists);
+                showList(adapter, mListener);
+                break;
+            case DIALOG_LOADING:
+                String msg = mBundle.getString(MSG_KEY);
+                showLoading(msg);
+                break;
+        }
     }
 
     private void initView() {
@@ -100,6 +125,13 @@ public class KDialogFragment extends DialogFragment {
             mLoadText = (TextView) mBodyView.findViewById(R.id.dialog_loading_text);
             mListView = (ListView) mBodyView.findViewById(R.id.dialog_list);
             mListLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_list_layout);
+        }
+    }
+
+    private void setOnItemClickListener(AdapterView.OnItemClickListener listener) {
+        this.mListener = listener;
+        if (mListView != null) {
+            mListView.setOnItemClickListener(mListener);
         }
     }
 

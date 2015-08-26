@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_list_item_bg">
 
     <ImageView
         android:id="@+id/dialog_list_item_icon"
@@ -15,9 +16,11 @@
         android:layout_height="40dp"
         android:layout_toRightOf="@id/dialog_list_item_icon"
         android:gravity="center_vertical"
-        android:text="AAAA" />
+        android:paddingLeft="@dimen/ui_activity_horizontal_margin"
+        android:textSize="@dimen/text_login_btn_size" />
 
     <View
+        android:id="@+id/dialog_list_divider"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ui_list_divider_small"
         android:layout_alignParentBottom="true"

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.kutear.app.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,10 +19,10 @@ import java.util.List;
  */
 public class DialogListAdapter extends BaseAdapter {
     private Context mContext;
-    private List<Integer> iconList;
-    private List<String> stringList;
+    private int[] iconList;
+    private String[] stringList;
 
-    public DialogListAdapter(Context context, List<Integer> icons, List<String> strings) {
+    public DialogListAdapter(Context context, int[] icons, String[] strings) {
         this.iconList = icons;
         this.stringList = strings;
         this.mContext = context;
@@ -29,12 +30,12 @@ public class DialogListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return stringList.size();
+        return stringList.length;
     }
 
     @Override
     public Object getItem(int position) {
-        return stringList.get(position);
+        return stringList[position];
     }
 
     @Override
@@ -50,23 +51,33 @@ public class DialogListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mContext).inflate(R.layout.dialog_list_item, null);
             holder.mIcon = (ImageView) convertView.findViewById(R.id.dialog_list_item_icon);
             holder.mTitle = (TextView) convertView.findViewById(R.id.dialog_list_item_text);
+            holder.mDivider = convertView.findViewById(R.id.dialog_list_divider);
+            convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
         }
-        holder.bindData(iconList.get(position), stringList.get(position));
-        return null;
+        holder.bindData(iconList, stringList, position);
+        return convertView;
     }
 
     private static class ViewHolder {
         public TextView mTitle;
         public ImageView mIcon;
+        public View mDivider;
 
-        public void bindData(int icon, String msg) {
-            mTitle.setText(msg);
-            if (icon == 0) {
-                mIcon.setVisibility(View.GONE);
+        public void bindData(int[] icons, String[] strings, int position) {
+            if (icons != null && icons.length > position) {
+                mIcon.setImageResource(icons[position]);
             } else {
-                mIcon.setImageResource(icon);
+                mIcon.setVisibility(View.GONE);
+            }
+            if (strings != null && strings.length > position) {
+                mTitle.setText(strings[position]);
+                if (position == strings.length - 1) {
+                    mDivider.setVisibility(View.GONE);
+                } else {
+                    mDivider.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

@@ -26,6 +26,7 @@ import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.Article;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetCallBack;
+import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -60,7 +61,7 @@ public class DetailsFragment extends BaseFragment implements IGetCallBack {
         initView(mBodyView);
         bindData();
         loadDefaultBackground();
-        showLoading("加载中");
+        showLoading(mActivity.getString(R.string.loading));
         return mBodyView;
     }
 

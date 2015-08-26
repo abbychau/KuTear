@@ -13,6 +13,7 @@ import com.kutear.app.bean.ManagerCategory;
 import com.kutear.app.callback.IGetListCallBack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -70,13 +71,43 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        // TODO: 2015/8/25 上下文菜单
-        ArrayList<String> lists = new ArrayList<>();
-        lists.add("AAAAAAAAAAAA");
-        lists.add("BBBBBBBBBBBB");
-        lists.add("CCCCCCCCCCCC");
-        lists.add("DDDDDDDDDDDD");
-        KDialogFragment.showListDialog(getFragmentManager(), lists, this);
+        KDialogFragment.showListDialog(getFragmentManager(), mActivity.getResources().getStringArray(R.array.category_option), mDialogListener);
+        clickPosition = position;
         return false;
     }
+
+    private int clickPosition;
+    private AdapterView.OnItemClickListener mDialogListener = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            // TODO: 2015/8/26 操作响应
+            KDialogFragment.hiddenDialog(getFragmentManager());
+            switch (position) {
+                case 0://删除
+                    deleteCategory();
+                    break;
+                case 1://修改
+                    modifyCategory();
+                    break;
+                case 2://取消
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void deleteCategory() {
+
+    }
+
+    private void modifyCategory() {
+
+    }
+
+    private void addCategory() {
+
+    }
+
+
 }
