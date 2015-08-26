@@ -19,7 +19,7 @@ import java.util.List;
  * Created by kutear.guo on 2015/8/24.
  * 分类管理页面
  */
-public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetListCallBack, AdapterView.OnItemClickListener {
+public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetListCallBack, AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener {
     private static final String TAG = ManagerCategoryFragment.class.getSimpleName();
     private ListView mLvLists;
     private ManagerCategoryAdapter mAdapter;
@@ -39,6 +39,7 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
         mAdapter = new ManagerCategoryAdapter(mLists, mActivity);
         mLvLists.setAdapter(mAdapter);
         mLvLists.setOnItemClickListener(this);
+        mLvLists.setOnItemLongClickListener(this);
     }
 
 
@@ -65,5 +66,17 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+        // TODO: 2015/8/25 上下文菜单
+        ArrayList<String> lists = new ArrayList<>();
+        lists.add("AAAAAAAAAAAA");
+        lists.add("BBBBBBBBBBBB");
+        lists.add("CCCCCCCCCCCC");
+        lists.add("DDDDDDDDDDDD");
+        KDialogFragment.showListDialog(getFragmentManager(), lists, this);
+        return false;
     }
 }

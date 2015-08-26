@@ -41,6 +41,6 @@
     <View
         android:id="@+id/manager_category_item_line"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_division_height"
+        android:layout_height="@dimen/ui_divider_height"
         android:background="@color/gray_300" />
 </LinearLayout>

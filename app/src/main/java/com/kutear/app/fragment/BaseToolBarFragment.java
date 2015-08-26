@@ -76,6 +76,7 @@ public abstract class BaseToolBarFragment extends BaseFragment {
         mActivity.setSupportActionBar(mToolBar);
         //noinspection ConstantConditions
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        showLoadingLayout();
         View view = setContentView();
         if (view != null) {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -84,7 +85,6 @@ public abstract class BaseToolBarFragment extends BaseFragment {
             contentLayout.removeAllViews();
             contentLayout.addView(view);
         }
-        showLoadingLayout();
         return bodyView;
     }
 

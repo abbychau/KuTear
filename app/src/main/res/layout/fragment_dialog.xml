@@ -8,16 +8,31 @@
     android:paddingRight="@dimen/ui_activity_horizontal_margin"
     android:paddingTop="@dimen/ui_activity_vertical_margin">
     <!--Title-->
+    <RelativeLayout
+        android:id="@+id/dialog_header"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:layout_height="40dp">
+
+        <TextView
+            android:id="@+id/dialog_header_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="标题" />
+        <!--todo 分割线-->
+    </RelativeLayout>
 
     <!--加载对话框-->
     <LinearLayout
-        android:id="@+id/dialog_loding"
+        android:id="@+id/dialog_loading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ProgressBar
-            android:id="@+id/dialog_loding_progressBar"
+            android:id="@+id/dialog_loading_progressBar"
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -25,13 +40,81 @@
 
         <TextView
             android:id="@+id/dialog_loading_text"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/loading" />
     </LinearLayout>
 
-    <!--Bottom-->
+    <!--列表对话框-->
+    <LinearLayout
+        android:id="@+id/dialog_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
+        <ListView
+            android:id="@+id/dialog_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null" />
+    </LinearLayout>
+    <!--普通Msg对话框-->
+    <LinearLayout
+        android:id="@+id/dialog_msg_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/dialog_msg_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <!--Bottom-->
+    <LinearLayout
+        android:id="@+id/dialog_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/dialog_bottom_layout_double"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/dialog_bottom_cancle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="取消" />
+
+            <TextView
+                android:id="@+id/dialog_bottom_ok"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="确定" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/dialog_bottom_layout_single"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/dialog_bottom_single"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="确定" />
+        </LinearLayout>
+    </LinearLayout>
 </LinearLayout>

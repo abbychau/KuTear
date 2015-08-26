@@ -43,6 +43,7 @@ public class ApiAdmin {
                     ApiUser.autoLogin(new ICallBack() {
                         @Override
                         public void onSuccess(int statusCode, String str) {
+                            L.v("Login", str);
                             onRequest(requestType, url, params, callBack);
                         }
 

@@ -60,7 +60,7 @@ public class DetailsFragment extends BaseFragment implements IGetCallBack {
         initView(mBodyView);
         bindData();
         loadDefaultBackground();
-        showLoading("");
+        showLoading("加载中");
         return mBodyView;
     }
 

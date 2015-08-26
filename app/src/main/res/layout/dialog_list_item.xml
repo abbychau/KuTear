@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/dialog_list_item_icon"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/dialog_list_item_text"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_toRightOf="@id/dialog_list_item_icon"
+        android:gravity="center_vertical"
+        android:text="AAAA" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ui_list_divider_small"
+        android:layout_alignParentBottom="true"
+        android:background="@color/gray_400" />
+</RelativeLayout>

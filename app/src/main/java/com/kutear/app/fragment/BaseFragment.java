@@ -61,7 +61,7 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
     }
 
     protected void showLoading(String msg) {
-        KDialogFragment.showDialog(getFragmentManager());
+        KDialogFragment.showDialog(getFragmentManager(), msg);
     }
 
     protected void hiddenLoad() {

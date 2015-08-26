@@ -29,7 +29,7 @@
         <View
             android:id="@+id/article_item_line"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ui_division_height"
+            android:layout_height="@dimen/ui_divider_height"
             android:layout_below="@id/article_item_title"
             android:background="@android:color/white" />
 

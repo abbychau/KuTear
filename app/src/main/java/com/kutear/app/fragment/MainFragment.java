@@ -73,7 +73,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
      */
     private void addListToHeader(List<Article> list) {
         if (getNotRepeatList(list).size() == 0) {
-            Snackbar.make(mSwipeRefreshLayout, "没有新数据啦", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mSwipeRefreshLayout, R.string.no_more_data, Snackbar.LENGTH_SHORT).show();
             return;
         }
         mLists.addAll(0, getNotRepeatList(list));
@@ -86,7 +86,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
      */
     private void addListToFooter(List<Article> list) {
         if (getNotRepeatList(list).size() == 0) {
-            Snackbar.make(mSwipeRefreshLayout, "没有更多数据啦", Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(mSwipeRefreshLayout, R.string.no_more_data, Snackbar.LENGTH_SHORT).show();
             return;
         }
         mLists.addAll(getNotRepeatList(list));

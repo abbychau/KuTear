@@ -8,7 +8,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_division_height"
+        android:layout_height="@dimen/ui_divider_height"
         android:background="@color/gray_300" />
 
     <ListView
@@ -19,6 +19,6 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ui_division_height"
+        android:layout_height="@dimen/ui_divider_height"
         android:background="@color/gray_300" />
 </LinearLayout>

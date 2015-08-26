@@ -38,7 +38,6 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
     protected View setContentView() {
         View mBodyView = inflate(R.layout.fragment_login);
         initView(mBodyView);
-        hiddenLoadingLayout();
         return mBodyView;
     }
 
@@ -91,7 +90,7 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
             return;
         }
         saveUserAndPass(user, pass);
-        showLoading("");
+        showLoading(mActivity.getString(R.string.login_ing));
         ApiUser.login(user, pass, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {

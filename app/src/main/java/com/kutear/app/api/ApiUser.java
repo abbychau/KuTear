@@ -139,7 +139,6 @@ public class ApiUser extends BaseRequest {
         postRequest(url, params, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
-                L.v(TAG, "Web Title:" + str);
                 parseHtml(str, callBack);
             }
 

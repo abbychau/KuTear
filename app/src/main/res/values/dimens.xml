@@ -15,7 +15,8 @@
     <dimen name="ui_radius">2dp</dimen>
     <dimen name="ui_cardview_radius">5dp</dimen>
     <dimen name="ui_cardview_padding">5dp</dimen>
-    <dimen name="ui_division_height">1dp</dimen>
+    <dimen name="ui_divider_height">1dp</dimen>
+    <dimen name="ui_list_divider_small">0.5dp</dimen>
     <dimen name="ui_list_padding">5dp</dimen>
 
 
