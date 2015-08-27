@@ -3,8 +3,9 @@ package com.kutear.app.fragment;
 import android.os.Bundle;
 import android.view.View;
 
-/**
+/**`
  * Created by kutear.guo on 2015/8/13.
+ * 文章预览
  */
 public class PreviewFragment extends BaseToolBarFragment {
 

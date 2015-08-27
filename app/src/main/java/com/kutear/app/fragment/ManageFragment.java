@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.kutear.app.R;
+import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.adapter.ManagerAdapter;
 
 /**
@@ -26,12 +27,11 @@ import com.kutear.app.adapter.ManagerAdapter;
  * 5.管理独立页面 /admin/manage-pages.php
  * 6.管理文章 /admin/manage-posts.php
  */
-public class ManageFragment extends BaseFragment {
+public class ManageFragment extends BaseFragment implements ViewPager.OnPageChangeListener {
     private TabLayout mTabLayout;
     private ViewPager mViewPager;
     private ManagerAdapter mAdapter;
     private Toolbar mToolBar;
-    private AppCompatActivity mActivity;
 
     public static ManageFragment newInstance() {
         Bundle args = new Bundle();
@@ -43,7 +43,6 @@ public class ManageFragment extends BaseFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.mActivity = (AppCompatActivity) activity;
     }
 
     @Nullable
@@ -61,6 +60,7 @@ public class ManageFragment extends BaseFragment {
         mToolBar = (Toolbar) v.findViewById(R.id.toolbar);
         mTabLayout = (TabLayout) v.findViewById(R.id.tabs);
         mViewPager = (ViewPager) v.findViewById(R.id.view_pager);
+        mViewPager.addOnPageChangeListener(this);
         mActivity.setSupportActionBar(mToolBar);
         //noinspection ConstantConditions
         mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -74,5 +74,25 @@ public class ManageFragment extends BaseFragment {
     private void bindData() {
         mAdapter = new ManagerAdapter(getFragmentManager());
         mViewPager.setAdapter(mAdapter);
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        if (position == 0) {
+            mActivity.setSwipeBackEnable(true);
+        } else {
+            mActivity.setSwipeBackEnable(false);
+        }
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }
