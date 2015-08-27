@@ -12,6 +12,15 @@ public class ManagerCategory extends BaseBean {
     private String childCategory;
     private String simpleName;
     private int articleCount;
+    private int parentId;
+
+    public int getParentId() {
+        return parentId;
+    }
+
+    public void setParentId(int parentId) {
+        this.parentId = parentId;
+    }
 
     public int getIndex() {
         return index;

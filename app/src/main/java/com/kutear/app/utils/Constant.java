@@ -39,6 +39,9 @@ public class Constant {
     public static final String URI_LINKS_SETTING = URI_HOST + "/admin/options-permalink.php";
     //分类管理
     public static final String URI_CATEGORY_MANAGER = URI_HOST + "/admin/manage-categories.php";
+    //分类编辑
+    public static final String URI_CATEGORY_EDIT = URI_HOST + "/admin/category.php?mid=%d";
+
 
     /*************************************
      * 广播 相关
@@ -68,4 +71,5 @@ public class Constant {
     public static final int ACTIVITY_SETTING = 0x00007;
     public static final int ACTIVITY_ABOUT = 0x00008;
     public static final int ACTIVITY_ARTICLE_LIST = 0x00009;
+    public static final int ACTIVITY_CATEGORY_MD = 0x00010;
 }

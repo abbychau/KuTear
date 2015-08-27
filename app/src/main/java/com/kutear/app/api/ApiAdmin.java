@@ -36,14 +36,11 @@ public class ApiAdmin {
             @Override
             public void onResponse(String s) {
                 if (isLogin(s)) {
-                    L.v(TAG, "已经登陆......");
                     onRequest(requestType, url, params, callBack);
                 } else {
-                    L.v(TAG, "正在登陆......");
                     ApiUser.autoLogin(new ICallBack() {
                         @Override
                         public void onSuccess(int statusCode, String str) {
-                            L.v("Login", str);
                             onRequest(requestType, url, params, callBack);
                         }
 

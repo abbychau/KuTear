@@ -13,6 +13,7 @@ import com.kutear.app.fragment.ArticleListFragment;
 import com.kutear.app.fragment.DetailsFragment;
 import com.kutear.app.fragment.LoginFragment;
 import com.kutear.app.fragment.ManageFragment;
+import com.kutear.app.fragment.ManagerCategoryMdFragment;
 import com.kutear.app.fragment.PreviewFragment;
 import com.kutear.app.fragment.SettingFragment;
 import com.kutear.app.fragment.UserCenterToolBarFragment;
@@ -88,6 +89,9 @@ public class CommonActivity extends BaseActivity {
                 break;
             case Constant.ACTIVITY_ARTICLE_LIST:
                 mFragment = ArticleListFragment.newInstance(bundle);
+                break;
+            case Constant.ACTIVITY_CATEGORY_MD:
+                mFragment = ManagerCategoryMdFragment.newInstance(bundle);
                 break;
             default:
                 break;
