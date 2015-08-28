@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:background="@drawable/dialog_bg"
     android:orientation="vertical">
     <!--Title-->
@@ -15,8 +15,7 @@
             android:id="@+id/dialog_header_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="标题" />
+            android:gravity="center" />
         <!--todo 分割线-->
     </RelativeLayout>
 
@@ -57,12 +56,12 @@
         android:visibility="gone">
 
         <ListView
-            android:paddingTop="@dimen/ui_dialog_padding"
-            android:paddingBottom="@dimen/ui_dialog_padding"
             android:id="@+id/dialog_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@null" />
+            android:divider="@null"
+            android:paddingBottom="@dimen/ui_dialog_padding"
+            android:paddingTop="@dimen/ui_dialog_padding" />
     </LinearLayout>
     <!--普通Msg对话框-->
     <LinearLayout
@@ -70,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:padding="@dimen/ui_activity_vertical_margin"
         android:visibility="gone">
 
         <TextView
@@ -86,9 +86,10 @@
         android:visibility="gone">
 
         <LinearLayout
-            android:id="@+id/dialog_bottom_layout_double"
+            android:id="@+id/dialog_bottom_double_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/dialog_bottom_cancle"
@@ -108,10 +109,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/dialog_bottom_layout_single"
+            android:id="@+id/dialog_bottom_single_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <TextView
                 android:id="@+id/dialog_bottom_single"

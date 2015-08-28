@@ -50,8 +50,10 @@ public class ManagerCategoryMdFragment extends BaseToolBarFragment implements Vi
             mCategoryName.setText(mCategory.getCategoryName());
             mCategorySimpleName.setText(mCategory.getSimpleName());
             type = "update";
+            mCategory.setParentId(parent);
         } else {
             mCategory = new ManagerCategory();
+            mCategory.setParentId(parent);
             type = "insert";
         }
     }

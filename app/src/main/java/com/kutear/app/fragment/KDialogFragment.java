@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,8 @@ import android.widget.TextView;
 
 import com.kutear.app.R;
 import com.kutear.app.adapter.DialogListAdapter;
+import com.kutear.app.bean.Link;
+import com.kutear.app.utils.DeviceInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,15 +36,26 @@ public class KDialogFragment extends DialogFragment {
     public static final String LIST_KEY = "list";
     public static final int DIALOG_LOADING = 0x0000;
     public static final int DIALOG_LIST = 0x0001;    //显示列表
+    public static final int DIALOG_MSG_ONE = 0x0002;    //含一个按钮的Dialog
+
     private int mDialogType;
     private View mBodyView;
     private LinearLayout mLoadLayout;
     private LinearLayout mListLayout;
+    private LinearLayout mMsgLayout;
+    private LinearLayout mBottonLayout;
+    private LinearLayout mBottonOneLayout;
+    private LinearLayout mBottonTwoLayout;
+    private TextView mBtnOk;
+    private TextView mBtnSingle;
+    private TextView mBtnCancle;
     private TextView mLoadText;
+    private TextView mMsgView;
     private ListView mListView;
     private Bundle mBundle;
     private static Activity mActivity;
     private AdapterView.OnItemClickListener mListener;
+    private View.OnClickListener mSingleListener;
 
     @Override
     public void onAttach(Activity activity) {
@@ -59,7 +73,7 @@ public class KDialogFragment extends DialogFragment {
         return fragment;
     }
 
-    public static void showDialog(FragmentManager manager, String msg) {
+    public static void showLoadingDialog(FragmentManager manager, String msg) {
         Bundle bundle = new Bundle();
         bundle.putString(MSG_KEY, msg);
         KDialogFragment dialogFragment = newInstance(bundle, DIALOG_LOADING);
@@ -72,6 +86,15 @@ public class KDialogFragment extends DialogFragment {
         bundle.putStringArray(LIST_KEY, lists);
         KDialogFragment dialogFragment = newInstance(bundle, DIALOG_LIST);
         dialogFragment.setOnItemClickListener(listener);
+        dialogFragment.show(manager, TAG);
+    }
+
+
+    public static void showMsgOne(FragmentManager manager, String msg, View.OnClickListener okListener) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MSG_KEY, msg);
+        KDialogFragment dialogFragment = newInstance(bundle, DIALOG_MSG_ONE);
+        dialogFragment.setmSingleListener(okListener);
         dialogFragment.show(manager, TAG);
     }
 
@@ -105,7 +128,20 @@ public class KDialogFragment extends DialogFragment {
         return mBodyView;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        //除了加载对话框外，其余的对话框宽度均为宽度的90%
+        if (mDialogType != DIALOG_LOADING) {
+            ViewGroup.LayoutParams params = getDialog().getWindow().getAttributes();
+            params.width = (int) (DeviceInfo.getScreenWidth(mActivity) * 0.9);
+            params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+            getDialog().getWindow().setAttributes((android.view.WindowManager.LayoutParams) params);
+        }
+    }
+
     private void showView() {
+        String msg = mBundle.getString(MSG_KEY);
         switch (mDialogType) {
             case DIALOG_LIST:
                 String[] lists = mBundle.getStringArray(LIST_KEY);
@@ -113,10 +149,40 @@ public class KDialogFragment extends DialogFragment {
                 showList(adapter, mListener);
                 break;
             case DIALOG_LOADING:
-                String msg = mBundle.getString(MSG_KEY);
                 showLoading(msg);
                 break;
+            case DIALOG_MSG_ONE:
+                showMsgWithOneBtn(msg);
+                break;
         }
+    }
+
+    /**
+     * 显示致函有一个按钮的MSG dialog
+     *
+     * @param msg
+     */
+    private void showMsgWithOneBtn(String msg) {
+        if (mMsgLayout != null) {
+            mMsgLayout.setVisibility(View.VISIBLE);
+        }
+        if (mMsgView != null) {
+            mMsgView.setText(msg);
+        }
+
+        if (mBottonLayout != null) {
+            mBottonLayout.setVisibility(View.VISIBLE);
+        }
+        if (mBottonOneLayout != null) {
+            mBottonOneLayout.setVisibility(View.VISIBLE);
+        }
+        if (mSingleListener != null) {
+            mBtnSingle.setOnClickListener(mSingleListener);
+        }
+    }
+
+    private void setmSingleListener(View.OnClickListener listener) {
+        this.mSingleListener = listener;
     }
 
     private void initView() {
@@ -125,6 +191,14 @@ public class KDialogFragment extends DialogFragment {
             mLoadText = (TextView) mBodyView.findViewById(R.id.dialog_loading_text);
             mListView = (ListView) mBodyView.findViewById(R.id.dialog_list);
             mListLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_list_layout);
+            mMsgLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_msg_layout);
+            mMsgView = (TextView) mBodyView.findViewById(R.id.dialog_msg_text);
+            mBottonLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_layout);
+            mBottonOneLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_single_layout);
+            mBottonTwoLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_double_layout);
+            mBtnCancle = (TextView) mBodyView.findViewById(R.id.dialog_bottom_cancle);
+            mBtnOk = (TextView) mBodyView.findViewById(R.id.dialog_bottom_ok);
+            mBtnSingle = (TextView) mBodyView.findViewById(R.id.dialog_bottom_single);
         }
     }
 

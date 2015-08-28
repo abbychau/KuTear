@@ -75,6 +75,10 @@ public class ManagerReadFragment extends BaseNoBarFragment implements View.OnCli
                 break;
             case R.id.manager_read_tips:
                 // TODO: 2015/8/23 弹出对话框显示规则
+                KDialogFragment.showMsgOne(getFragmentManager(), "这只是一个测试。。。。\n 换行啦",this);
+                break;
+            case R.id.dialog_bottom_single:
+                hiddenLoad();
                 break;
             default:
                 break;

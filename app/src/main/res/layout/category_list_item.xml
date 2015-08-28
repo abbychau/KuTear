@@ -17,6 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/gray_800"
+            android:singleLine="true"
             android:textSize="@dimen/text_article_item_title" />
 
         <TextView
@@ -25,6 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="@dimen/ui_activity_horizontal_margin"
+            android:singleLine="true"
             android:layout_toRightOf="@id/manager_category_item_title" />
 
         <TextView
@@ -33,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:singleLine="true"
             android:paddingRight="@dimen/ui_activity_horizontal_margin" />
 
 

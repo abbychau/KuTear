@@ -31,7 +31,6 @@ public class ApiAdmin {
     }
 
     protected static void baseRequest(final int requestType, final String url, final Map<String, String> params, final ICallBack callBack) {
-        // TODO: 2015/8/23 首先需要判断是否已经登陆
         KStringRequest checkLogin = new KStringRequest(Request.Method.GET, Constant.URI_ADMIN, params, new Response.Listener<String>() {
             @Override
             public void onResponse(String s) {
