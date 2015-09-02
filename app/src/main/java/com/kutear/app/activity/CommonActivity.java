@@ -21,6 +21,7 @@ import com.kutear.app.utils.Constant;
 
 /**
  * Created by kutear.guo on 2015/8/4.
+ * 所有Fragment的依附点
  */
 public class CommonActivity extends BaseActivity {
 
