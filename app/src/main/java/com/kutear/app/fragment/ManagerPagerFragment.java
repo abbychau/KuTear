@@ -2,6 +2,7 @@ package com.kutear.app.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * Created by kutear.guo on 2015/8/25.
  * 独立页面试图
  */
-public class ManagerPagerFragment extends BaseNoBarFragment implements IGetListCallBack {
+public class ManagerPagerFragment extends BaseNoBarFragment implements IGetListCallBack, AdapterView.OnItemClickListener {
     private static final String TAG = ManagerPagerFragment.class.getSimpleName();
     private ListView mListView;
     private List<Pager> mLists;
@@ -51,6 +52,7 @@ public class ManagerPagerFragment extends BaseNoBarFragment implements IGetListC
     @Override
     protected void initView(View v) {
         mListView = (ListView) v.findViewById(R.id.manager_pager_list);
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -63,5 +65,10 @@ public class ManagerPagerFragment extends BaseNoBarFragment implements IGetListC
     @Override
     public void onError(String msg) {
         showSnack(mListView, msg);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 }

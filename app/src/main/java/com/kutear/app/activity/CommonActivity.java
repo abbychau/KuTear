@@ -52,6 +52,11 @@ public class CommonActivity extends BaseActivity {
         chooseFragment(mFragmentType);
     }
 
+    /**
+     * 根据type来选择对应的Fragment
+     *
+     * @param type
+     */
     private void chooseFragment(int type) {
         Bundle bundle = getIntent().getExtras();
         switch (type) {

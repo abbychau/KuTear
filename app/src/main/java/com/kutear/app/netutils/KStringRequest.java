@@ -18,6 +18,7 @@ import java.util.Set;
 
 /**
  * Created by kutear.guo on 2015/8/4.
+ * 所有的网络请求都是通过该类实现
  */
 public class KStringRequest extends StringRequest {
     private static final String TAG = KStringRequest.class.getSimpleName();

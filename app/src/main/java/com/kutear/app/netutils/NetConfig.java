@@ -8,6 +8,7 @@ import java.util.Map;
 
 /**
  * Created by kutear.guo on 2015/8/4.
+ * Cookies保存
  */
 public class NetConfig {
     private static final String SET_COOKIE_KEY = "Set-Cookie";

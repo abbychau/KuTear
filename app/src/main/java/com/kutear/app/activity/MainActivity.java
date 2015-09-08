@@ -120,9 +120,13 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (mTvNickName == null) {
                 mTvNickName = (TextView) findViewById(R.id.nav_name);
             }
-            // TODO: 2015/8/21 为什么会空指针
-            mAvater.setImageURI(Uri.parse(AppApplication.getUserManager().getUserInfo().getAvater()));
-            mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+            if(AppApplication.getUserManager().getUserInfo().getAvater()!=null){
+                mAvater.setImageURI(Uri.parse(AppApplication.getUserManager().getUserInfo().getAvater()));
+            }
+            if(AppApplication.getUserManager().getUserInfo().getNickName()!=null){
+                mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+
+            }
         }
     }
 
