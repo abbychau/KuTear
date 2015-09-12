@@ -7,11 +7,11 @@ import android.view.View;
  * Created by kutear.guo on 2015/8/13.
  * 文章预览
  */
-public class PreviewFragment extends BaseToolBarFragment {
+public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
 
-    public static PreviewFragment newInstance() {
+    public static ManagerArticlePreviewFragment newInstance() {
         Bundle args = new Bundle();
-        PreviewFragment fragment = new PreviewFragment();
+        ManagerArticlePreviewFragment fragment = new ManagerArticlePreviewFragment();
         fragment.setArguments(args);
         return fragment;
     }

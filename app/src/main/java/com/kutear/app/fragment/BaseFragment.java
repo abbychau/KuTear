@@ -91,7 +91,12 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
     protected abstract void initView(View v);
 
 
-    protected View inflate(int res) {
+    /**
+     * 加载视图
+     * @param res 资源文件
+     * @return
+     */
+    protected final View inflate(int res) {
         if (inflater != null) {
             return inflater.inflate(res, container, false);
         } else {
@@ -114,5 +119,9 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
         return super.onOptionsItemSelected(item);
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity = null;
+    }
 }

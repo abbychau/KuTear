@@ -120,10 +120,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             if (mTvNickName == null) {
                 mTvNickName = (TextView) findViewById(R.id.nav_name);
             }
-            if(AppApplication.getUserManager().getUserInfo().getAvater()!=null){
+            if (AppApplication.getUserManager().getUserInfo().getAvater() != null) {
                 mAvater.setImageURI(Uri.parse(AppApplication.getUserManager().getUserInfo().getAvater()));
             }
-            if(AppApplication.getUserManager().getUserInfo().getNickName()!=null){
+            if (AppApplication.getUserManager().getUserInfo().getNickName() != null) {
                 mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
 
             }
@@ -132,15 +132,11 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(MenuItem menuItem) {
-        if (menuItem.isChecked()) {
-            menuItem.setChecked(false);
-            mDrawerLayout.closeDrawers();
-            return false;
-        }
+        mDrawerLayout.closeDrawers();
+        menuItem.setChecked(true);
+
         if (menuItem.getItemId() == R.id.menu_main) {
-            menuItem.setChecked(true);
-            mDrawerLayout.closeDrawers();
-            return false;
+            return true;
         }
         int type = 0;
         Bundle bundle = null;
@@ -148,37 +144,30 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             case R.id.menu_archive:
                 bundle = new Bundle();
                 bundle.putInt(ArchiveFragment.KEY, ArchiveFragment.ARCHIVE);
-                menuItem.setChecked(true);
                 type = Constant.ACTIVITY_ARCHIVE;
                 break;
             case R.id.menu_manager:
-                menuItem.setChecked(true);
                 type = Constant.ACTIVITY_MANAGER;
                 break;
             case R.id.menu_setting:
-                menuItem.setChecked(true);
                 type = Constant.ACTIVITY_SETTING;
                 break;
             case R.id.menu_about:
-                menuItem.setChecked(true);
                 type = Constant.ACTIVITY_ABOUT;
                 break;
             case R.id.menu_tab:
                 bundle = new Bundle();
                 bundle.putInt(ArchiveFragment.KEY, ArchiveFragment.TAB);
-                menuItem.setChecked(true);
                 type = Constant.ACTIVITY_ARCHIVE;
                 break;
             case R.id.menu_category:
                 bundle = new Bundle();
                 bundle.putInt(ArchiveFragment.KEY, ArchiveFragment.CATEGORY);
-                menuItem.setChecked(true);
                 type = Constant.ACTIVITY_ARCHIVE;
                 break;
             default:
                 break;
         }
-        mDrawerLayout.closeDrawers();
         AppApplication.startActivity(this, type, bundle);
         return true;
     }

@@ -1,5 +1,7 @@
 package com.kutear.app.utils;
 
+import java.net.URI;
+
 /**
  * Created by kutear.guo on 2015/8/4.
  * <p/>
@@ -43,6 +45,8 @@ public class Constant {
     public static final String URI_PAGER_MANAGER = URI_HOST + "/admin/manage-pages.php";
     //文章管理页面
     public static final String URI_ARTICLE_MANAGER = URI_HOST + "/admin/manage-posts.php?page=%d";
+    //文章详情页面
+    public static final String URI_ARTICLE_DETAILS = URI_HOST + "/admin/write-post.php?cid=%d";
 
 
     /*************************************
@@ -74,4 +78,5 @@ public class Constant {
     public static final int ACTIVITY_ABOUT = 0x00008;
     public static final int ACTIVITY_ARTICLE_LIST = 0x00009;
     public static final int ACTIVITY_CATEGORY_MD = 0x00010;
+    public static final int ACTIVITY_EDIT_ARTICLE = 0x00011;
 }

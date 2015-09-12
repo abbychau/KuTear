@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +19,7 @@ import android.widget.TextView;
 
 import com.kutear.app.R;
 import com.kutear.app.adapter.DialogListAdapter;
-import com.kutear.app.bean.Link;
 import com.kutear.app.utils.DeviceInfo;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kutear.guo on 2015/8/16.
@@ -43,9 +39,9 @@ public class KDialogFragment extends DialogFragment {
     private LinearLayout mLoadLayout;
     private LinearLayout mListLayout;
     private LinearLayout mMsgLayout;
-    private LinearLayout mBottonLayout;
-    private LinearLayout mBottonOneLayout;
-    private LinearLayout mBottonTwoLayout;
+    private LinearLayout mButtonLayout;
+    private LinearLayout mButtonOneLayout;
+    private LinearLayout mButtonTwoLayout;
     private TextView mBtnOk;
     private TextView mBtnSingle;
     private TextView mBtnCancle;
@@ -96,6 +92,16 @@ public class KDialogFragment extends DialogFragment {
         KDialogFragment dialogFragment = newInstance(bundle, DIALOG_MSG_ONE);
         dialogFragment.setmSingleListener(okListener);
         dialogFragment.show(manager, TAG);
+    }
+
+    @Override
+    public void show(FragmentManager manager, String tag) {
+//        super.show(manager, tag );
+//        this.mDismissed = false;
+//        this.mShownByMe = true;
+        FragmentTransaction ft = manager.beginTransaction();
+        ft.add(this, tag);
+        ft.commitAllowingStateLoss();
     }
 
     public static void hiddenDialog(FragmentManager manager) {
@@ -170,11 +176,11 @@ public class KDialogFragment extends DialogFragment {
             mMsgView.setText(msg);
         }
 
-        if (mBottonLayout != null) {
-            mBottonLayout.setVisibility(View.VISIBLE);
+        if (mButtonLayout != null) {
+            mButtonLayout.setVisibility(View.VISIBLE);
         }
-        if (mBottonOneLayout != null) {
-            mBottonOneLayout.setVisibility(View.VISIBLE);
+        if (mButtonOneLayout != null) {
+            mButtonOneLayout.setVisibility(View.VISIBLE);
         }
         if (mSingleListener != null) {
             mBtnSingle.setOnClickListener(mSingleListener);
@@ -193,9 +199,9 @@ public class KDialogFragment extends DialogFragment {
             mListLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_list_layout);
             mMsgLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_msg_layout);
             mMsgView = (TextView) mBodyView.findViewById(R.id.dialog_msg_text);
-            mBottonLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_layout);
-            mBottonOneLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_single_layout);
-            mBottonTwoLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_double_layout);
+            mButtonLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_layout);
+            mButtonOneLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_single_layout);
+            mButtonTwoLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_bottom_double_layout);
             mBtnCancle = (TextView) mBodyView.findViewById(R.id.dialog_bottom_cancle);
             mBtnOk = (TextView) mBodyView.findViewById(R.id.dialog_bottom_ok);
             mBtnSingle = (TextView) mBodyView.findViewById(R.id.dialog_bottom_single);
@@ -233,5 +239,9 @@ public class KDialogFragment extends DialogFragment {
         }
     }
 
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mActivity = null;
+    }
 }

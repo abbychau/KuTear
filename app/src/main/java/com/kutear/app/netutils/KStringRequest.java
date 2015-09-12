@@ -6,15 +6,11 @@ import com.android.volley.ParseError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
-import com.kutear.app.AppApplication;
-import com.kutear.app.utils.L;
-import com.kutear.app.utils.SaveData;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by kutear.guo on 2015/8/4.

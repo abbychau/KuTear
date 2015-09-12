@@ -1,17 +1,21 @@
 package com.kutear.app.fragment;
 
+import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.adapter.ManagerArticleAdapter;
 import com.kutear.app.api.ApiArticleManager;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.ManagerArticle;
 import com.kutear.app.callback.IGetListCallBack;
+import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
 
 import java.util.ArrayList;
@@ -22,7 +26,7 @@ import java.util.List;
  * Created by kutear.guo on 2015/8/25.
  * 文章管理页面
  */
-public class ManagerArticleFragment extends BaseNoBarFragment implements IGetListCallBack {
+public class ManagerArticleFragment extends BaseNoBarFragment implements IGetListCallBack, AdapterView.OnItemClickListener {
 
     private static final String TAG = ManagerArticleFragment.class.getSimpleName();
     private List<ManagerArticle> mLists = new ArrayList<>();
@@ -53,7 +57,7 @@ public class ManagerArticleFragment extends BaseNoBarFragment implements IGetLis
     @Override
     protected void initView(View v) {
         mListView = (ListView) v.findViewById(R.id.manager_pager_list);
-
+        mListView.setOnItemClickListener(this);
     }
 
     @Override
@@ -67,5 +71,12 @@ public class ManagerArticleFragment extends BaseNoBarFragment implements IGetLis
     @Override
     public void onError(String msg) {
 
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Bundle bundle = new Bundle();
+        bundle.putString(ManagerEditArticleFragment.KEY, String.format(Constant.URI_ARTICLE_DETAILS, mLists.get(position).getIndex()));
+        AppApplication.startActivity(mActivity, Constant.ACTIVITY_EDIT_ARTICLE, bundle);
     }
 }

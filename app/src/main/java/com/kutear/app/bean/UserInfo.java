@@ -43,7 +43,7 @@ public class UserInfo extends BaseBean {
     public String toString() {
         return "UserInfo{" +
                 "nickName='" + nickName + '\'' +
-                ", avater='" + avater + '\'' +
+                ", avatar='" + avater + '\'' +
                 ", mainPager='" + mainPager + '\'' +
                 ", eMail='" + eMail + '\'' +
                 '}';
