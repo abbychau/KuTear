@@ -8,13 +8,13 @@ import android.view.View;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class WebVIewFragment extends BaseToolBarFragment {
+public class WebViewFragment extends BaseToolBarFragment {
 
     private static final String KEY = "key";
 
-    public static WebVIewFragment newInstance(String url) {
+    public static WebViewFragment newInstance(String url) {
         Bundle args = new Bundle();
-        WebVIewFragment fragment = new WebVIewFragment();
+        WebViewFragment fragment = new WebViewFragment();
         args.putString(KEY, url);
         fragment.setArguments(args);
         return fragment;

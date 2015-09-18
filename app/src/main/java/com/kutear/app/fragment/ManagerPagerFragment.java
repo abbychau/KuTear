@@ -6,12 +6,14 @@ import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.adapter.ManagerPagerAdapter;
 import com.kutear.app.api.ApiPagerManager;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.Pager;
 import com.kutear.app.callback.IGetListCallBack;
+import com.kutear.app.utils.Constant;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,6 +71,9 @@ public class ManagerPagerFragment extends BaseNoBarFragment implements IGetListC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ManagerPagerEditFragment.KEY, mLists.get(position));
+        bundle.putBoolean(ManagerPagerEditFragment.IS_MODIFY, true);
+        AppApplication.startActivity(mActivity, Constant.ACTIVITY_EDIT_PAGER, bundle);
     }
 }

@@ -82,6 +82,7 @@ public abstract class BaseNoBarFragment extends BaseFragment {
     @Override
     public void onGetError(String error) {
         super.onGetError(error);
+        hiddenLoadingLayout();
         // TODO: 2015/8/25 把加载视图改变为显示失败
     }
 

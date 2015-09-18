@@ -6,6 +6,7 @@
     <string name="closeDrawer">关闭</string>
     <string name="username">用户名</string>
     <string name="article_content">文章内容</string>
+    <string name="pager_content">文章内容</string>
     <string name="password">密码</string>
     <string name="login_forget_password">忘记密码?</string>
     <string name="tips_not_support_find_password">暂时不支持找回密码</string>
@@ -27,6 +28,9 @@
     <string name="web_form_attribute">action</string>
     <string name="get_url_failed">获取登录链接失败</string>
     <string name="article_title">文章标题</string>
+    <string name="pager_title">页面标题</string>
+    <string name="article_edit_fragment_title">编辑文章</string>
+    <string name="article_preview_fragment_title">文章预览</string>
     <string name="no_more_article">没有更多文章</string>
     <string name="share">分享</string>
     <string name="can_not_find_archive_list">找不到归档列表</string>
@@ -75,7 +79,12 @@
         <item>取消</item>
     </array>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="can_not_get_content">没有获取到内容</string>
+    <string name="post_article">发布文章</string>
+    <string name="post_pager">发布页面</string>
+    <string name="get_url_error">获取链接失败</string>
+    <string name="save_to_server_fail">保存失败</string>
+    <string name="article_title_can_not_be_empty">文章标题不可为空</string>
+    <string name="article_posting">文章发布中</string>
+    <string name="pager_edit">页面编辑</string>
 </resources>

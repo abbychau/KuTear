@@ -2,9 +2,12 @@ package com.kutear.app.bean;
 
 import android.os.Parcel;
 
+import java.util.ArrayList;
+
 /**
  * Created by kutear on 15-9-12.
- * * title=Android Desigin Library&slug=Android_Desigin_Library&
+ * * title=Android Desigin Library&
+ * slug=Android_Desigin_Library&
  * text=# Android Desigin Library
  * fieldNames[]=&
  * fieldTypes[]=str&
@@ -24,22 +27,109 @@ import android.os.Parcel;
  * trackback=
  */
 public class ManagerArticleDetails extends BaseBean {
-    private String title;
-    private String content;
-    private String fieldNames;
-    private String fieldTypes;
-    private String cid;
-    private String doAction;
-    private String markdown;
-    private String date;
-    private String category;
-    private String tags;
-    private String visibility;
-    private String password;
-    private String allowComment;
-    private String allowPing;
-    private String allowFeed;
-    private String trackback;
+    private String title = "";
+    private String content = "";
+    private String cid = "";
+    private String doAction = "";
+    private String markdown = "";
+    private String date = "";
+    private ArrayList<ManagerCategory> category;
+    private String tags = "";
+    private String visibility = "";
+    private String password = "";
+    private String allowComment = "";
+    private String allowPing = "";
+    private String allowFeed = "";
+    private String trackback = "";
+    private String slug = "";
+    private ArrayList<Field> customField;
+
+    //自定义的字段名字
+    public static class Field extends BaseBean {
+        private String filedName = "";
+        private String filedValue = "";
+        private String filedType = "";
+
+        public String getFiledName() {
+            return filedName;
+        }
+
+        public void setFiledName(String filedName) {
+            this.filedName = filedName;
+        }
+
+        public String getFiledValue() {
+            return filedValue;
+        }
+
+        public void setFiledValue(String filedValue) {
+            this.filedValue = filedValue;
+        }
+
+        public String getFiledType() {
+            return filedType;
+        }
+
+        public void setFiledType(String filedType) {
+            this.filedType = filedType;
+        }
+
+        @Override
+        public String toString() {
+            return "Field{" +
+                    "filedName='" + filedName + '\'' +
+                    ", filedValue='" + filedValue + '\'' +
+                    ", filedType='" + filedType + '\'' +
+                    '}';
+        }
+
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel dest, int flags) {
+            dest.writeString(this.filedName);
+            dest.writeString(this.filedValue);
+            dest.writeString(this.filedType);
+        }
+
+        public Field() {
+        }
+
+        protected Field(Parcel in) {
+            this.filedName = in.readString();
+            this.filedValue = in.readString();
+            this.filedType = in.readString();
+        }
+
+        public static final Creator<Field> CREATOR = new Creator<Field>() {
+            public Field createFromParcel(Parcel source) {
+                return new Field(source);
+            }
+
+            public Field[] newArray(int size) {
+                return new Field[size];
+            }
+        };
+    }
+
+    public ArrayList<Field> getCustomField() {
+        return customField;
+    }
+
+    public void setCustomField(ArrayList<Field> customField) {
+        this.customField = customField;
+    }
+
+    public String getSlug() {
+        return slug;
+    }
+
+    public void setSlug(String slug) {
+        this.slug = slug;
+    }
 
     public String getTitle() {
         return title;
@@ -55,22 +145,6 @@ public class ManagerArticleDetails extends BaseBean {
 
     public void setContent(String content) {
         this.content = content;
-    }
-
-    public String getFieldNames() {
-        return fieldNames;
-    }
-
-    public void setFieldNames(String fieldNames) {
-        this.fieldNames = fieldNames;
-    }
-
-    public String getFieldTypes() {
-        return fieldTypes;
-    }
-
-    public void setFieldTypes(String fieldTypes) {
-        this.fieldTypes = fieldTypes;
     }
 
     public String getCid() {
@@ -105,11 +179,11 @@ public class ManagerArticleDetails extends BaseBean {
         this.date = date;
     }
 
-    public String getCategory() {
+    public ArrayList<ManagerCategory> getCategory() {
         return category;
     }
 
-    public void setCategory(String category) {
+    public void setCategory(ArrayList<ManagerCategory> category) {
         this.category = category;
     }
 
@@ -133,7 +207,16 @@ public class ManagerArticleDetails extends BaseBean {
         return password;
     }
 
+    /**
+     * 密码长度<=16
+     *
+     * @param password
+     */
     public void setPassword(String password) {
+        if (password == null || password.length() > 16) {
+            System.err.println("Article password length must <=16");
+            return;
+        }
         this.password = password;
     }
 
@@ -170,12 +253,81 @@ public class ManagerArticleDetails extends BaseBean {
     }
 
     @Override
+    public String toString() {
+        return "ManagerArticleDetails{" +
+                "title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                ", cid='" + cid + '\'' +
+                ", doAction='" + doAction + '\'' +
+                ", markdown='" + markdown + '\'' +
+                ", date='" + date + '\'' +
+                ", category=" + category +
+                ", tags='" + tags + '\'' +
+                ", visibility='" + visibility + '\'' +
+                ", password='" + password + '\'' +
+                ", allowComment='" + allowComment + '\'' +
+                ", allowPing='" + allowPing + '\'' +
+                ", allowFeed='" + allowFeed + '\'' +
+                ", trackback='" + trackback + '\'' +
+                ", slug='" + slug + '\'' +
+                ", customField=" + customField +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(this.title);
+        dest.writeString(this.content);
+        dest.writeString(this.cid);
+        dest.writeString(this.doAction);
+        dest.writeString(this.markdown);
+        dest.writeString(this.date);
+        dest.writeTypedList(category);
+        dest.writeString(this.tags);
+        dest.writeString(this.visibility);
+        dest.writeString(this.password);
+        dest.writeString(this.allowComment);
+        dest.writeString(this.allowPing);
+        dest.writeString(this.allowFeed);
+        dest.writeString(this.trackback);
+        dest.writeString(this.slug);
+        dest.writeTypedList(customField);
     }
+
+    public ManagerArticleDetails() {
+    }
+
+    protected ManagerArticleDetails(Parcel in) {
+        this.title = in.readString();
+        this.content = in.readString();
+        this.cid = in.readString();
+        this.doAction = in.readString();
+        this.markdown = in.readString();
+        this.date = in.readString();
+        this.category = in.createTypedArrayList(ManagerCategory.CREATOR);
+        this.tags = in.readString();
+        this.visibility = in.readString();
+        this.password = in.readString();
+        this.allowComment = in.readString();
+        this.allowPing = in.readString();
+        this.allowFeed = in.readString();
+        this.trackback = in.readString();
+        this.slug = in.readString();
+        this.customField = in.createTypedArrayList(Field.CREATOR);
+    }
+
+    public static final Creator<ManagerArticleDetails> CREATOR = new Creator<ManagerArticleDetails>() {
+        public ManagerArticleDetails createFromParcel(Parcel source) {
+            return new ManagerArticleDetails(source);
+        }
+
+        public ManagerArticleDetails[] newArray(int size) {
+            return new ManagerArticleDetails[size];
+        }
+    };
 }

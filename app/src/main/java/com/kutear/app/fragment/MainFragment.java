@@ -137,6 +137,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
 
     @Override
     public void onError(String msg) {
+        hiddenLoadingLayout();
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }

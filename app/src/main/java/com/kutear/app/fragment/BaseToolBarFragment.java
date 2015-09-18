@@ -107,4 +107,13 @@ public abstract class BaseToolBarFragment extends BaseFragment {
      */
     protected abstract View setContentView();
 
+    protected final void setTitle(String title) {
+        mToolBar.setTitle(title);
+    }
+
+    protected final void setTitle(int titleRes) {
+        mToolBar.setTitle(titleRes);
+    }
+
+
 }

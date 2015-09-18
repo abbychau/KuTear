@@ -1,9 +1,7 @@
 package com.kutear.app.fragment;
 
-import android.app.Application;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
@@ -16,7 +14,6 @@ import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.ManagerArticle;
 import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -76,7 +73,8 @@ public class ManagerArticleFragment extends BaseNoBarFragment implements IGetLis
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Bundle bundle = new Bundle();
-        bundle.putString(ManagerEditArticleFragment.KEY, String.format(Constant.URI_ARTICLE_DETAILS, mLists.get(position).getIndex()));
+        bundle.putBoolean(ManagerArticleEditFragment.IS_MODIFY, true);
+        bundle.putString(ManagerArticleEditFragment.KEY, String.format(Constant.URI_ARTICLE_DETAILS, mLists.get(position).getIndex()));
         AppApplication.startActivity(mActivity, Constant.ACTIVITY_EDIT_ARTICLE, bundle);
     }
 }

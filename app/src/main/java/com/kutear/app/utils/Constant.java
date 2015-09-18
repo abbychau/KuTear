@@ -47,6 +47,10 @@ public class Constant {
     public static final String URI_ARTICLE_MANAGER = URI_HOST + "/admin/manage-posts.php?page=%d";
     //文章详情页面
     public static final String URI_ARTICLE_DETAILS = URI_HOST + "/admin/write-post.php?cid=%d";
+    //发布文章URL
+    public static final String URI_ARTICLE_POST = URI_HOST + "/admin/write-post.php";
+    //独立页面URL
+    public static final String URI_PAGER_DETAILS= URI_HOST + "/admin/write-page.php";
 
 
     /*************************************
@@ -71,7 +75,7 @@ public class Constant {
     public static final int ACTIVITY_LOGIN = 0x00001;
     public static final int ACTIVITY_DETAILS = 0x00002;
     public static final int ACTIVITY_ARCHIVE = 0x00003;
-    public static final int ACTIVITY_PREVIEW = 0x00004;
+    public static final int ACTIVITY_PREVIEW_ARTICLE = 0x0004;
     public static final int ACTIVITY_MANAGER = 0x00005;
     public static final int ACTIVITY_USER_CENTER = 0x00006;
     public static final int ACTIVITY_SETTING = 0x00007;
@@ -79,4 +83,5 @@ public class Constant {
     public static final int ACTIVITY_ARTICLE_LIST = 0x00009;
     public static final int ACTIVITY_CATEGORY_MD = 0x00010;
     public static final int ACTIVITY_EDIT_ARTICLE = 0x00011;
+    public static final int ACTIVITY_EDIT_PAGER = 0x00012;
 }

@@ -19,7 +19,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     }
 
 //    /**
-//     * 默认是允许的，但是在viewhelp中可能存在冲突
+//     * 默认是允许的，但是在ViewPager中可能存在冲突
 //     */
 //    public void disableSwipeBackLayout() {
 //        mSwipeBackLayout.setEnableGesture(false);

@@ -6,7 +6,6 @@ import com.kutear.app.bean.Article;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -14,7 +13,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by kutear.guo on 2015/8/16.
@@ -44,7 +42,6 @@ public class ApiArticleList extends BaseRequest {
 
             @Override
             public void onError(int statusCode, String str) {
-                L.v(TAG, statusCode + "");
                 if (callBack != null) {
                     callBack.onError(str);
                 }

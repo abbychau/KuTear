@@ -5,16 +5,16 @@
     android:orientation="vertical">
 
     <android.support.design.widget.TextInputLayout
-        android:id="@+id/article_til_title_layout"
+        android:id="@+id/pager_til_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/ui_activity_vertical_margin">
 
         <EditText
-            android:id="@+id/article_et_title"
+            android:id="@+id/pager_et_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/article_title"
+            android:hint="@string/pager_title"
             android:inputType="text"
             android:singleLine="true" />
     </android.support.design.widget.TextInputLayout>
@@ -26,26 +26,28 @@
         android:orientation="vertical">
 
         <EditText
-            android:id="@+id/article_et_content"
+            android:id="@+id/pager_et_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
             android:gravity="top|start"
-            android:hint="@string/article_content"
+            android:hint="@string/pager_content"
             android:inputType="textMultiLine"
             android:padding="@dimen/ui_edit_padding" />
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/article_footer"
+        android:id="@+id/pager_footer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <Button android:id="@+id/article_post_btn"
+
+        <Button
+            android:id="@+id/pager_post_btn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@android:color/white"
             android:background="?attr/colorPrimary"
-            android:text="@string/post_article"/>
+            android:text="@string/post_pager"
+            android:textColor="@android:color/white" />
     </LinearLayout>
 </LinearLayout>

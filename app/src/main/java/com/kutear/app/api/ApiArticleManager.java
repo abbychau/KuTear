@@ -63,7 +63,7 @@ public class ApiArticleManager extends ApiAdmin {
                 if (indexElement != null) {
                     try {
                         article.setIndex(Integer.parseInt(indexElement.attr("value")));
-                    }catch (NumberFormatException e){
+                    } catch (NumberFormatException e) {
                         article.setIndex(0);
                     }
                 }
@@ -85,9 +85,10 @@ public class ApiArticleManager extends ApiAdmin {
                     }
                 }
 
-                if (item.childNodeSize() > 5) {
+                if (item.childNodeSize() > 5 && item.child(4) != null) {
                     //获取分类名字
-                    Element categoryElement = item.child(4).child(0);
+                    Element categoryElement = item.child(4).children().size() > 0 ?
+                            item.child(4).child(0) : null;
                     if (categoryElement != null) {
                         article.setCategoryUrl(categoryElement.attr("href"));
                         article.setCategory(categoryElement.ownText());

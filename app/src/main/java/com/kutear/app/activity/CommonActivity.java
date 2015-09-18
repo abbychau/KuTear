@@ -13,9 +13,10 @@ import com.kutear.app.fragment.ArticleListFragment;
 import com.kutear.app.fragment.DetailsFragment;
 import com.kutear.app.fragment.LoginFragment;
 import com.kutear.app.fragment.ManageFragment;
-import com.kutear.app.fragment.ManagerCategoryMdFragment;
-import com.kutear.app.fragment.ManagerEditArticleFragment;
 import com.kutear.app.fragment.ManagerArticlePreviewFragment;
+import com.kutear.app.fragment.ManagerCategoryMdFragment;
+import com.kutear.app.fragment.ManagerArticleEditFragment;
+import com.kutear.app.fragment.ManagerPagerEditFragment;
 import com.kutear.app.fragment.SettingFragment;
 import com.kutear.app.fragment.UserCenterToolBarFragment;
 import com.kutear.app.utils.Constant;
@@ -85,9 +86,6 @@ public class CommonActivity extends BaseActivity {
             case Constant.ACTIVITY_USER_CENTER:
                 mFragment = UserCenterToolBarFragment.newInstance();
                 break;
-            case Constant.ACTIVITY_PREVIEW:
-                mFragment = ManagerArticlePreviewFragment.newInstance();
-                break;
             case Constant.ACTIVITY_SETTING:
                 mFragment = SettingFragment.newInstance();
                 break;
@@ -101,7 +99,13 @@ public class CommonActivity extends BaseActivity {
                 mFragment = ManagerCategoryMdFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_EDIT_ARTICLE:
-                mFragment = ManagerEditArticleFragment.newInstance(bundle);
+                mFragment = ManagerArticleEditFragment.newInstance(bundle);
+                break;
+            case Constant.ACTIVITY_PREVIEW_ARTICLE:
+                mFragment = ManagerArticlePreviewFragment.newInstance(bundle);
+                break;
+            case Constant.ACTIVITY_EDIT_PAGER:
+                mFragment = ManagerPagerEditFragment.newInstance(bundle);
                 break;
             default:
                 break;
