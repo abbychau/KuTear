@@ -1,11 +1,12 @@
 package com.kutear.app.fragment;
 
 import android.os.Bundle;
+import android.text.Html;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.webkit.WebView;
+import android.widget.TextView;
 
 import com.commonsware.cwac.anddown.AndDown;
 import com.kutear.app.R;
@@ -14,6 +15,7 @@ import com.kutear.app.api.ApiPagerDetailsManager;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.ManagerArticleDetails;
 import com.kutear.app.bean.ManagerPagerDetails;
+import com.kutear.app.netutils.UrlImageParser;
 
 /**
  * `
@@ -23,8 +25,9 @@ import com.kutear.app.bean.ManagerPagerDetails;
 public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     public static String KEY = "key";
     public static String TAG = ManagerArticlePreviewFragment.class.getSimpleName();
-    private WebView mWebView;
+    private TextView mTextView;
     private BaseBean mBaseBean;
+    private UrlImageParser parser;
 
     public static ManagerArticlePreviewFragment newInstance(Bundle args) {
         ManagerArticlePreviewFragment fragment = new ManagerArticlePreviewFragment();
@@ -44,18 +47,18 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
         mBaseBean = getArguments().getParcelable(KEY);
         if (mBaseBean != null) {
             AndDown andDown = new AndDown();
-            mWebView.getSettings().setJavaScriptEnabled(true);
-            mWebView.getSettings().setDefaultTextEncodingName("utf-8");
             if (mBaseBean instanceof ManagerArticleDetails) {
+                parser = new UrlImageParser(mTextView, mActivity);
                 mActivity.setTitle(R.string.article_preview_fragment_title);
                 ManagerArticleDetails details = (ManagerArticleDetails) mBaseBean;
                 String html = andDown.markdownToHtml(details.getContent());
-                mWebView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
+                mTextView.setText(Html.fromHtml(html, parser, null));
             } else if (mBaseBean instanceof ManagerPagerDetails) {
+                parser = new UrlImageParser(mTextView, mActivity);
                 mActivity.setTitle(R.string.pager_preview_fragment_title);
                 ManagerPagerDetails details = (ManagerPagerDetails) mBaseBean;
                 String html = andDown.markdownToHtml(details.getContent());
-                mWebView.loadDataWithBaseURL(null, html, "text/html", "utf-8", null);
+                mTextView.setText(Html.fromHtml(html, parser, null));
             }
         }
     }
@@ -63,7 +66,7 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     @Override
     protected void initView(View v) {
         hiddenLoadingLayout();
-        mWebView = (WebView) v.findViewById(R.id.article_details_webview);
+        mTextView = (TextView) v.findViewById(R.id.article_details_text_view);
     }
 
     @Override
@@ -89,6 +92,14 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (parser != null) {
+            parser.destoryDrawable();
+        }
     }
 
     @Override

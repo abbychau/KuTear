@@ -33,8 +33,8 @@ public class ApiArticleList extends BaseRequest {
 
 
     public static void getArticle(String url, int pager, final IGetListCallBack callBack) {
-        // TODO: 2015/8/25 对于pager的url重组
-        getRequest(url, new ICallBack() {
+        String newUrl = url + pager + "/";
+        getRequest(newUrl, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
                 parseArticle(str, callBack);

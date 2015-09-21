@@ -1,24 +1,16 @@
 package com.kutear.app.fragment;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kutear.app.R;
 import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.bean.BaseBean;
-import com.kutear.app.callback.IGetCallBack;
-import com.kutear.app.callback.IPostCallBack;
 
 /**
  * Created by Kutear on 2015/8/10 in KuTear.

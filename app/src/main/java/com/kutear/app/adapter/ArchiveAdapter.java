@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.kutear.app.R;
-import com.kutear.app.api.ApiArchive;
 import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.Category;

@@ -114,7 +114,7 @@ public class UrlImageParser implements ImageGetter {
             float multiplier = (float) (DeviceInfo.getScreenWidth(c) * 0.8) / (float) result.getIntrinsicWidth();
             int width = (int) (result.getIntrinsicWidth() * multiplier);
             int height = (int) (result.getIntrinsicHeight() * multiplier);
-            urlDrawable.setBounds(0, 0, width, height);
+            urlDrawable.setBounds((int) (DeviceInfo.getScreenWidth(c) * 0.1), 0, width, height);
             // set the correct bound according to the result from HTTP call
 //            urlDrawable.setBounds(0, 0, result.getIntrinsicWidth(), result.getIntrinsicHeight());
             // change the reference of the current drawable to the result
@@ -144,7 +144,7 @@ public class UrlImageParser implements ImageGetter {
                 float multiplier = (float) (DeviceInfo.getScreenWidth(c) * 0.8) / (float) drawable.getIntrinsicWidth();
                 int width = (int) (drawable.getIntrinsicWidth() * multiplier);
                 int height = (int) (drawable.getIntrinsicHeight() * multiplier);
-                drawable.setBounds(0, 0, width, height);
+                drawable.setBounds((int) (DeviceInfo.getScreenWidth(c) * 0.1), 0, width, height);
                 return drawable;
             } catch (Exception e) {
                 return null;

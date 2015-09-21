@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.kutear.app.R;
 import com.kutear.app.bean.ManagerArticle;
-import com.kutear.app.bean.Pager;
 
 import java.util.List;
 

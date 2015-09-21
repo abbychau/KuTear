@@ -6,7 +6,6 @@ import com.kutear.app.bean.Pager;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

@@ -3,7 +3,6 @@ package com.kutear.app.api;
 import com.kutear.app.bean.ReadInfo;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetCallBack;
-import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.callback.IPostCallBack;
 import com.kutear.app.utils.Constant;
 

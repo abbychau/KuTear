@@ -5,13 +5,11 @@ import android.text.TextUtils;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.bean.ManagerArticleDetails;
-import com.kutear.app.bean.ManagerCategory;
 import com.kutear.app.bean.ManagerPagerDetails;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.callback.IPostCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,7 +17,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.IdentityHashMap;
 
 /**

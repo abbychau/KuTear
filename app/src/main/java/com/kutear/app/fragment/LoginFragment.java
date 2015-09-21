@@ -1,7 +1,6 @@
 package com.kutear.app.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +11,8 @@ import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.api.ApiUser;
 import com.kutear.app.bean.BaseBean;
-import com.kutear.app.callback.ICallBack;
 import com.kutear.app.bean.UserInfo;
+import com.kutear.app.callback.ICallBack;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;

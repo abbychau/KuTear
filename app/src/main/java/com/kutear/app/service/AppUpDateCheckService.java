@@ -8,7 +8,7 @@ import android.support.annotation.Nullable;
 /**
  * Created by kutear.guo on 2015/8/5.
  */
-public class AppUpDateCheckService extends Service{
+public class AppUpDateCheckService extends Service {
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

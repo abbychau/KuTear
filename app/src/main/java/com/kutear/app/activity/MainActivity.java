@@ -11,7 +11,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,9 +23,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.ArchiveFragment;
-import com.kutear.app.fragment.BaseFragment;
 import com.kutear.app.fragment.MainFragment;
-import com.kutear.app.swipebacklayout.SwipeBackLayout;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.view.CircleImageView;
 

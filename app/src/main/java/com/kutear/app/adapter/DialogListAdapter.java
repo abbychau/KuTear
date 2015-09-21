@@ -10,9 +10,6 @@ import android.widget.TextView;
 
 import com.kutear.app.R;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by kutear.guo on 2015/8/26.
  * dialog中的listView使用的适配器

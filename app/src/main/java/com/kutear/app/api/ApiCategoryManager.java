@@ -10,14 +10,12 @@ import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetListCallBack;
 import com.kutear.app.callback.IPostCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 

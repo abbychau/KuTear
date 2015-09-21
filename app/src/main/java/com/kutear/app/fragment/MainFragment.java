@@ -16,6 +16,7 @@ import com.kutear.app.api.ApiArticleList;
 import com.kutear.app.bean.Article;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetListCallBack;
+import com.kutear.app.listener.EndlessRecyclerOnScrollListener;
 import com.kutear.app.utils.Constant;
 
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     private ArticleAdapter mAdapter;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private int pager = 0;
+    private boolean isRefresh;
+    private boolean loading = true;
+    private EndlessRecyclerOnScrollListener loadMoreListener;
 
     public static MainFragment newInstance() {
         Bundle args = new Bundle();
@@ -49,11 +53,23 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     @Override
     protected void initView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycle_layout);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+//        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         //下拉刷新
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.swipe_refresh_layout);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setColorSchemeColors(mActivity.getResources().getColor(R.color.teal_500));
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mActivity);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
+        loadMoreListener = new EndlessRecyclerOnScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore() {
+                if (loading) {
+                    loading = false;
+                    ApiArticleList.getArticle(++pager, MainFragment.this);
+                }
+            }
+        };
+        mRecyclerView.addOnScrollListener(loadMoreListener);
     }
 
     private void bindData() {
@@ -63,7 +79,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     }
 
     private void requestData() {
-        ApiArticleList.getArticle(1, this);
+        ApiArticleList.getArticle(++pager, this);
     }
 
     /**
@@ -92,25 +108,40 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
         mLists.addAll(getNotRepeatList(list));
     }
 
+    /**
+     * 获取不重复的部分
+     *
+     * @param list
+     * @return
+     */
     private List<Article> getNotRepeatList(List<Article> list) {
         if (mLists.size() == 0) {
             return list;
         }
         List<Article> tempList = new ArrayList<>();
         for (Article article : list) {
+            boolean without = true;
             for (Article article2 : mLists) {
-                if (!article.equals(article2)) {
-                    tempList.add(article);
+                if (article.equals(article2)) {
+                    without = false;
+                    break;
                 }
+            }
+            if (without) {
+                tempList.add(article);
             }
         }
         return tempList;
     }
 
 
+    /**
+     * 获取首页内容
+     */
     @Override
     public void onRefresh() {
-        ApiArticleList.getArticle(++pager, this);
+        isRefresh = true;
+        ApiArticleList.getArticle(1, this);
     }
 
     @Override
@@ -123,7 +154,9 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     @Override
     public void onSuccess(List<? extends BaseBean> lists) {
         ArrayList<Article> list = (ArrayList<Article>) lists;
-        if (pager == 2) {
+        loading = true;
+        if (isRefresh) {
+            isRefresh = false;
             addListToHeader(list);
         } else {
             addListToFooter(list);
@@ -138,6 +171,10 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     @Override
     public void onError(String msg) {
         hiddenLoadingLayout();
+        loading = true;
+        if (!isRefresh) {
+            pager--;
+        }
         if (mSwipeRefreshLayout.isRefreshing()) {
             mSwipeRefreshLayout.setRefreshing(false);
         }

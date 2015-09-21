@@ -8,7 +8,6 @@ import com.kutear.app.bean.UserInfo;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;
 
 import org.jsoup.Jsoup;

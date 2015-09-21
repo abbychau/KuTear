@@ -3,34 +3,34 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/menu_main"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/kutear_home"
             android:title="@string/menu_string_main" />
         <item
             android:id="@+id/menu_manager"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/kutear_manager"
             android:title="@string/menu_string_manager" />
         <item
             android:id="@+id/menu_archive"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/kutear_archive"
             android:title="@string/menu_string_archive" />
         <item
             android:id="@+id/menu_tab"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/kutear_tab"
             android:title="@string/menu_string_tab" />
         <item
             android:id="@+id/menu_category"
-            android:icon="@mipmap/ic_launcher"
+            android:icon="@drawable/kutear_menu"
             android:title="@string/menu_string_category" />
     </group>
     <item android:title="@string/other">
         <menu>
             <item
                 android:id="@+id/menu_setting"
-                android:icon="@mipmap/ic_launcher"
+                android:icon="@drawable/kutear_setting"
                 android:title="@string/menu_string_setting" />
             <item
                 android:id="@+id/menu_about"
-                android:icon="@mipmap/ic_launcher"
+                android:icon="@drawable/kutear_about"
                 android:title="@string/menu_string_about" />
         </menu>
     </item>

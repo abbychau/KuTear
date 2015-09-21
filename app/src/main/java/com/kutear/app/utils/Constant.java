@@ -1,7 +1,5 @@
 package com.kutear.app.utils;
 
-import java.net.URI;
-
 /**
  * Created by kutear.guo on 2015/8/4.
  * <p/>
@@ -28,7 +26,7 @@ public class Constant {
     //关于接口
     public static final String URI_ABOUT = URI_HOST + "/index.php/about.html";
     //文章列表接口
-    public static final String URI_ARTICLE = URI_HOST + "/index.php/page/1/";
+    public static final String URI_ARTICLE = URI_HOST + "/index.php/page/";
     //用户信息主页
     public static final String URI_USER_CENTER = URI_HOST + "/admin/profile.php";
     //基本设置
@@ -50,7 +48,7 @@ public class Constant {
     //发布文章URL
     public static final String URI_ARTICLE_POST = URI_HOST + "/admin/write-post.php";
     //独立页面URL
-    public static final String URI_PAGER_DETAILS= URI_HOST + "/admin/write-page.php";
+    public static final String URI_PAGER_DETAILS = URI_HOST + "/admin/write-page.php";
 
 
     /*************************************

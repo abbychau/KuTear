@@ -1,7 +1,6 @@
 package com.kutear.app.fragment;
 
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
