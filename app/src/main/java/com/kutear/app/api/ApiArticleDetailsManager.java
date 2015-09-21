@@ -274,6 +274,7 @@ public class ApiArticleDetailsManager extends ApiAdmin {
                 params.put("category[]", item.getIndex() + "");
             }
         }
+        params.put("date", details.getDate());
         params.put("tags", details.getTags());
         params.put("visibility", details.getVisibility());
         params.put("password", details.getPassword());

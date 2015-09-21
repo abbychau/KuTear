@@ -31,6 +31,7 @@
     <string name="pager_title">页面标题</string>
     <string name="article_edit_fragment_title">编辑文章</string>
     <string name="article_preview_fragment_title">文章预览</string>
+    <string name="pager_preview_fragment_title">页面预览</string>
     <string name="no_more_article">没有更多文章</string>
     <string name="share">分享</string>
     <string name="can_not_find_archive_list">找不到归档列表</string>
@@ -86,5 +87,7 @@
     <string name="save_to_server_fail">保存失败</string>
     <string name="article_title_can_not_be_empty">文章标题不可为空</string>
     <string name="article_posting">文章发布中</string>
+    <string name="pager_posting">页面发布中</string>
     <string name="pager_edit">页面编辑</string>
+    <string name="failed_to_load_image">加载图片失败</string>
 </resources>

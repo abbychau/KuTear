@@ -5,13 +5,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.api.ApiPagerDetailsManager;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.ManagerPagerDetails;
 import com.kutear.app.bean.Pager;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 /**
  * Created by kutear on 15-9-17.
@@ -63,7 +63,15 @@ public class ManagerPagerEditFragment extends BaseToolBarFragment implements Vie
 
     @Override
     public void onClick(View v) {
-
+        if (details == null) {
+            details = new ManagerPagerDetails();
+            //TODO 其它数据
+        }
+        details.setTitle(mETTitle.getText().toString().trim());
+        details.setContent(mETContent.getText().toString().trim());
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(ManagerArticlePreviewFragment.KEY, details);
+        AppApplication.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
     }
 
     @Override

@@ -5,9 +5,12 @@ import android.text.TextUtils;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.bean.ManagerArticleDetails;
+import com.kutear.app.bean.ManagerCategory;
 import com.kutear.app.bean.ManagerPagerDetails;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.callback.IGetCallBack;
+import com.kutear.app.callback.IPostCallBack;
+import com.kutear.app.utils.Constant;
 import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
@@ -16,6 +19,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.IdentityHashMap;
 
 /**
  * Created by kutear on 15-9-17.
@@ -31,7 +36,6 @@ public class ApiPagerDetailsManager extends ApiAdmin {
      * @param callBack
      */
     public static void getPagerDetails(String url, final IGetCallBack callBack) {
-        L.v(TAG, "Url=" + url);
         getRequest(url, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {
@@ -190,5 +194,83 @@ public class ApiPagerDetailsManager extends ApiAdmin {
         if (callBack != null) {
             callBack.onGetSuccess(details);
         }
+    }
+
+    /**
+     * 发表pager
+     */
+    public static void postPager(final ManagerPagerDetails details, final IPostCallBack callBack) {
+        getRequest(Constant.URI_PAGER_DETAILS, new ICallBack() {
+            @Override
+            public void onSuccess(int statusCode, String str) {
+                if (!TextUtils.isEmpty(str)) {
+                    Document doc = Jsoup.parse(str);
+                    Element formElement = doc.getElementsByTag("form") != null ? doc.getElementsByTag("form").first() : null;
+                    if (formElement != null) {
+                        String url = formElement.attr("action");
+                        onPostPager(url, details, callBack);
+                    } else {
+                        if (callBack != null) {
+                            callBack.onPostError(AppApplication.getKString(R.string.get_url_error));
+                        }
+                    }
+                } else {
+                    if (callBack != null) {
+                        callBack.onPostError(AppApplication.getKString(R.string.get_url_error));
+                    }
+                }
+            }
+
+            @Override
+            public void onError(int statusCode, String str) {
+                if (callBack != null) {
+                    callBack.onPostError(AppApplication.getKString(R.string.get_url_error));
+                }
+            }
+        });
+    }
+
+    /**
+     * @param url
+     * @param callBack
+     */
+    private static void onPostPager(String url, ManagerPagerDetails details, final IPostCallBack callBack) {
+        IdentityHashMap params = new IdentityHashMap();
+        params.put("title", details.getTitle());
+        params.put("slug", details.getSlug());
+        params.put("text", details.getContent());
+        if (details.getCustomField() != null) {
+            for (ManagerArticleDetails.Field item : details.getCustomField()) {
+                params.put("fieldNames[]", item.getFiledName());
+                params.put("fieldValues[]", item.getFiledValue());
+                params.put("fieldTypes[]", item.getFiledType());
+            }
+        }
+        params.put("order", details.getOrder());
+        params.put("template", details.getTemplate());
+        params.put("date", details.getDate());
+        params.put("cid", details.getCid());
+        params.put("do", details.getDoAction());
+        params.put("markdown", details.getMarkdown());
+        params.put("visibility", details.getVisibility());
+        params.put("allowComment", details.getAllowComment());
+        params.put("allowPing", details.getAllowPing());
+        params.put("allowFeed", details.getAllowFeed());
+
+        postRequest(url, params, new ICallBack() {
+            @Override
+            public void onSuccess(int statusCode, String str) {
+                if (callBack != null) {
+                    callBack.onPostSuccess(str);
+                }
+            }
+
+            @Override
+            public void onError(int statusCode, String str) {
+                if (callBack != null) {
+                    callBack.onPostError(AppApplication.getKString(R.string.save_to_server_fail));
+                }
+            }
+        });
     }
 }

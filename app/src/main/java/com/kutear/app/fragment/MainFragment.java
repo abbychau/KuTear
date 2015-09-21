@@ -116,7 +116,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     @Override
     public void onClick(View v, int position) {
         Bundle bundle = new Bundle();
-        bundle.putParcelable(DetailsFragment.KEY, mLists.get(position));
+        bundle.putParcelable(ArticleDetailsFragment.KEY, mLists.get(position));
         AppApplication.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
     }
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -26,7 +27,7 @@ import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.Article;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetCallBack;
-import com.kutear.app.utils.L;
+import com.kutear.app.netutils.UrlImageParser;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -36,18 +37,19 @@ import org.jsoup.select.Elements;
  * Created by kutear.guo on 2015/8/5.
  * 文章详情
  */
-public class DetailsFragment extends BaseFragment implements IGetCallBack {
+public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack {
     public static final String KEY = "Article";
-    private static final String TAG = DetailsFragment.class.getSimpleName();
+    private static final String TAG = ArticleDetailsFragment.class.getSimpleName();
     private Toolbar mToolBar;
     private NetworkImageView mIvTitleBg;
     private Article mArticle;
     private TextView mTvContent;
     private ShareActionProvider mShareActionProvider;
     private CollapsingToolbarLayout mToolBarLayout;
+    private UrlImageParser parser;
 
-    public static DetailsFragment newInstance(Bundle args) {
-        DetailsFragment fragment = new DetailsFragment();
+    public static ArticleDetailsFragment newInstance(Bundle args) {
+        ArticleDetailsFragment fragment = new ArticleDetailsFragment();
         if (args != null) {
             fragment.setArguments(args);
         }
@@ -139,7 +141,10 @@ public class DetailsFragment extends BaseFragment implements IGetCallBack {
         String str = ((Article) result).getDetail();
         setFirstImage(str);
         str += getCssFromAsset();
-        mTvContent.setText(Html.fromHtml(str));
+        parser = new UrlImageParser(mTvContent, mActivity);
+        mTvContent.setText(Html.fromHtml(str, parser, null));
+// TODO 文章中的链接
+        mTvContent.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -149,7 +154,7 @@ public class DetailsFragment extends BaseFragment implements IGetCallBack {
     }
 
     private String getCssFromAsset() {
-        String cssUrl = "file:///android_asset/style.css";
+        String cssUrl = "file://android_asset/style.css";
         return "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + cssUrl + "\" />";
     }
 
@@ -175,6 +180,9 @@ public class DetailsFragment extends BaseFragment implements IGetCallBack {
     @Override
     public void onDestroy() {
         mIvTitleBg.destroyDrawingCache();
+        if (parser != null) {
+            parser.destoryDrawable();
+        }
         super.onDestroy();
     }
 }

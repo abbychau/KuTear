@@ -10,7 +10,7 @@ import com.kutear.app.R;
 import com.kutear.app.fragment.AboutFragment;
 import com.kutear.app.fragment.ArchiveFragment;
 import com.kutear.app.fragment.ArticleListFragment;
-import com.kutear.app.fragment.DetailsFragment;
+import com.kutear.app.fragment.ArticleDetailsFragment;
 import com.kutear.app.fragment.LoginFragment;
 import com.kutear.app.fragment.ManageFragment;
 import com.kutear.app.fragment.ManagerArticlePreviewFragment;
@@ -69,7 +69,7 @@ public class CommonActivity extends BaseActivity {
                 mFragment = ArchiveFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_DETAILS:
-                mFragment = DetailsFragment.newInstance(bundle);
+                mFragment = ArticleDetailsFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_MANAGER:
                 if (AppApplication.getUserManager().isLogin()) {

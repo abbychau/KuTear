@@ -137,16 +137,6 @@ public class ManagerPagerDetails extends BaseBean {
     }
 
     @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
-    @Override
     public String toString() {
         return "ManagerPagerDetails{" +
                 "title='" + title + '\'' +
@@ -165,4 +155,57 @@ public class ManagerPagerDetails extends BaseBean {
                 ", customField=" + customField +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.title);
+        dest.writeString(this.content);
+        dest.writeString(this.cid);
+        dest.writeString(this.doAction);
+        dest.writeString(this.markdown);
+        dest.writeString(this.date);
+        dest.writeString(this.visibility);
+        dest.writeString(this.allowComment);
+        dest.writeString(this.allowPing);
+        dest.writeString(this.allowFeed);
+        dest.writeString(this.slug);
+        dest.writeString(this.template);
+        dest.writeString(this.order);
+        dest.writeTypedList(customField);
+    }
+
+    public ManagerPagerDetails() {
+    }
+
+    protected ManagerPagerDetails(Parcel in) {
+        this.title = in.readString();
+        this.content = in.readString();
+        this.cid = in.readString();
+        this.doAction = in.readString();
+        this.markdown = in.readString();
+        this.date = in.readString();
+        this.visibility = in.readString();
+        this.allowComment = in.readString();
+        this.allowPing = in.readString();
+        this.allowFeed = in.readString();
+        this.slug = in.readString();
+        this.template = in.readString();
+        this.order = in.readString();
+        this.customField = in.createTypedArrayList(ManagerArticleDetails.Field.CREATOR);
+    }
+
+    public static final Creator<ManagerPagerDetails> CREATOR = new Creator<ManagerPagerDetails>() {
+        public ManagerPagerDetails createFromParcel(Parcel source) {
+            return new ManagerPagerDetails(source);
+        }
+
+        public ManagerPagerDetails[] newArray(int size) {
+            return new ManagerPagerDetails[size];
+        }
+    };
 }
