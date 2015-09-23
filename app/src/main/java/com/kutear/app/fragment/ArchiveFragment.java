@@ -178,10 +178,6 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
 
     private void resetData(List<? extends BaseBean> lists) {
-        for( BaseBean bean:lists){
-            L.v(TAG,bean.toString());
-        }
-
         mlist.clear();
         mlist.addAll(lists);
         mAdapter.notifyDataSetChanged();

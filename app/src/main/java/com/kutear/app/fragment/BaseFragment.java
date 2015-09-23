@@ -93,6 +93,7 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
 
     /**
      * 加载视图
+     *
      * @param res 资源文件
      * @return
      */
@@ -123,5 +124,6 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
     public void onDestroy() {
         super.onDestroy();
         mActivity = null;
+        System.gc();
     }
 }

@@ -41,7 +41,7 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
     }
 
     protected void initView(View v) {
-        mActivity.setTitle(R.string.login);
+        setTitle(R.string.login);
         mEtPassWord = (EditText) v.findViewById(R.id.login_et_password);
         mEtUserName = (EditText) v.findViewById(R.id.login_et_username);
         Button mBtnLogin = (Button) v.findViewById(R.id.login_btn_login);

@@ -34,7 +34,7 @@ public class AboutFragment extends BaseToolBarFragment {
     }
 
     protected void initView(View v) {
-        mActivity.setTitle(R.string.menu_string_about);
+        setTitle(R.string.menu_string_about);
         mTvAbout = (TextView) v.findViewById(R.id.about_text);
     }
 

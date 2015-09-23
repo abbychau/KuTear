@@ -25,6 +25,6 @@ public class SettingFragment extends BaseToolBarFragment {
 
     @Override
     protected void initView(View v) {
-       mActivity.setTitle(R.string.menu_string_setting);
+        setTitle(R.string.menu_string_setting);
     }
 }

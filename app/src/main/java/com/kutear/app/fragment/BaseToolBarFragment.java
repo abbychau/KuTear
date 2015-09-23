@@ -3,20 +3,24 @@ package com.kutear.app.fragment;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.kutear.app.R;
 import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.bean.BaseBean;
+import com.kutear.app.callback.OnBackPressed;
+import com.kutear.app.utils.L;
 
 /**
  * Created by Kutear on 2015/8/10 in KuTear.
  * Fragment
  */
-public abstract class BaseToolBarFragment extends BaseFragment {
+public abstract class BaseToolBarFragment extends BaseFragment implements OnBackPressed {
     protected BaseActivity mActivity;
     protected View bodyView;
     protected ViewGroup loadingLayout;
@@ -58,6 +62,10 @@ public abstract class BaseToolBarFragment extends BaseFragment {
         super.onStart();
     }
 
+    protected int getMenuRes() {
+        return -1;
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -65,9 +73,25 @@ public abstract class BaseToolBarFragment extends BaseFragment {
         loadingLayout = (ViewGroup) bodyView.findViewById(R.id.loading_layout);
         contentLayout = (ViewGroup) bodyView.findViewById(R.id.content_layout);
         mToolBar = (Toolbar) bodyView.findViewById(R.id.toolbar);
-        mActivity.setSupportActionBar(mToolBar);
+        mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
+        mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        if (getMenuRes() > 0) {
+            mToolBar.inflateMenu(getMenuRes());
+        }
+        mToolBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                return onOptionsItemSelected(item);
+            }
+        });
+//        mActivity.setSupportActionBar(mToolBar);
         //noinspection ConstantConditions
-        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        mActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         showLoadingLayout();
         View view = setContentView();
         if (view != null) {
@@ -101,11 +125,16 @@ public abstract class BaseToolBarFragment extends BaseFragment {
 
     protected final void setTitle(String title) {
         mToolBar.setTitle(title);
+        mActivity.setTitle(title);
     }
 
     protected final void setTitle(int titleRes) {
         mToolBar.setTitle(titleRes);
+        mActivity.setTitle(titleRes);
     }
 
-
+    @Override
+    public void onBackPressed() {
+        mActivity.finish();
+    }
 }

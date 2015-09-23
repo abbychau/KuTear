@@ -34,7 +34,7 @@ public class ManagerPagerEditFragment extends BaseToolBarFragment implements Vie
 
     @Override
     protected View setContentView() {
-        mActivity.setTitle(mActivity.getString(R.string.pager_edit));
+        setTitle(mActivity.getString(R.string.pager_edit));
         View mBodyView = inflate(R.layout.fragment_manager_pager_edit);
         initView(mBodyView);
         doRequest();

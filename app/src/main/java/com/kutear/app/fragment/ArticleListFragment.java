@@ -85,9 +85,9 @@ public class ArticleListFragment extends BaseToolBarFragment implements IGetList
             }
         });
         if (mTab != null) {
-            mActivity.setTitle(mTab.getName());
+            setTitle(mTab.getName());
         } else if (mCategory != null) {
-            mActivity.setTitle(mCategory.getName());
+            setTitle(mCategory.getName());
         }
         mAdapter = new ArticleAdapter(mLists, this);
         mRecycleView.setAdapter(mAdapter);

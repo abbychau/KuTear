@@ -19,6 +19,7 @@ import com.kutear.app.fragment.ManagerArticleEditFragment;
 import com.kutear.app.fragment.ManagerPagerEditFragment;
 import com.kutear.app.fragment.SettingFragment;
 import com.kutear.app.fragment.UserCenterToolBarFragment;
+import com.kutear.app.fragment.WebViewFragment;
 import com.kutear.app.utils.Constant;
 
 /**
@@ -106,6 +107,9 @@ public class CommonActivity extends BaseActivity {
                 break;
             case Constant.ACTIVITY_EDIT_PAGER:
                 mFragment = ManagerPagerEditFragment.newInstance(bundle);
+                break;
+            case Constant.ACTIVITY_WEB_VIEW:
+                mFragment = WebViewFragment.newInstance(bundle);
                 break;
             default:
                 break;

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="teal_500">#ff009688</color>
+    <color name="black_000">#ff000000</color>
     <color name="teal_300">#FF4DB6AC</color>
     <color name="teal_900">#ff00796B</color>
     <color name="blue_500">#ff03A9F4</color>
@@ -8,6 +9,7 @@
     <color name="gray_300">#ffE0E0E0</color>
     <color name="gray_400">#ffBDBDBD</color>
     <color name="gray_800">#ff424242</color>
+    <color name="gray_900">#ff212121</color>
     <color name="green_500">#FF4CAF50</color>
     <color name="red_500">#ffF44336</color>
 </resources>

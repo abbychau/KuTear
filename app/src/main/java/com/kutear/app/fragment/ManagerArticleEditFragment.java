@@ -60,7 +60,7 @@ public class ManagerArticleEditFragment extends BaseToolBarFragment implements V
 
     @Override
     protected void initView(View v) {
-        mActivity.setTitle(R.string.article_edit_fragment_title);
+        setTitle(R.string.article_edit_fragment_title);
         mETTitle = (EditText) v.findViewById(R.id.article_et_title);
         mETContent = (EditText) v.findViewById(R.id.article_et_content);
         mBtPostArticle = (Button) v.findViewById(R.id.article_post_btn);

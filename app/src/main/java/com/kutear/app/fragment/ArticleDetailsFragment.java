@@ -2,6 +2,7 @@ package com.kutear.app.fragment;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
@@ -9,12 +10,21 @@ import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.ShareActionProvider;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
+import android.text.Layout;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.SpannableStringBuilder;
 import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
+import android.text.method.Touch;
+import android.text.style.ClickableSpan;
+import android.text.style.URLSpan;
+import android.text.style.UnderlineSpan;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -28,6 +38,8 @@ import com.kutear.app.bean.Article;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.netutils.UrlImageParser;
+import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -142,9 +154,23 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
         setFirstImage(str);
         str += getCssFromAsset();
         parser = new UrlImageParser(mTvContent, mActivity);
+//        SpannableStringBuilder strBuilder = new SpannableStringBuilder();
+//        final UnderlineSpan[] underlines = strBuilder.getSpans(0, 10, UnderlineSpan.class);
+//        for (UnderlineSpan span : underlines) {
+//            int start = strBuilder.getSpanStart(span);
+//            int end = strBuilder.getSpanEnd(span);
+//            int flags = strBuilder.getSpanFlags(span);
+//            ClickableSpan myActivityLauncher = new ClickableSpan() {
+//                public void onClick(View view) {
+//                    L.e(TAG, "on click");
+//                }
+//            };
+//            strBuilder.setSpan(myActivityLauncher, start, end, flags);
+//        }
         mTvContent.setText(Html.fromHtml(str, parser, null));
-// TODO 文章中的链接
-        mTvContent.setMovementMethod(LinkMovementMethod.getInstance());
+
+
+        mTvContent.setMovementMethod(new CustomLinkMovementMethod());
     }
 
     @Override
@@ -184,5 +210,59 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
             parser.destoryDrawable();
         }
         super.onDestroy();
+    }
+
+    /**
+     * 文章中的链接处理
+     */
+    public class CustomLinkMovementMethod extends LinkMovementMethod {
+        @Override
+        public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
+            int action = event.getAction();
+
+            if (action == MotionEvent.ACTION_UP ||
+                    action == MotionEvent.ACTION_DOWN) {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+
+                x -= widget.getTotalPaddingLeft();
+                y -= widget.getTotalPaddingTop();
+
+                x += widget.getScrollX();
+                y += widget.getScrollY();
+
+                Layout layout = widget.getLayout();
+                int line = layout.getLineForVertical(y);
+                int off = layout.getOffsetForHorizontal(line, x);
+
+                ClickableSpan[] link = buffer.getSpans(off, off, ClickableSpan.class);
+                if (link.length != 0) {
+                    if (action == MotionEvent.ACTION_UP) {
+                        //强制转向自己的WebView,不响应link的onClick事件
+                        if (link[0] instanceof URLSpan) {
+                            String url = ((URLSpan) link[0]).getURL();
+                            Bundle bundle = new Bundle();
+                            bundle.putString(WebViewFragment.KEY, url);
+                            AppApplication.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
+                        }
+                    } else if (action == MotionEvent.ACTION_DOWN) {
+                        Selection.setSelection(buffer,
+                                buffer.getSpanStart(link[0]),
+                                buffer.getSpanEnd(link[0]));
+                    }
+
+//                    if (widget instanceof TextViewFixTouchConsume) {
+//                        ((TextViewFixTouchConsume) widget).linkHit = true;
+//                    }
+                    return true;
+                } else {
+                    Selection.removeSelection(buffer);
+                    Touch.onTouchEvent(widget, buffer, event);
+                    return false;
+                }
+            }
+            return Touch.onTouchEvent(widget, buffer, event);
+        }
+
     }
 }

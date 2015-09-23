@@ -49,13 +49,13 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
             AndDown andDown = new AndDown();
             if (mBaseBean instanceof ManagerArticleDetails) {
                 parser = new UrlImageParser(mTextView, mActivity);
-                mActivity.setTitle(R.string.article_preview_fragment_title);
+                setTitle(R.string.article_preview_fragment_title);
                 ManagerArticleDetails details = (ManagerArticleDetails) mBaseBean;
                 String html = andDown.markdownToHtml(details.getContent());
                 mTextView.setText(Html.fromHtml(html, parser, null));
             } else if (mBaseBean instanceof ManagerPagerDetails) {
                 parser = new UrlImageParser(mTextView, mActivity);
-                mActivity.setTitle(R.string.pager_preview_fragment_title);
+                setTitle(R.string.pager_preview_fragment_title);
                 ManagerPagerDetails details = (ManagerPagerDetails) mBaseBean;
                 String html = andDown.markdownToHtml(details.getContent());
                 mTextView.setText(Html.fromHtml(html, parser, null));
@@ -70,9 +70,8 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_preview, menu);
-        super.onCreateOptionsMenu(menu, inflater);
+    protected int getMenuRes() {
+        return R.menu.menu_preview;
     }
 
     @Override
