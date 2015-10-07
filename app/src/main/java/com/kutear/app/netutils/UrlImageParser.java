@@ -32,6 +32,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -140,7 +141,9 @@ public class UrlImageParser implements ImageGetter {
         public Drawable fetchDrawable(String urlString) {
             try {
                 InputStream is = fetch(urlString);
-                Drawable drawable = Drawable.createFromStream(is, "src");
+                BitmapFactory.Options options = new BitmapFactory.Options();
+                options.inSampleSize = 2;
+                Drawable drawable = Drawable.createFromResourceStream(null, null, is, "src", options);
                 float multiplier = (float) (DeviceInfo.getScreenWidth(c) * 0.8) / (float) drawable.getIntrinsicWidth();
                 int width = (int) (drawable.getIntrinsicWidth() * multiplier);
                 int height = (int) (drawable.getIntrinsicHeight() * multiplier);
