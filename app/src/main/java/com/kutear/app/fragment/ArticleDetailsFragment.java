@@ -154,22 +154,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
         setFirstImage(str);
         str += getCssFromAsset();
         parser = new UrlImageParser(mTvContent, mActivity);
-//        SpannableStringBuilder strBuilder = new SpannableStringBuilder();
-//        final UnderlineSpan[] underlines = strBuilder.getSpans(0, 10, UnderlineSpan.class);
-//        for (UnderlineSpan span : underlines) {
-//            int start = strBuilder.getSpanStart(span);
-//            int end = strBuilder.getSpanEnd(span);
-//            int flags = strBuilder.getSpanFlags(span);
-//            ClickableSpan myActivityLauncher = new ClickableSpan() {
-//                public void onClick(View view) {
-//                    L.e(TAG, "on click");
-//                }
-//            };
-//            strBuilder.setSpan(myActivityLauncher, start, end, flags);
-//        }
         mTvContent.setText(Html.fromHtml(str, parser, null));
-
-
         mTvContent.setMovementMethod(new CustomLinkMovementMethod());
     }
 
@@ -250,10 +235,6 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
                                 buffer.getSpanStart(link[0]),
                                 buffer.getSpanEnd(link[0]));
                     }
-
-//                    if (widget instanceof TextViewFixTouchConsume) {
-//                        ((TextViewFixTouchConsume) widget).linkHit = true;
-//                    }
                     return true;
                 } else {
                     Selection.removeSelection(buffer);

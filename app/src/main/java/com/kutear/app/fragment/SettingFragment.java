@@ -1,10 +1,15 @@
 package com.kutear.app.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.view.View;
 
 import com.kutear.app.R;
+import com.kutear.app.callback.IUploadCallBack;
 import com.kutear.app.upload.QiniuUpload;
+import com.kutear.app.utils.L;
+import com.kutear.app.viewhelper.EditTextViewHelper;
 
 import java.io.File;
 
@@ -13,6 +18,9 @@ import java.io.File;
  * 设置页面
  */
 public class SettingFragment extends BaseToolBarFragment {
+    private static final String TAG = SettingFragment.class.getSimpleName();
+    private EditTextViewHelper mEditTextViewHelper;
+
     public static SettingFragment newInstance() {
         Bundle args = new Bundle();
         SettingFragment fragment = new SettingFragment();
@@ -24,8 +32,13 @@ public class SettingFragment extends BaseToolBarFragment {
     protected View setContentView() {
         initView(null);
         hiddenLoadingLayout();
-        QiniuUpload.upload(new File("/storage/emulated/0/Download/IMG_20151010_114340.jpg"),null);
-        return null;
+        mEditTextViewHelper = new EditTextViewHelper(this);
+        return mEditTextViewHelper.getMainView();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mEditTextViewHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

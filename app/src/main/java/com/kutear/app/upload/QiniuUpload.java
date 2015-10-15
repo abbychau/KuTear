@@ -1,11 +1,14 @@
 package com.kutear.app.upload;
 
 import com.kutear.app.AppApplication;
+import com.kutear.app.R;
 import com.kutear.app.callback.IUploadCallBack;
 import com.kutear.app.utils.L;
 import com.qiniu.android.http.ResponseInfo;
 import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
 import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 import com.qiniu.android.utils.UrlSafeBase64;
 
 import org.json.JSONObject;
@@ -25,34 +28,49 @@ public class QiniuUpload {
     private static final String SecretKey = "8YIxcuQXJTa5dwnfl-M79vFpgusxlhgByRhT5Twr";
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
+    private static final String QINIU_HOST = "http://kutear.qiniudn.com/";
+    private static final String SCOPE = "kutear";//容器名称
+
     private static final String TAG = QiniuUpload.class.getSimpleName();
 
-    public static void upload(File file, IUploadCallBack callBack) {
+    public static void upload(final File file, final IUploadCallBack callBack) {
         UploadManager uploadManager = AppApplication.getUploadManager();
         try {
             // 1 构造上传策略
             JSONObject _json = new JSONObject();
             long _dataline = System.currentTimeMillis() / 1000 + 3600;
             _json.put("deadline", _dataline);// 有效时间为一个小时
-            _json.put("scope", "kutear");
+            _json.put("scope", SCOPE);
             String _encodedPutPolicy = UrlSafeBase64.encodeToString(_json
                     .toString().getBytes());
             byte[] _sign = HmacSHA1Encrypt(_encodedPutPolicy, SecretKey);
             String _encodedSign = UrlSafeBase64.encodeToString(_sign);
             String _uploadToken = AccessKey + ':' + _encodedSign + ':'
                     + _encodedPutPolicy;
-            L.v(TAG, "开始上传......");
-            uploadManager.put(file, null, _uploadToken,
+            final String fileName = System.currentTimeMillis() + "_" + file.getName();
+            UpProgressHandler progressHandler = new UpProgressHandler() {
+                @Override
+                public void progress(String key, double percent) {
+                    if (callBack != null) {
+                        callBack.onProcess(percent);
+                    }
+                }
+            };
+            UploadOptions options = new UploadOptions(null, "image/*", false, progressHandler, null);
+            uploadManager.put(file, fileName, _uploadToken,
                     new UpCompletionHandler() {
                         @Override
                         public void complete(String key, ResponseInfo info,
                                              JSONObject response) {
-                            L.e(TAG, info.toString());
+                            if (callBack != null) {
+                                callBack.onSuccess(QINIU_HOST + key);
+                            }
                         }
-                    }, null);
-
+                    }, options);
         } catch (Exception e) {
-            e.printStackTrace();
+            if (callBack != null) {
+                callBack.onError(AppApplication.getKString(R.string.failed_to_upload));
+            }
         }
     }
 

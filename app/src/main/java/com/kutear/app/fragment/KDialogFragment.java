@@ -13,8 +13,10 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.kutear.app.R;
@@ -30,9 +32,11 @@ public class KDialogFragment extends DialogFragment {
     public static final String DIALOG_TYPE = "type";
     public static final String MSG_KEY = "msg";
     public static final String LIST_KEY = "list";
-    public static final int DIALOG_LOADING = 0x0000;
+    public static final String DIALOG_TITLE = "title";
+    public static final int DIALOG_LOADING = 0x0000;  //Loading
     public static final int DIALOG_LIST = 0x0001;    //显示列表
     public static final int DIALOG_MSG_ONE = 0x0002;    //含一个按钮的Dialog
+    public static final int DIALOG_EDIT_TEXT = 0x0003; //含EditText的对话框
 
     private int mDialogType;
     private View mBodyView;
@@ -42,16 +46,26 @@ public class KDialogFragment extends DialogFragment {
     private LinearLayout mButtonLayout;
     private LinearLayout mButtonOneLayout;
     private LinearLayout mButtonTwoLayout;
+    private LinearLayout mEditTextLayout;
+    private RelativeLayout mTitleLayout;
+    private TextView mTitleText;
     private TextView mBtnOk;
     private TextView mBtnSingle;
     private TextView mBtnCancle;
     private TextView mLoadText;
     private TextView mMsgView;
     private ListView mListView;
+    private EditText mEditText;
     private Bundle mBundle;
-    private static Activity mActivity;
+    private Activity mActivity;
     private AdapterView.OnItemClickListener mListener;
     private View.OnClickListener mSingleListener;
+    private View.OnClickListener mOkListener;
+    private IEditTextCallBack mIEditTextCallBack;
+
+    public interface IEditTextCallBack {
+        void onTextInput(String str);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -69,6 +83,12 @@ public class KDialogFragment extends DialogFragment {
         return fragment;
     }
 
+    /**
+     * 显示加载对话框
+     *
+     * @param manager
+     * @param msg
+     */
     public static void showLoadingDialog(FragmentManager manager, String msg) {
         Bundle bundle = new Bundle();
         bundle.putString(MSG_KEY, msg);
@@ -77,6 +97,13 @@ public class KDialogFragment extends DialogFragment {
         dialogFragment.show(manager, TAG);
     }
 
+    /**
+     * 显示列表对话框
+     *
+     * @param manager
+     * @param lists
+     * @param listener
+     */
     public static void showListDialog(FragmentManager manager, String[] lists, AdapterView.OnItemClickListener listener) {
         Bundle bundle = new Bundle();
         bundle.putStringArray(LIST_KEY, lists);
@@ -86,19 +113,48 @@ public class KDialogFragment extends DialogFragment {
     }
 
 
+    /**
+     * 显示含一个确定按钮的Msg对话框
+     *
+     * @param manager
+     * @param msg
+     * @param okListener
+     */
     public static void showMsgOne(FragmentManager manager, String msg, View.OnClickListener okListener) {
         Bundle bundle = new Bundle();
         bundle.putString(MSG_KEY, msg);
         KDialogFragment dialogFragment = newInstance(bundle, DIALOG_MSG_ONE);
-        dialogFragment.setmSingleListener(okListener);
+        dialogFragment.setSingleListener(okListener);
         dialogFragment.show(manager, TAG);
+    }
+
+    /**
+     * 显示含EditText的对话框
+     *
+     * @param manager
+     * @param title      对话框标题
+     * @param msg        EditText 默认
+     * @param okListener
+     */
+    public static void showEditText(FragmentManager manager, String title, String msg, IEditTextCallBack mIEditTextCallBack) {
+        Bundle bundle = new Bundle();
+        bundle.putString(MSG_KEY, msg);
+        bundle.putString(DIALOG_TITLE, title);
+        KDialogFragment dialogFragment = newInstance(bundle, DIALOG_EDIT_TEXT);
+        dialogFragment.setIEditTextCallBack(mIEditTextCallBack);
+        dialogFragment.show(manager, TAG);
+    }
+
+    public void setIEditTextCallBack(IEditTextCallBack mIEditTextCallBack) {
+        this.mIEditTextCallBack = mIEditTextCallBack;
+    }
+
+    private void setOkOnClickListener(View.OnClickListener listener) {
+        this.mOkListener = listener;
     }
 
     @Override
     public void show(FragmentManager manager, String tag) {
-//        super.show(manager, tag );
-//        this.mDismissed = false;
-//        this.mShownByMe = true;
         FragmentTransaction ft = manager.beginTransaction();
         ft.add(this, tag);
         ft.commitAllowingStateLoss();
@@ -160,7 +216,37 @@ public class KDialogFragment extends DialogFragment {
             case DIALOG_MSG_ONE:
                 showMsgWithOneBtn(msg);
                 break;
+            case DIALOG_EDIT_TEXT:
+                showEditText();
+                break;
         }
+    }
+
+    /**
+     * 显示EditText对话框
+     */
+    private void showEditText() {
+        mTitleLayout.setVisibility(View.VISIBLE);
+        mTitleText.setText(getArguments().getString(DIALOG_TITLE));
+        mButtonLayout.setVisibility(View.VISIBLE);
+        mEditTextLayout.setVisibility(View.VISIBLE);
+        mEditText.setText(getArguments().getString(MSG_KEY));
+        mButtonTwoLayout.setVisibility(View.VISIBLE);
+        mBtnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mIEditTextCallBack != null) {
+                    mIEditTextCallBack.onTextInput(mEditText.getText().toString().trim());
+                    hiddenDialog(getFragmentManager());
+                }
+            }
+        });
+        mBtnCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                hiddenDialog(getFragmentManager());
+            }
+        });
     }
 
     /**
@@ -182,17 +268,16 @@ public class KDialogFragment extends DialogFragment {
         if (mButtonOneLayout != null) {
             mButtonOneLayout.setVisibility(View.VISIBLE);
         }
-        if (mSingleListener != null) {
-            mBtnSingle.setOnClickListener(mSingleListener);
-        }
     }
 
-    private void setmSingleListener(View.OnClickListener listener) {
+    private void setSingleListener(View.OnClickListener listener) {
         this.mSingleListener = listener;
     }
 
     private void initView() {
         if (mBodyView != null) {
+            mTitleLayout = (RelativeLayout) mBodyView.findViewById(R.id.dialog_header);
+            mTitleText = (TextView) mBodyView.findViewById(R.id.dialog_header_title);
             mLoadLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_loading);
             mLoadText = (TextView) mBodyView.findViewById(R.id.dialog_loading_text);
             mListView = (ListView) mBodyView.findViewById(R.id.dialog_list);
@@ -205,6 +290,8 @@ public class KDialogFragment extends DialogFragment {
             mBtnCancle = (TextView) mBodyView.findViewById(R.id.dialog_bottom_cancle);
             mBtnOk = (TextView) mBodyView.findViewById(R.id.dialog_bottom_ok);
             mBtnSingle = (TextView) mBodyView.findViewById(R.id.dialog_bottom_single);
+            mEditText = (EditText) mBodyView.findViewById(R.id.dialog_edit_text);
+            mEditTextLayout = (LinearLayout) mBodyView.findViewById(R.id.dialog_edit_text_layout);
         }
     }
 

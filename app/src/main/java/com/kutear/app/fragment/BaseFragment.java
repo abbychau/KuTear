@@ -2,6 +2,7 @@ package com.kutear.app.fragment;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
@@ -119,7 +120,6 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
         }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
     public void onDestroy() {
         super.onDestroy();

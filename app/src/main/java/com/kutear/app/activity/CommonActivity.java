@@ -21,6 +21,7 @@ import com.kutear.app.fragment.SettingFragment;
 import com.kutear.app.fragment.UserCenterToolBarFragment;
 import com.kutear.app.fragment.WebViewFragment;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 
 /**
  * Created by kutear.guo on 2015/8/4.
@@ -31,6 +32,7 @@ public class CommonActivity extends BaseActivity {
     private FragmentManager mManager;
     private int mFragmentType;
     private Fragment mFragment;
+    private static final String TAG = CommonActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,5 +120,11 @@ public class CommonActivity extends BaseActivity {
         if (mFragment != null) {
             mManager.beginTransaction().replace(R.id.common_fragment, mFragment).commitAllowingStateLoss();
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        L.v(TAG, "onActivityResult");
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

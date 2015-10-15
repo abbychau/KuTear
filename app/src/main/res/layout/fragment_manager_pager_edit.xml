@@ -20,22 +20,11 @@
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
+        android:id="@+id/pager_et_content_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/pager_et_content"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@null"
-            android:gravity="top|start"
-            android:hint="@string/pager_content"
-            android:inputType="textMultiLine"
-            android:padding="@dimen/ui_edit_padding" />
-    </LinearLayout>
-
+        android:orientation="vertical" />
     <LinearLayout
         android:id="@+id/pager_footer"
         android:layout_width="match_parent"
