@@ -34,6 +34,7 @@
     <string name="pager_preview_fragment_title">页面预览</string>
     <string name="no_more_article">没有更多文章</string>
     <string name="share">分享</string>
+    <string name="open_in_brown">在浏览器中打开</string>
     <string name="can_not_find_archive_list">找不到归档列表</string>
     <string name="can_not_get_category_info">不能获取到分类</string>
     <string name="can_not_read_tab_list">不能读取标签列表</string>

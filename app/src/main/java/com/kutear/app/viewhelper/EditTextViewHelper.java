@@ -15,6 +15,7 @@ import com.kutear.app.callback.IUploadCallBack;
 import com.kutear.app.fragment.BaseFragment;
 import com.kutear.app.fragment.KDialogFragment;
 import com.kutear.app.upload.QiniuUpload;
+import com.kutear.app.utils.L;
 
 import java.io.File;
 
@@ -28,7 +29,7 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
     private View mMainView;
     private EditText mEditText;
     private static final String IMAGE_TYPE = "image/*";
-    private static final int IMAGE_CODE = 0;   //这里的IMAGE_CODE是自己任意定义的
+    private static final int IMAGE_CODE = 0;
     private static final String TAG = EditTextViewHelper.class.getSimpleName();
 
     public EditTextViewHelper(BaseFragment fragment) {
@@ -65,7 +66,7 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
      * 从相册选取图片
      */
     private void chooseImgFromAlbum() {
-        Intent getAlbum = new Intent(Intent.ACTION_GET_CONTENT);
+        Intent getAlbum = new Intent(Intent.ACTION_PICK);
         getAlbum.setType(IMAGE_TYPE);
         mFragment.startActivityForResult(getAlbum, IMAGE_CODE);
     }
@@ -78,7 +79,7 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
      * @param data
      */
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMAGE_CODE) {
+        if (requestCode == IMAGE_CODE && resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();
             uploadImg(getRealPathFromURI(uri));
         }
@@ -93,6 +94,8 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
         if (path != null) {
             File file = new File(path);
             QiniuUpload.upload(file, this);
+            //显示上传对话框
+            showUploadDialog();
         } else {
             Snackbar.make(mMainView, R.string.please_choose_from_album, Snackbar.LENGTH_SHORT).show();
         }
@@ -157,6 +160,7 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
 
     /**
      * 设置文本
+     *
      * @param input
      */
     public void setContent(String input) {
@@ -165,10 +169,21 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
 
     @Override
     public void onError(String error) {
-
+        closeUploadDialog();
     }
 
     @Override
     public void onProcess(double process) {
+        if (process == 1.0) {
+            closeUploadDialog();
+        }
+    }
+
+    private void showUploadDialog() {
+        KDialogFragment.showLoadingDialog(mFragment.getFragmentManager(), "上传中...");
+    }
+
+    private void closeUploadDialog() {
+        KDialogFragment.hiddenDialog(mFragment.getFragmentManager());
     }
 }

@@ -36,7 +36,6 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
     @Override
     protected View setContentView() {
         View mBodyView = inflate(R.layout.fragment_login);
-        initView(mBodyView);
         return mBodyView;
     }
 

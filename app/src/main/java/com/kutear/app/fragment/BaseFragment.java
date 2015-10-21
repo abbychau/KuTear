@@ -89,6 +89,10 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
         hiddenLoad();
     }
 
+    /**
+     * 如没有网络请求,主动调用函数关闭加载布局
+     * @param v
+     */
     protected abstract void initView(View v);
 
 
@@ -120,10 +124,12 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
         }
         return super.onOptionsItemSelected(item);
     }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
         mActivity = null;
         System.gc();
     }
+
 }

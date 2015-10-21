@@ -34,7 +34,6 @@ public class ManagerSiteFragment extends BaseNoBarFragment implements View.OnCli
     @Override
     protected View setContentView() {
         View view = inflate(R.layout.fragment_manager_site);
-        initView(view);
         hiddenInputMethod();
         doRequest();
         return view;

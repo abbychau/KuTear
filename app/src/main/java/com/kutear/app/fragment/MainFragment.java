@@ -44,10 +44,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
 
     @Override
     protected View setContentView() {
-        View mBodyView = inflate(R.layout.fragment_main);
-        initView(mBodyView);
-        bindData();
-        return mBodyView;
+        return inflate(R.layout.fragment_main);
     }
 
     @Override
@@ -70,6 +67,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
             }
         };
         mRecyclerView.addOnScrollListener(loadMoreListener);
+        bindData();
     }
 
     private void bindData() {

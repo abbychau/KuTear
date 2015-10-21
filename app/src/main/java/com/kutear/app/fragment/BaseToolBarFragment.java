@@ -6,6 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -101,7 +103,17 @@ public abstract class BaseToolBarFragment extends BaseFragment implements OnBack
             contentLayout.removeAllViews();
             contentLayout.addView(view);
         }
+        initView(view);
         return bodyView;
+    }
+
+    @Override
+    @Deprecated
+    /**
+     * @see #getMenuRes()
+     */
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override

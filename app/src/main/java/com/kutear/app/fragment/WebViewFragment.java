@@ -94,9 +94,7 @@ public class WebViewFragment extends BaseToolBarFragment {
 
     @Override
     protected View setContentView() {
-        View mBodyView = inflate(R.layout.fragment_web_view);
-        initView(mBodyView);
-        return mBodyView;
+        return inflate(R.layout.fragment_web_view);
     }
 
     @Override

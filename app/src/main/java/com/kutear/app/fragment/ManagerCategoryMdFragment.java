@@ -30,7 +30,6 @@ public class ManagerCategoryMdFragment extends BaseToolBarFragment implements Vi
     @Override
     protected View setContentView() {
         View mBody = inflate(R.layout.fragment_manager_category_md);
-        initView(mBody);
         bindData();
         hiddenLoadingLayout();
         return mBody;

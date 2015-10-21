@@ -17,7 +17,6 @@ import com.kutear.app.utils.Constant;
 import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
-import com.squareup.leakcanary.LeakCanary;
 
 import java.net.CookieHandler;
 import java.net.CookieManager;
@@ -60,7 +59,6 @@ public class AppApplication extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        LeakCanary.install(this);
         mCookieManager = new CookieManager(null, CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(mCookieManager);
         mQueue = Volley.newRequestQueue(this);

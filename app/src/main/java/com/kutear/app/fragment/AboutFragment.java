@@ -27,17 +27,15 @@ public class AboutFragment extends BaseToolBarFragment {
     @Override
     protected View setContentView() {
         View view = inflate(R.layout.fragment_about);
-        initView(view);
         bindData();
         showLoadingLayout();
         return view;
     }
-
+    @Override
     protected void initView(View v) {
         setTitle(R.string.menu_string_about);
         mTvAbout = (TextView) v.findViewById(R.id.about_text);
     }
-
     private void bindData() {
         ApiAbout.getAbout(this);
     }

@@ -56,7 +56,6 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
     private NetworkImageView mIvTitleBg;
     private Article mArticle;
     private TextView mTvContent;
-    private ShareActionProvider mShareActionProvider;
     private CollapsingToolbarLayout mToolBarLayout;
     private UrlImageParser parser;
 
@@ -87,26 +86,23 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
         inflater.inflate(R.menu.article_details, menu);
-        MenuItem menuItem = menu.findItem(R.id.menu_item_share);
-        mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
-        setShareIntent();
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        setShareIntent();
+        if (item.getItemId() == R.id.menu_item_open_in_brown) {
+            openInBrown();
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
-    private void setShareIntent() {
-        if (mShareActionProvider != null && mArticle != null) {
-            Intent intent = new Intent();
-            intent.setAction(Intent.ACTION_SEND_MULTIPLE);
-            intent.putExtra(Intent.EXTRA_TEXT, mArticle.getContent());
-            mShareActionProvider.setShareIntent(intent);
-        }
+    private void openInBrown() {
+        Bundle bundle = new Bundle();
+        bundle.putString(WebViewFragment.KEY, mArticle.getUrl());
+        AppApplication.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
     }
 
     private void bindData() {

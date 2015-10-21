@@ -38,8 +38,6 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     @Override
     protected View setContentView() {
         View bodyView = inflate(R.layout.fragment_preview_article);
-        initView(bodyView);
-        bindData();
         return bodyView;
     }
 
@@ -67,6 +65,7 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     protected void initView(View v) {
         hiddenLoadingLayout();
         mTextView = (TextView) v.findViewById(R.id.article_details_text_view);
+        bindData();
     }
 
     @Override

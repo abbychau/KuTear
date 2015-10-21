@@ -61,6 +61,7 @@ public abstract class BaseNoBarFragment extends BaseFragment {
             }
         }
         showLoadingLayout();
+        initView(view);
         return bodyView;
     }
 
@@ -85,7 +86,4 @@ public abstract class BaseNoBarFragment extends BaseFragment {
         hiddenLoadingLayout();
         // TODO: 2015/8/25 把加载视图改变为显示失败
     }
-
-
-    protected abstract void initView(View v);
 }

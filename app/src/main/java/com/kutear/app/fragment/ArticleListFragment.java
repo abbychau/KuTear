@@ -48,7 +48,6 @@ public class ArticleListFragment extends BaseToolBarFragment implements IGetList
     protected View setContentView() {
         View view = inflate(R.layout.fragment_article);
         getData();
-        initView(view);
         return view;
     }
 

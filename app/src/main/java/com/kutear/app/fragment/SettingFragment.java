@@ -30,7 +30,6 @@ public class SettingFragment extends BaseToolBarFragment {
 
     @Override
     protected View setContentView() {
-        initView(null);
         hiddenLoadingLayout();
         mEditTextViewHelper = new EditTextViewHelper(this);
         return mEditTextViewHelper.getMainView();

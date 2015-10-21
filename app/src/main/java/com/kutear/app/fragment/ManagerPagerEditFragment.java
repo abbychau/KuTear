@@ -2,6 +2,9 @@ package com.kutear.app.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +23,11 @@ import com.kutear.app.viewhelper.EditTextViewHelper;
  * Created by kutear on 15-9-17.
  * 独立页面编辑
  */
-public class ManagerPagerEditFragment extends BaseToolBarFragment implements View.OnClickListener {
+public class ManagerPagerEditFragment extends BaseToolBarFragment {
     private static final String TAG = ManagerPagerEditFragment.class.getSimpleName();
     public static final String KEY = "pager_url";
     public static final String IS_MODIFY = "is_modify";
     private EditText mETTitle;
-    private Button mBtPostPager;
     private ManagerPagerDetails details;
     private EditTextViewHelper mEditTextViewHelper;
     private LinearLayout mContentLayout;
@@ -41,8 +43,6 @@ public class ManagerPagerEditFragment extends BaseToolBarFragment implements Vie
         setTitle(mActivity.getString(R.string.pager_edit));
         View mBodyView = inflate(R.layout.fragment_manager_pager_edit);
         mEditTextViewHelper = new EditTextViewHelper(this);
-        initView(mBodyView);
-        doRequest();
         return mBodyView;
     }
 
@@ -62,8 +62,6 @@ public class ManagerPagerEditFragment extends BaseToolBarFragment implements Vie
     @Override
     protected void initView(View v) {
         mETTitle = (EditText) v.findViewById(R.id.pager_et_title);
-        mBtPostPager = (Button) v.findViewById(R.id.pager_post_btn);
-        mBtPostPager.setOnClickListener(this);
         mContentLayout = (LinearLayout) v.findViewById(R.id.pager_et_content_layout);
         LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) mEditTextViewHelper
                 .getMainView().getLayoutParams();
@@ -74,19 +72,36 @@ public class ManagerPagerEditFragment extends BaseToolBarFragment implements Vie
         params.width = LinearLayout.LayoutParams.MATCH_PARENT;
         params.height = LinearLayout.LayoutParams.MATCH_PARENT;
         mContentLayout.addView(mEditTextViewHelper.getMainView(), params);
+        doRequest();
+    }
+
+
+//    @Override
+//    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        inflater.inflate(R.menu.menu_preview, menu);
+//        super.onCreateOptionsMenu(menu, inflater);
+//    }
+
+    @Override
+    protected int getMenuRes() {
+        return R.menu.menu_preview;
     }
 
     @Override
-    public void onClick(View v) {
-        if (details == null) {
-            details = new ManagerPagerDetails();
-            //TODO 其它数据
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.article_post_menu) {
+            if (details == null) {
+                details = new ManagerPagerDetails();
+                //TODO 其它数据
+            }
+            details.setTitle(mETTitle.getText().toString().trim());
+            details.setContent(mEditTextViewHelper.getContent());
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(ManagerArticlePreviewFragment.KEY, details);
+            AppApplication.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
+            return true;
         }
-        details.setTitle(mETTitle.getText().toString().trim());
-        details.setContent(mEditTextViewHelper.getContent());
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(ManagerArticlePreviewFragment.KEY, details);
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

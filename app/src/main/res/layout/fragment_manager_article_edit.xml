@@ -26,19 +26,4 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical" />
-
-    <LinearLayout
-        android:id="@+id/article_footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/article_post_btn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="?attr/colorPrimary"
-            android:text="@string/post_article"
-            android:textColor="@android:color/white" />
-    </LinearLayout>
 </LinearLayout>

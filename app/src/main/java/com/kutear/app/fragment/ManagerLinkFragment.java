@@ -37,7 +37,6 @@ public class ManagerLinkFragment extends BaseNoBarFragment implements View.OnCli
     @Override
     protected View setContentView() {
         View view = inflate(R.layout.fragment_manager_link);
-        initView(view);
         doRequest();
         return view;
     }

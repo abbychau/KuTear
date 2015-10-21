@@ -83,5 +83,6 @@ public class Constant {
     public static final int ACTIVITY_EDIT_ARTICLE = 0x00011;
     public static final int ACTIVITY_EDIT_PAGER = 0x00012;
     public static final int ACTIVITY_WEB_VIEW = 0x00013;
+    public static final int ACTIVITY_LEADER_PAGER = 0x00014;
 
 }

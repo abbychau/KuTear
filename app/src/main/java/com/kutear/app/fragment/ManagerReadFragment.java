@@ -29,7 +29,6 @@ public class ManagerReadFragment extends BaseNoBarFragment implements View.OnCli
     @Override
     protected View setContentView() {
         View view = inflate(R.layout.fragment_manager_read);
-        initView(view);
         bindData();
         return view;
     }

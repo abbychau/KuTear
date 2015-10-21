@@ -11,6 +11,7 @@ import com.kutear.app.fragment.AboutFragment;
 import com.kutear.app.fragment.ArchiveFragment;
 import com.kutear.app.fragment.ArticleListFragment;
 import com.kutear.app.fragment.ArticleDetailsFragment;
+import com.kutear.app.fragment.LeaderFragment;
 import com.kutear.app.fragment.LoginFragment;
 import com.kutear.app.fragment.ManageFragment;
 import com.kutear.app.fragment.ManagerArticlePreviewFragment;
@@ -51,8 +52,9 @@ public class CommonActivity extends BaseActivity {
         if (intent != null) {
             mFragmentType = intent.getIntExtra(Constant.ACTIVITY_TYPE, -1);
         }
+        //默认为启动页
         if (mFragmentType == 0 || mFragmentType == -1) {
-            return;
+            mFragmentType = Constant.ACTIVITY_LEADER_PAGER;
         }
         chooseFragment(mFragmentType);
     }
@@ -112,6 +114,9 @@ public class CommonActivity extends BaseActivity {
                 break;
             case Constant.ACTIVITY_WEB_VIEW:
                 mFragment = WebViewFragment.newInstance(bundle);
+                break;
+            case Constant.ACTIVITY_LEADER_PAGER:
+                mFragment = LeaderFragment.newInstance();
                 break;
             default:
                 break;

@@ -40,8 +40,6 @@ public class ManagerArticleFragment extends BaseNoBarFragment implements IGetLis
     @Override
     protected View setContentView() {
         View view = inflate(R.layout.fragment_manager_pager);
-        initView(view);
-        doRequest();
         return view;
     }
 
@@ -55,6 +53,7 @@ public class ManagerArticleFragment extends BaseNoBarFragment implements IGetLis
     protected void initView(View v) {
         mListView = (ListView) v.findViewById(R.id.manager_pager_list);
         mListView.setOnItemClickListener(this);
+        doRequest();
     }
 
     @Override

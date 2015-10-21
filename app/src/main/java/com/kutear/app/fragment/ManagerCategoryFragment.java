@@ -66,7 +66,6 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
     @Override
     protected View setContentView() {
         View v = inflate(R.layout.fragment_manager_category);
-        initView(v);
         return v;
     }
 
