@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.bean.BaseBean;
@@ -28,11 +29,13 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
     protected LayoutInflater inflater;
     protected ViewGroup container;
     protected Bundle savedInstanceState;
+    protected AppApplication mApp;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         mActivity = (BaseActivity) activity;
+        mApp = mActivity.getAppApplication();
     }
 
     @Nullable

@@ -132,7 +132,7 @@ public class ManagerCategoryFragment extends BaseNoBarFragment implements IGetLi
         Bundle bundle = new Bundle();
         bundle.putParcelable(ManagerCategoryMdFragment.KEY, mLists.get(clickPosition));
         bundle.putInt(ManagerCategoryMdFragment.PARENT, urlStack.peek());
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_CATEGORY_MD, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_CATEGORY_MD, bundle);
     }
 
     private void addCategory() {

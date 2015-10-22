@@ -110,18 +110,18 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         actionBarDrawerToggle.syncState();
         View headerView = mNavigationView.inflateHeaderView(R.layout.nav_header);
         headerView.setOnClickListener(this);
-        if (AppApplication.getUserManager().getUserInfo() != null) {
+        if (mApp.getUserManager().getUserInfo() != null) {
             if (mAvater == null) {
                 mAvater = (CircleImageView) findViewById(R.id.nav_avatar);
             }
             if (mTvNickName == null) {
                 mTvNickName = (TextView) findViewById(R.id.nav_name);
             }
-            if (AppApplication.getUserManager().getUserInfo().getAvater() != null) {
-                mAvater.setImageURI(Uri.parse(AppApplication.getUserManager().getUserInfo().getAvater()));
+            if (mApp.getUserManager().getUserInfo().getAvater() != null) {
+                mAvater.setImageURI(Uri.parse(mApp.getUserManager().getUserInfo().getAvater()));
             }
-            if (AppApplication.getUserManager().getUserInfo().getNickName() != null) {
-                mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+            if (mApp.getUserManager().getUserInfo().getNickName() != null) {
+                mTvNickName.setText(mApp.getUserManager().getUserInfo().getNickName());
 
             }
         }
@@ -165,16 +165,16 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             default:
                 break;
         }
-        AppApplication.startActivity(this, type, bundle);
+        mApp.startActivity(this, type, bundle);
         return true;
     }
 
     @Override
     public void onClick(View v) {
-        if (AppApplication.getUserManager().isLogin()) {
-            AppApplication.startActivity(this, Constant.ACTIVITY_USER_CENTER, null);
+        if (mApp.getUserManager().isLogin()) {
+            mApp.startActivity(this, Constant.ACTIVITY_USER_CENTER, null);
         } else {
-            AppApplication.startActivity(this, Constant.ACTIVITY_LOGIN, null);
+            mApp.startActivity(this, Constant.ACTIVITY_LOGIN, null);
         }
         mDrawerLayout.closeDrawers();
     }
@@ -182,7 +182,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private BroadcastReceiver loginBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if (intent.getAction().equals(Constant.BROADCAST_LOGIN) && AppApplication.getUserManager().getUserInfo() != null) {
+            if (intent.getAction().equals(Constant.BROADCAST_LOGIN) && mApp.getUserManager().getUserInfo() != null) {
                 if (mAvater == null) {
                     mAvater = (CircleImageView) findViewById(R.id.nav_avatar);
                 }
@@ -190,8 +190,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
                     mTvNickName = (TextView) findViewById(R.id.nav_name);
                 }
                 if (mAvater != null && mTvNickName != null) {
-                    loadImage(AppApplication.getUserManager().getUserInfo().getAvater());
-                    mTvNickName.setText(AppApplication.getUserManager().getUserInfo().getNickName());
+                    loadImage(mApp.getUserManager().getUserInfo().getAvater());
+                    mTvNickName.setText(mApp.getUserManager().getUserInfo().getNickName());
                 }
             }
         }

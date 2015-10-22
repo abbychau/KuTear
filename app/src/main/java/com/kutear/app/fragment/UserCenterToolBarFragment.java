@@ -39,7 +39,7 @@ public class UserCenterToolBarFragment extends BaseFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUserInfo = AppApplication.getUserManager() != null ? AppApplication.getUserManager().getUserInfo() : null;
+        mUserInfo = mApp.getUserManager() != null ? mApp.getUserManager().getUserInfo() : null;
         if (mUserInfo == null) {
             ApiUser.getUserInfo(this);
         }

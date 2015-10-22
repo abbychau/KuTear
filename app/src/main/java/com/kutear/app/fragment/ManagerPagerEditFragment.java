@@ -98,7 +98,7 @@ public class ManagerPagerEditFragment extends BaseToolBarFragment {
             details.setContent(mEditTextViewHelper.getContent());
             Bundle bundle = new Bundle();
             bundle.putParcelable(ManagerArticlePreviewFragment.KEY, details);
-            AppApplication.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
+            mApp.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
             return true;
         }
         return super.onOptionsItemSelected(item);

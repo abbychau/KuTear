@@ -73,6 +73,6 @@ public class ManagerPagerFragment extends BaseNoBarFragment implements IGetListC
         Bundle bundle = new Bundle();
         bundle.putParcelable(ManagerPagerEditFragment.KEY, mLists.get(position));
         bundle.putBoolean(ManagerPagerEditFragment.IS_MODIFY, true);
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_EDIT_PAGER, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_EDIT_PAGER, bundle);
     }
 }

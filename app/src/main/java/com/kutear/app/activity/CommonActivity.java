@@ -77,7 +77,7 @@ public class CommonActivity extends BaseActivity {
                 mFragment = ArticleDetailsFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_MANAGER:
-                if (AppApplication.getUserManager().isLogin()) {
+                if (mApp.getUserManager().isLogin()) {
                     mFragment = ManageFragment.newInstance();
                 } else {
                     if (bundle == null) {

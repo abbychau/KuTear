@@ -129,7 +129,7 @@ public class ManagerArticleEditFragment extends BaseToolBarFragment {
         if (details != null) {
             Bundle bundle = new Bundle();
             bundle.putParcelable(ManagerArticlePreviewFragment.KEY, details);
-            AppApplication.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
+            mApp.startActivity(mActivity, Constant.ACTIVITY_PREVIEW_ARTICLE, bundle);
         }
     }
 

@@ -74,6 +74,6 @@ public class ManagerArticleFragment extends BaseNoBarFragment implements IGetLis
         Bundle bundle = new Bundle();
         bundle.putBoolean(ManagerArticleEditFragment.IS_MODIFY, true);
         bundle.putString(ManagerArticleEditFragment.KEY, String.format(Constant.URI_ARTICLE_DETAILS, mLists.get(position).getIndex()));
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_EDIT_ARTICLE, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_EDIT_ARTICLE, bundle);
     }
 }

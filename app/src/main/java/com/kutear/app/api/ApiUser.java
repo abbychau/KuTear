@@ -210,7 +210,7 @@ public class ApiUser extends BaseRequest {
         AppApplication.startBroadcast(Constant.BROADCAST_LOGIN);
     }
 
-    public static void checkUserLogin(final ICallBack callBack) {
+    public void checkUserLogin(final ICallBack callBack) {
         getRequest(Constant.URI_ADMIN, new ICallBack() {
             @Override
             public void onSuccess(int statusCode, String str) {

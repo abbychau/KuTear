@@ -118,13 +118,13 @@ public class LoginFragment extends BaseToolBarFragment implements View.OnClickLi
     @Override
     public void onGetSuccess(BaseBean result) {
         super.onGetSuccess(result);
-        AppApplication.getUserManager().setUserInfo((UserInfo) result);
+        mApp.getUserManager().setUserInfo((UserInfo) result);
         mActivity.finish();
 
         if (getArguments() != null) {
             int toFragment = getArguments().getInt(TO_FRAGMENT, 0);
             if (toFragment != 0) {
-                AppApplication.startActivity(mActivity, toFragment, null);
+                mApp.startActivity(mActivity, toFragment, null);
             }
         }
     }

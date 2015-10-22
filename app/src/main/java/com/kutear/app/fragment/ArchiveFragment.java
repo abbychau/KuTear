@@ -161,19 +161,19 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
     private void onItemClickArchive(View v, int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ArticleDetailsFragment.KEY, mlist.get(position));
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
     }
 
     private void onItemClickTab(View v, int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ArticleListFragment.KEY, mlist.get(position));
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_ARTICLE_LIST, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_ARTICLE_LIST, bundle);
     }
 
     private void onItemClickCategory(View v, int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ArticleListFragment.KEY, mlist.get(position));
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_ARTICLE_LIST, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_ARTICLE_LIST, bundle);
     }
 
 

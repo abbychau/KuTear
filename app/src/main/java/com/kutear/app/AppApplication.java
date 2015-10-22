@@ -98,7 +98,7 @@ public class AppApplication extends Application {
         return mUploadManager;
     }
 
-    public static void startActivity(Activity activity, int type, Bundle bundle) {
+    public void startActivity(Activity activity, int type, Bundle bundle) {
         Intent intent = new Intent(activity, CommonActivity.class);
         intent.putExtra(Constant.ACTIVITY_TYPE, type);
         if (bundle != null) {
@@ -108,11 +108,11 @@ public class AppApplication extends Application {
         activity.overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
     }
 
-    public static UserManager getUserManager() {
+    public UserManager getUserManager() {
         return mUserManager;
     }
 
-    public static void startBroadcast(String action) {
+    public static  void startBroadcast(String action) {
         Intent intent = new Intent();
         intent.setAction(action);
         app.sendBroadcast(intent);

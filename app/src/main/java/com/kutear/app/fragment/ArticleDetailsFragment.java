@@ -102,7 +102,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
     private void openInBrown() {
         Bundle bundle = new Bundle();
         bundle.putString(WebViewFragment.KEY, mArticle.getUrl());
-        AppApplication.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
     }
 
     private void bindData() {
@@ -224,7 +224,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
                             String url = ((URLSpan) link[0]).getURL();
                             Bundle bundle = new Bundle();
                             bundle.putString(WebViewFragment.KEY, url);
-                            AppApplication.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
+                            mApp.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
                         }
                     } else if (action == MotionEvent.ACTION_DOWN) {
                         Selection.setSelection(buffer,
