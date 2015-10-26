@@ -16,7 +16,7 @@ public class Constant {
      * URL 相关
      *************************************/
 //    public static final String URI_HOST = "http://192.168.6.121/kutear";
-    public static final String URI_HOST = "http://www.kutear.com";
+    public static final String URI_HOST = "http://kutearforte.sinaapp.com";
     //登陆接口 post
     public static final String URI_ADMIN = URI_HOST + "/admin";
     //归档接口

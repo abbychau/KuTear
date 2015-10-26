@@ -19,6 +19,7 @@ import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetCallBack;
 import com.kutear.app.callback.IPostCallBack;
+import com.kutear.app.utils.Constant;
 
 /**
  * Created by Kutear on 2015/8/10 in KuTear.
@@ -94,6 +95,7 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
 
     /**
      * 如没有网络请求,主动调用函数关闭加载布局
+     *
      * @param v
      */
     protected abstract void initView(View v);
@@ -133,6 +135,12 @@ public abstract class BaseFragment extends Fragment implements IGetCallBack, IPo
         super.onDestroy();
         mActivity = null;
         System.gc();
+    }
+
+    public void startWebFragment(String url) {
+        Bundle bundle = new Bundle();
+        bundle.putString(WebViewFragment.KEY, url);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_WEB_VIEW, bundle);
     }
 
 }

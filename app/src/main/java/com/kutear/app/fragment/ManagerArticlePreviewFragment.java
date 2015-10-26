@@ -16,18 +16,21 @@ import com.kutear.app.bean.BaseBean;
 import com.kutear.app.bean.ManagerArticleDetails;
 import com.kutear.app.bean.ManagerPagerDetails;
 import com.kutear.app.netutils.UrlImageParser;
+import com.kutear.app.utils.Constant;
+import com.kutear.app.view.RichTextView;
+
+import java.util.List;
 
 /**
  * `
  * Created by kutear.guo on 2015/8/13.
  * 文章/独立页面预览
  */
-public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
+public class ManagerArticlePreviewFragment extends BaseToolBarFragment implements RichTextView.OnImageClickListener, RichTextView.OnUrlClickListener {
     public static String KEY = "key";
     public static String TAG = ManagerArticlePreviewFragment.class.getSimpleName();
-    private TextView mTextView;
+    private RichTextView mTextView;
     private BaseBean mBaseBean;
-    private UrlImageParser parser;
 
     public static ManagerArticlePreviewFragment newInstance(Bundle args) {
         ManagerArticlePreviewFragment fragment = new ManagerArticlePreviewFragment();
@@ -37,8 +40,7 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
 
     @Override
     protected View setContentView() {
-        View bodyView = inflate(R.layout.fragment_preview_article);
-        return bodyView;
+        return inflate(R.layout.fragment_preview_article);
     }
 
     private void bindData() {
@@ -46,17 +48,15 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
         if (mBaseBean != null) {
             AndDown andDown = new AndDown();
             if (mBaseBean instanceof ManagerArticleDetails) {
-                parser = new UrlImageParser(mTextView, mActivity);
                 setTitle(R.string.article_preview_fragment_title);
                 ManagerArticleDetails details = (ManagerArticleDetails) mBaseBean;
                 String html = andDown.markdownToHtml(details.getContent());
-                mTextView.setText(Html.fromHtml(html, parser, null));
+                mTextView.setHtml(html);
             } else if (mBaseBean instanceof ManagerPagerDetails) {
-                parser = new UrlImageParser(mTextView, mActivity);
                 setTitle(R.string.pager_preview_fragment_title);
                 ManagerPagerDetails details = (ManagerPagerDetails) mBaseBean;
                 String html = andDown.markdownToHtml(details.getContent());
-                mTextView.setText(Html.fromHtml(html, parser, null));
+                mTextView.setHtml(html);
             }
         }
     }
@@ -64,7 +64,9 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     @Override
     protected void initView(View v) {
         hiddenLoadingLayout();
-        mTextView = (TextView) v.findViewById(R.id.article_details_text_view);
+        mTextView = (RichTextView) v.findViewById(R.id.article_details_text_view);
+        mTextView.setOnImageClickListener(this);
+        mTextView.setOnUrlClickListener(this);
         bindData();
     }
 
@@ -95,8 +97,8 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (parser != null) {
-            parser.destoryDrawable();
+        if (mTextView != null) {
+            mTextView.recycle();
         }
     }
 
@@ -108,5 +110,15 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment {
     @Override
     public void onPostError(String msg) {
         super.onPostError(msg);
+    }
+
+    @Override
+    public void imageClicked(List<String> imageUrls, int position) {
+        //TODO 图片预览
+    }
+
+    @Override
+    public void urlClicked(String url) {
+        startWebFragment(url);
     }
 }

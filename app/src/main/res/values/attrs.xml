@@ -33,4 +33,9 @@
     </declare-styleable>
 
     <attr name="SwipeBackLayoutStyle" format="reference" />
+
+    <declare-styleable name="RichTextView">
+        <attr name="default_drawable" format="reference" />
+        <attr name="error_drawable" format="reference" />
+    </declare-styleable>
 </resources>
