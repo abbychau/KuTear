@@ -23,7 +23,6 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -31,7 +30,7 @@ import com.android.volley.toolbox.ImageRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.utils.DeviceInfo;
-import com.kutear.app.utils.L;
+import com.kutear.app.utils.ImageCompressUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,10 +60,10 @@ public class RichTextView extends TextView {
                     new Response.Listener<Bitmap>() {
                         @Override
                         public void onResponse(Bitmap bitmap) {
-                            BitmapDrawable drawable = new BitmapDrawable(getContext().getResources(), bitmap);
+                            BitmapDrawable drawable = new BitmapDrawable(getContext().getResources(), ImageCompressUtil.compressByQuality(bitmap, 100));
                             mUrlDrawable.setDrawable(drawable);
                         }
-                    }, 0, 0, null,
+                    }, 0, 0, Bitmap.Config.RGB_565,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
                             Drawable drawable = null;
@@ -170,9 +169,11 @@ public class RichTextView extends TextView {
             }
             spannableStringBuilder.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        super.setText(spanned);
-        setMovementMethod(CustomLinkMovementMethod.getInstance());
+        setText(spanned);
+        setMovementMethod(new CustomLinkMovementMethod());
+        setFocusable(true);
     }
+
 
     public interface OnImageClickListener {
         void imageClicked(List<String> imageUrls, int position);
@@ -183,7 +184,7 @@ public class RichTextView extends TextView {
     }
 
     //TODO 资源回收
-    public void recycle(){
+    public void recycle() {
 
     }
 
@@ -194,7 +195,6 @@ public class RichTextView extends TextView {
         @Override
         public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
             int action = event.getAction();
-            L.v(TAG,"function:onTouchEvent");
             if (action == MotionEvent.ACTION_UP ||
                     action == MotionEvent.ACTION_DOWN) {
                 int x = (int) event.getX();
@@ -272,8 +272,8 @@ public class RichTextView extends TextView {
             int height = (int) (drawable.getIntrinsicHeight() * multiplier);
             int left = (int) (DeviceInfo.getScreenWidth(getContext()) * 0.1);
             //非常重要,否则图片只占位,不显示
-            drawable.setBounds(left, 10, width , height);
-            setBounds(left, 0, width+left , height+10);
+            drawable.setBounds(left, 10, width, height);
+            setBounds(left, 0, width + left, height + 10);
         }
     }
 
