@@ -11,6 +11,7 @@ import com.kutear.app.fragment.AboutFragment;
 import com.kutear.app.fragment.ArchiveFragment;
 import com.kutear.app.fragment.ArticleListFragment;
 import com.kutear.app.fragment.ArticleDetailsFragment;
+import com.kutear.app.fragment.ImagePreviewFragment;
 import com.kutear.app.fragment.LeaderFragment;
 import com.kutear.app.fragment.LoginFragment;
 import com.kutear.app.fragment.ManageFragment;
@@ -128,7 +129,7 @@ public class CommonActivity extends BaseActivity {
                 mFragment = LeaderFragment.newInstance();
                 break;
             case Constant.ACTIVITY_IMAGE_PREVIEW:
-                mFragment = LeaderFragment.newInstance();
+                mFragment = ImagePreviewFragment.newInstance(bundle);
                 break;
             default:
                 break;

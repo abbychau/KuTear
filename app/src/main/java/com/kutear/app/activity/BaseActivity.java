@@ -22,7 +22,7 @@ public abstract class BaseActivity extends SwipeBackActivity {
     protected SwipeBackLayout mSwipeBackLayout;
     protected AppApplication mApp;
     protected boolean isFullScreen;
-    public static final String SCREEN_FLAG = "screen_flag";
+    public static final String SCREEN_FLAG = "is_full_screen";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

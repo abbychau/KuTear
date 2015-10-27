@@ -31,6 +31,7 @@ import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.utils.DeviceInfo;
 import com.kutear.app.utils.ImageCompressUtil;
+import com.kutear.app.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -157,6 +158,7 @@ public class RichTextView extends TextView {
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
+                    L.v(TAG,"ClickableSpan");
                     if (mOnImageClickListener != null) {
                         mOnImageClickListener.imageClicked(imageUrls, finalI);
                     }
@@ -172,7 +174,6 @@ public class RichTextView extends TextView {
         }
         setText(spanned);
         setMovementMethod(new CustomLinkMovementMethod());
-        setFocusable(true);
     }
 
 

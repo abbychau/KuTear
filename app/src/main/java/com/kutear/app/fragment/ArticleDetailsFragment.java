@@ -16,17 +16,21 @@ import android.view.ViewGroup;
 import com.android.volley.toolbox.NetworkImageView;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.activity.BaseActivity;
 import com.kutear.app.api.ApiArticleDetails;
 import com.kutear.app.bean.Archive;
 import com.kutear.app.bean.Article;
 import com.kutear.app.bean.BaseBean;
 import com.kutear.app.callback.IGetCallBack;
+import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 import com.kutear.app.view.RichTextView;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -83,7 +87,20 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
     }
 
     private void openInBrowser() {
-        startWebFragment(mArticle.getUrl());
+        if (getArguments() != null) {
+            if (getArguments().getParcelable(KEY) instanceof Article) {
+                mArticle = getArguments().getParcelable(KEY);
+                if (mArticle != null) {
+                    startWebFragment(mArticle.getUrl());
+                }
+            }
+            if (getArguments().getParcelable(KEY) instanceof Archive) {
+                Archive mArchive = getArguments().getParcelable(KEY);
+                if (mArchive != null) {
+                    startWebFragment(mArchive.getUrl());
+                }
+            }
+        }
     }
 
     private void bindData() {
@@ -187,6 +204,11 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
 
     @Override
     public void imageClicked(List<String> imageUrls, int position) {
-        //TODO 图片预览
+        L.v(TAG, "imageClicked");
+        Bundle bundle = new Bundle();
+        bundle.putBoolean(BaseActivity.SCREEN_FLAG, true);
+        bundle.putInt(ImagePreviewFragment.INDEX, position);
+        bundle.putStringArrayList(ImagePreviewFragment.KEY, (ArrayList<String>) imageUrls);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_IMAGE_PREVIEW, bundle);
     }
 }

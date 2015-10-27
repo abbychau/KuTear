@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.activity.CommonActivity;
 import com.kutear.app.adapter.ArchiveAdapter;
 import com.kutear.app.adapter.ArticleAdapter;
 import com.kutear.app.api.ApiArchive;
@@ -160,6 +161,7 @@ public class ArchiveFragment extends BaseFragment implements TabLayout.OnTabSele
 
     private void onItemClickArchive(View v, int position) {
         Bundle bundle = new Bundle();
+        bundle.putBoolean(CommonActivity.SCREEN_FLAG,true);
         bundle.putParcelable(ArticleDetailsFragment.KEY, mlist.get(position));
         mApp.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
     }
