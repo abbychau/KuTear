@@ -33,14 +33,23 @@ public class CommonActivity extends BaseActivity {
     private FragmentManager mManager;
     private int mFragmentType;
     private Fragment mFragment;
+
     private static final String TAG = CommonActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.common_activity);
+        loadLayout();
         initView();
         startFragment();
+    }
+
+    protected void loadLayout() {
+        if (isFullScreen) {
+            setContentView(R.layout.common_full_screen_activity);
+        } else {
+            setContentView(R.layout.common_activity);
+        }
     }
 
     @SuppressWarnings("ConstantConditions")
@@ -62,7 +71,7 @@ public class CommonActivity extends BaseActivity {
     /**
      * 根据type来选择对应的Fragment
      *
-     * @param type
+     * @param type Fragment {@link Constant#ACTIVITY_ABOUT etc..}
      */
     private void chooseFragment(int type) {
         Bundle bundle = getIntent().getExtras();
@@ -116,6 +125,9 @@ public class CommonActivity extends BaseActivity {
                 mFragment = WebViewFragment.newInstance(bundle);
                 break;
             case Constant.ACTIVITY_LEADER_PAGER:
+                mFragment = LeaderFragment.newInstance();
+                break;
+            case Constant.ACTIVITY_IMAGE_PREVIEW:
                 mFragment = LeaderFragment.newInstance();
                 break;
             default:

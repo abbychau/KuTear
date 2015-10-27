@@ -5,6 +5,7 @@ import android.app.Application;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.util.LruCache;
 
 import com.android.volley.Request;
@@ -18,6 +19,7 @@ import com.qiniu.android.common.Zone;
 import com.qiniu.android.storage.Configuration;
 import com.qiniu.android.storage.UploadManager;
 
+import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -33,6 +35,7 @@ public class AppApplication extends Application {
     private static ImageLoader mImageLoader;
     private static UserManager mUserManager;
     private static UploadManager mUploadManager;
+    private static final String APP_PATH = "KuTear";
 
     public static AppApplication getApplication() {
         return app;
@@ -53,6 +56,17 @@ public class AppApplication extends Application {
 
     public static ImageLoader getImageLoader() {
         return mImageLoader;
+    }
+
+    public String getAppPath() {
+        File file = new File(Environment.getExternalStorageDirectory(), APP_PATH);
+        if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            file = new File(getAppPath(), APP_PATH);
+        }
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+        return file.getAbsolutePath();
     }
 
     @Override
@@ -112,7 +126,7 @@ public class AppApplication extends Application {
         return mUserManager;
     }
 
-    public static  void startBroadcast(String action) {
+    public static void startBroadcast(String action) {
         Intent intent = new Intent();
         intent.setAction(action);
         app.sendBroadcast(intent);

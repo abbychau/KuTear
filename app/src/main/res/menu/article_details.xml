@@ -4,6 +4,6 @@
     <item
         android:id="@+id/menu_item_open_in_brown"
         android:title="@string/open_in_brown"
-        android:icon="@drawable/kutear_miantiaofenxiang_liulanqi"
+        android:icon="@drawable/kutear_browser"
         app:showAsAction="always" />
 </menu>

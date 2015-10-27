@@ -45,13 +45,14 @@ public class RichTextView extends TextView {
     private Drawable mDefaultDrawable;
     private OnImageClickListener mOnImageClickListener;
     private OnUrlClickListener mOnUrlClickListener;
+    private ArrayList<BitmapDrawable> mImagelist = new ArrayList<>();
     private Html.ImageGetter mImageGetter = new Html.ImageGetter() {
-
         @Override
         public Drawable getDrawable(String source) {
             URLDrawable mUrlDrawable;
             mUrlDrawable = new URLDrawable(mDefaultDrawable);
             doVolleyRequest(source, mUrlDrawable);
+            mImagelist.add(mUrlDrawable);
             return mUrlDrawable;
         }
 
@@ -63,14 +64,14 @@ public class RichTextView extends TextView {
                             BitmapDrawable drawable = new BitmapDrawable(getContext().getResources(), ImageCompressUtil.compressByQuality(bitmap, 100));
                             mUrlDrawable.setDrawable(drawable);
                         }
-                    }, 0, 0, Bitmap.Config.RGB_565,
+                    }, 480, 480, Bitmap.Config.RGB_565,
                     new Response.ErrorListener() {
                         public void onErrorResponse(VolleyError error) {
                             Drawable drawable = null;
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                                drawable = getContext().getDrawable(R.drawable.kutear_logo);
+                                drawable = getContext().getDrawable(R.drawable.kutear_fialed);
                             } else {
-                                drawable = getContext().getResources().getDrawable(R.drawable.kutear_logo);
+                                drawable = getContext().getResources().getDrawable(R.drawable.kutear_fialed);
                             }
                             mUrlDrawable.setDrawable(drawable);
                         }
@@ -108,9 +109,9 @@ public class RichTextView extends TextView {
         mDefaultDrawable = mTypedArray.getDrawable(R.styleable.RichTextView_default_drawable);
         if (mDefaultDrawable == null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                mDefaultDrawable = context.getDrawable(R.drawable.kutear_logo);
+                mDefaultDrawable = context.getDrawable(R.drawable.kutear_load);
             } else {
-                mDefaultDrawable = context.getResources().getDrawable(R.drawable.kutear_logo);
+                mDefaultDrawable = context.getResources().getDrawable(R.drawable.kutear_load);
             }
         }
         mTypedArray.recycle();
@@ -183,9 +184,15 @@ public class RichTextView extends TextView {
         void urlClicked(String url);
     }
 
-    //TODO 资源回收
     public void recycle() {
-
+      for(BitmapDrawable items:mImagelist){
+          Bitmap bmp = items.getBitmap();
+          if(bmp!=null&&!bmp.isRecycled()){
+              bmp.recycle();
+              System.gc();
+              items = null;
+          }
+      }
     }
 
     /**

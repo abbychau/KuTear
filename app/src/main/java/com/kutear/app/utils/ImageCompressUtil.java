@@ -27,28 +27,28 @@ public class ImageCompressUtil {
      * @return 压缩后的图片位图对象
      */
     public static Bitmap compressByQuality(Bitmap bitmap, int maxSize) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        int quality = 70;
-//        bitmap.compress(CompressFormat.JPEG, quality, baos);
-//        L.v(TAG, "图片压缩前大小：" + baos.toByteArray().length + "byte");
-//        boolean isCompressed = false;
-//        while (baos.toByteArray().length / 1024 > maxSize) {
-//            quality -= 10;
-//            baos.reset();
-//            bitmap.compress(CompressFormat.JPEG, quality, baos);
-//            L.v(TAG, "质量压缩到原来的" + quality + "%时大小为："
-//                    + baos.toByteArray().length + "byte");
-//            isCompressed = true;
-//        }
-//        L.v(TAG, "图片压缩后大小：" + baos.toByteArray().length + "byte");
-//        if (isCompressed) {
-//            Bitmap compressedBitmap = BitmapFactory.decodeByteArray(
-//                    baos.toByteArray(), 0, baos.toByteArray().length);
-//            recycleBitmap(bitmap);
-//            return compressedBitmap;
-//        } else {
-        return bitmap;
-//        }
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        int quality = 70;
+        bitmap.compress(CompressFormat.JPEG, quality, baos);
+        L.v(TAG, "图片压缩前大小：" + baos.toByteArray().length + "byte");
+        boolean isCompressed = false;
+        while (baos.toByteArray().length / 1024 > maxSize) {
+            quality -= 10;
+            baos.reset();
+            bitmap.compress(CompressFormat.JPEG, quality, baos);
+            L.v(TAG, "质量压缩到原来的" + quality + "%时大小为："
+                    + baos.toByteArray().length + "byte");
+            isCompressed = true;
+        }
+        L.v(TAG, "图片压缩后大小：" + baos.toByteArray().length + "byte");
+        if (isCompressed) {
+            Bitmap compressedBitmap = BitmapFactory.decodeByteArray(
+                    baos.toByteArray(), 0, baos.toByteArray().length);
+            recycleBitmap(bitmap);
+            return compressedBitmap;
+        } else {
+            return bitmap;
+        }
     }
 
     /**
@@ -216,5 +216,7 @@ public class ImageCompressUtil {
             bitmap = null;
         }
     }
+
+
 
 }

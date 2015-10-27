@@ -3,21 +3,28 @@ package com.kutear.app.viewhelper;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.view.View;
 import android.widget.EditText;
 
+import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.callback.IUploadCallBack;
 import com.kutear.app.fragment.BaseFragment;
 import com.kutear.app.fragment.KDialogFragment;
 import com.kutear.app.upload.QiniuUpload;
+import com.kutear.app.utils.ImageCompressUtil;
 import com.kutear.app.utils.L;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * Created by kutear on 15-10-11.
@@ -81,7 +88,11 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == IMAGE_CODE && resultCode == Activity.RESULT_OK) {
             Uri uri = data.getData();
-            uploadImg(getRealPathFromURI(uri));
+            try {
+                uploadImg(getRealPathFromURI(uri));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -90,9 +101,25 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
      *
      * @param path
      */
-    private void uploadImg(String path) {
+    private void uploadImg(String path) throws IOException {
         if (path != null) {
             File file = new File(path);
+            Bitmap bmp = ImageCompressUtil.compressBySize(file.getAbsolutePath(), 480, 480);
+            File tempFile = new File(((AppApplication) mActivity.getApplication()).getAppPath(), file.getName());
+            L.v(TAG, tempFile.getAbsolutePath());
+            File parentFile = tempFile.getParentFile();
+            if (!parentFile.exists()) {
+                parentFile.mkdirs();
+            }
+            if (!tempFile.exists()) {
+                tempFile.createNewFile();
+            }
+            FileOutputStream baos = new FileOutputStream(tempFile);
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);//png类型
+            baos.flush();
+            baos.close();
+            file = tempFile;
+            bmp.recycle();
             QiniuUpload.upload(file, this);
             //显示上传对话框
             showUploadDialog();

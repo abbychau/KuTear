@@ -14,6 +14,8 @@ import com.qiniu.android.utils.UrlSafeBase64;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
 
 import javax.crypto.Mac;
 import javax.crypto.SecretKey;
@@ -47,7 +49,8 @@ public class QiniuUpload {
             String _encodedSign = UrlSafeBase64.encodeToString(_sign);
             String _uploadToken = AccessKey + ':' + _encodedSign + ':'
                     + _encodedPutPolicy;
-            final String fileName = System.currentTimeMillis() + "_" + file.getName();
+            Calendar calendar = Calendar.getInstance();
+            final String fileName = calendar.get(Calendar.YEAR) + "/" + (calendar.get(Calendar.MONTH)+1) + "/" + file.getName();
             UpProgressHandler progressHandler = new UpProgressHandler() {
                 @Override
                 public void progress(String key, double percent) {

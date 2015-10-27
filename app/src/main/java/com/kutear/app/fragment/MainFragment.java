@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.activity.BaseActivity;
+import com.kutear.app.activity.CommonActivity;
 import com.kutear.app.adapter.ArticleAdapter;
 import com.kutear.app.api.ApiArticleList;
 import com.kutear.app.bean.Article;
@@ -146,6 +148,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     public void onClick(View v, int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ArticleDetailsFragment.KEY, mLists.get(position));
+        bundle.putBoolean(BaseActivity.SCREEN_FLAG,true);
         mApp.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
     }
 
