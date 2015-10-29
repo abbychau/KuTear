@@ -1,6 +1,7 @@
 package com.kutear.app.fragment;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -9,6 +10,7 @@ import com.kutear.app.R;
 import com.kutear.app.callback.IUploadCallBack;
 import com.kutear.app.upload.QiniuUpload;
 import com.kutear.app.utils.L;
+import com.kutear.app.view.CustomTextView;
 import com.kutear.app.viewhelper.EditTextViewHelper;
 
 import java.io.File;
@@ -20,6 +22,7 @@ import java.io.File;
 public class SettingFragment extends BaseToolBarFragment {
     private static final String TAG = SettingFragment.class.getSimpleName();
     private EditTextViewHelper mEditTextViewHelper;
+    private CustomTextView mTV;
 
     public static SettingFragment newInstance() {
         Bundle args = new Bundle();
@@ -32,7 +35,9 @@ public class SettingFragment extends BaseToolBarFragment {
     protected View setContentView() {
         hiddenLoadingLayout();
         mEditTextViewHelper = new EditTextViewHelper(this);
-        return mEditTextViewHelper.getMainView();
+        mTV = new CustomTextView(mActivity);
+        mTV.setText("This Is Test");
+        return mTV;
     }
 
     @Override

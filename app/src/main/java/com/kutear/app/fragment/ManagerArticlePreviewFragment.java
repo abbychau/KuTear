@@ -19,6 +19,7 @@ import com.kutear.app.netutils.UrlImageParser;
 import com.kutear.app.utils.Constant;
 import com.kutear.app.view.RichTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -114,7 +115,10 @@ public class ManagerArticlePreviewFragment extends BaseToolBarFragment implement
 
     @Override
     public void imageClicked(List<String> imageUrls, int position) {
-        //TODO 图片预览
+        Bundle bundle = new Bundle();
+        bundle.putInt(ImagePreviewFragment.INDEX, position);
+        bundle.putStringArrayList(ImagePreviewFragment.KEY, (ArrayList<String>) imageUrls);
+        mApp.startActivity(mActivity, Constant.ACTIVITY_IMAGE_PREVIEW, bundle);
     }
 
     @Override

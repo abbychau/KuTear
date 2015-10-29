@@ -54,7 +54,7 @@ public class AppApplication extends Application {
         return app.getString(resId);
     }
 
-    public static ImageLoader getImageLoader() {
+    public ImageLoader getImageLoader() {
         return mImageLoader;
     }
 
@@ -108,7 +108,7 @@ public class AppApplication extends Application {
         mUploadManager = new UploadManager(config);
     }
 
-    public static UploadManager getUploadManager() {
+    public UploadManager getUploadManager() {
         return mUploadManager;
     }
 

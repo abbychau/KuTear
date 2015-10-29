@@ -20,6 +20,7 @@ import com.kutear.app.fragment.KDialogFragment;
 import com.kutear.app.upload.QiniuUpload;
 import com.kutear.app.utils.ImageCompressUtil;
 import com.kutear.app.utils.L;
+import com.kutear.app.utils.SaveData;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -105,22 +106,11 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
         if (path != null) {
             File file = new File(path);
             Bitmap bmp = ImageCompressUtil.compressBySize(file.getAbsolutePath(), 480, 480);
-            File tempFile = new File(((AppApplication) mActivity.getApplication()).getAppPath(), file.getName());
-            L.v(TAG, tempFile.getAbsolutePath());
-            File parentFile = tempFile.getParentFile();
-            if (!parentFile.exists()) {
-                parentFile.mkdirs();
+            String absPath = SaveData.saveImage(bmp, file.getName());
+            if (absPath != null) {
+                file = new File(absPath);
             }
-            if (!tempFile.exists()) {
-                tempFile.createNewFile();
-            }
-            FileOutputStream baos = new FileOutputStream(tempFile);
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, baos);//png类型
-            baos.flush();
-            baos.close();
-            file = tempFile;
-            bmp.recycle();
-            QiniuUpload.upload(file, this);
+            QiniuUpload.upload((AppApplication) mActivity.getApplication(),file, this);
             //显示上传对话框
             showUploadDialog();
         } else {

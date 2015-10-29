@@ -171,7 +171,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
 
     private void loadDefaultBackground() {
         //TODO 需要添加自己的图片
-        mIvTitleBg.setImageUrl("http://kutearforte-uploads.stor.sinaapp.com/2802316513.png", AppApplication.getImageLoader());
+        mIvTitleBg.setImageUrl("http://kutearforte-uploads.stor.sinaapp.com/2802316513.png", mApp.getImageLoader());
     }
 
     private void setFirstImage(String str) {
@@ -183,7 +183,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
         if (elements.first() != null) {
             String url = elements.first().attr("src");
             if (!TextUtils.isEmpty(url)) {
-                mIvTitleBg.setImageUrl(url, AppApplication.getImageLoader());
+                mIvTitleBg.setImageUrl(url, mApp.getImageLoader());
             }
         }
     }
@@ -204,9 +204,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
 
     @Override
     public void imageClicked(List<String> imageUrls, int position) {
-        L.v(TAG, "imageClicked");
         Bundle bundle = new Bundle();
-        bundle.putBoolean(BaseActivity.SCREEN_FLAG, true);
         bundle.putInt(ImagePreviewFragment.INDEX, position);
         bundle.putStringArrayList(ImagePreviewFragment.KEY, (ArrayList<String>) imageUrls);
         mApp.startActivity(mActivity, Constant.ACTIVITY_IMAGE_PREVIEW, bundle);

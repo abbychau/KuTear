@@ -35,8 +35,8 @@ public class QiniuUpload {
 
     private static final String TAG = QiniuUpload.class.getSimpleName();
 
-    public static void upload(final File file, final IUploadCallBack callBack) {
-        UploadManager uploadManager = AppApplication.getUploadManager();
+    public static void upload(AppApplication app,final File file, final IUploadCallBack callBack) {
+        UploadManager uploadManager = app.getUploadManager();
         try {
             // 1 构造上传策略
             JSONObject _json = new JSONObject();

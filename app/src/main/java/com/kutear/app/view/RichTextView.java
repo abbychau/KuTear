@@ -29,9 +29,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
 import com.kutear.app.AppApplication;
 import com.kutear.app.R;
+import com.kutear.app.utils.AndroidUtils;
 import com.kutear.app.utils.DeviceInfo;
 import com.kutear.app.utils.ImageCompressUtil;
-import com.kutear.app.utils.L;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +47,8 @@ public class RichTextView extends TextView {
     private OnImageClickListener mOnImageClickListener;
     private OnUrlClickListener mOnUrlClickListener;
     private ArrayList<BitmapDrawable> mImagelist = new ArrayList<>();
+    private float mDefaultDrawableWidth;
+    private float mDefaultDrawableHeight;
     private Html.ImageGetter mImageGetter = new Html.ImageGetter() {
         @Override
         public Drawable getDrawable(String source) {
@@ -74,7 +76,7 @@ public class RichTextView extends TextView {
                             } else {
                                 drawable = getContext().getResources().getDrawable(R.drawable.kutear_fialed);
                             }
-                            mUrlDrawable.setDrawable(drawable);
+                            mUrlDrawable.setErrorDrawable(drawable);
                         }
                     });
             AppApplication.startRequest(request);
@@ -115,6 +117,8 @@ public class RichTextView extends TextView {
                 mDefaultDrawable = context.getResources().getDrawable(R.drawable.kutear_load);
             }
         }
+        mDefaultDrawableHeight = mTypedArray.getDimension(R.styleable.RichTextView_default_drawable_height, 0);
+        mDefaultDrawableWidth = mTypedArray.getDimension(R.styleable.RichTextView_default_drawable_width, 0);
         mTypedArray.recycle();
     }
 
@@ -144,6 +148,7 @@ public class RichTextView extends TextView {
         } else {
             spannableStringBuilder = new SpannableStringBuilder(spanned);
         }
+
         ImageSpan[] imageSpans = spannableStringBuilder.getSpans(0, spannableStringBuilder.length(), ImageSpan.class);
         final List<String> imageUrls = new ArrayList<>();
 
@@ -153,26 +158,27 @@ public class RichTextView extends TextView {
             int start = spannableStringBuilder.getSpanStart(imageSpan);
             int end = spannableStringBuilder.getSpanEnd(imageSpan);
             imageUrls.add(imageUrl);
-
             final int finalI = i;
+            //使用自己的ClickableSpan去代替系统原本的的Clickable
             ClickableSpan clickableSpan = new ClickableSpan() {
                 @Override
                 public void onClick(View widget) {
-                    L.v(TAG,"ClickableSpan");
                     if (mOnImageClickListener != null) {
                         mOnImageClickListener.imageClicked(imageUrls, finalI);
                     }
                 }
             };
+            //移除原本的
             ClickableSpan[] clickableSpans = spannableStringBuilder.getSpans(start, end, ClickableSpan.class);
             if (clickableSpans != null && clickableSpans.length != 0) {
                 for (ClickableSpan cs : clickableSpans) {
                     spannableStringBuilder.removeSpan(cs);
                 }
             }
+            //添加自定义的
             spannableStringBuilder.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
         }
-        setText(spanned);
+        super.setText(spanned);
         setMovementMethod(new CustomLinkMovementMethod());
     }
 
@@ -186,14 +192,14 @@ public class RichTextView extends TextView {
     }
 
     public void recycle() {
-      for(BitmapDrawable items:mImagelist){
-          Bitmap bmp = items.getBitmap();
-          if(bmp!=null&&!bmp.isRecycled()){
-              bmp.recycle();
-              System.gc();
-              items = null;
-          }
-      }
+        for (BitmapDrawable items : mImagelist) {
+            Bitmap bmp = items.getBitmap();
+            if (bmp != null && !bmp.isRecycled()) {
+                bmp.recycle();
+                System.gc();
+                items = null;
+            }
+        }
     }
 
     /**
@@ -228,6 +234,11 @@ public class RichTextView extends TextView {
                                 mOnUrlClickListener.urlClicked(url);
                                 return true;
                             }
+                        } else {
+                            //其他情况默认处理,比如图片点击响应
+                            //实际图片对应的是函数setHtml()中的匿名ClickableSpan
+                            //则会执行上面的OnClick
+                            link[0].onClick(widget);
                         }
                     } else {
                         Selection.setSelection(buffer,
@@ -251,7 +262,22 @@ public class RichTextView extends TextView {
 
         public URLDrawable(Drawable defaultDrawable) {
             this.drawable = defaultDrawable;
-            initBounds();
+            initDefaultBounds();
+        }
+
+        private void initDefaultBounds() {
+            if (mDefaultDrawableWidth == 0) {
+                mDefaultDrawableWidth = (float) (DeviceInfo.getScreenWidth(getContext()) * 0.8);
+            }
+            if (mDefaultDrawableHeight == 0) {
+                mDefaultDrawableHeight = AndroidUtils.convertDpToPixel(100);
+            }
+            setBoundsByWH((int) mDefaultDrawableWidth, (int) mDefaultDrawableHeight);
+        }
+
+        public void setErrorDrawable(Drawable drawable) {
+            this.drawable = drawable;
+            initDefaultBounds();
         }
 
         @Override
@@ -262,11 +288,14 @@ public class RichTextView extends TextView {
 
         public void setDrawable(Drawable drawable) {
             this.drawable = drawable;
-            initBounds();
+            float multiplier = (float) (DeviceInfo.getScreenWidth(getContext()) * 0.8) / (float) drawable.getIntrinsicWidth();
+            int width = (int) (drawable.getIntrinsicWidth() * multiplier);
+            int height = (int) (drawable.getIntrinsicHeight() * multiplier);
+
+            setBoundsByWH(width, height);
         }
 
-        private void initBounds() {
-            setBoundsWithDevice();
+        private void invalidate() {
             RichTextView.this.invalidate();
             RichTextView.this.setText(RichTextView.this.getText());
         }
@@ -274,14 +303,12 @@ public class RichTextView extends TextView {
         /**
          * 根据设备信息设置宽高
          */
-        private void setBoundsWithDevice() {
-            float multiplier = (float) (DeviceInfo.getScreenWidth(getContext()) * 0.8) / (float) drawable.getIntrinsicWidth();
-            int width = (int) (drawable.getIntrinsicWidth() * multiplier);
-            int height = (int) (drawable.getIntrinsicHeight() * multiplier);
-            int left = (int) (DeviceInfo.getScreenWidth(getContext()) * 0.1);
+        private void setBoundsByWH(int w, int h) {
             //非常重要,否则图片只占位,不显示
-            drawable.setBounds(left, 10, width, height);
-            setBounds(left, 0, width + left, height + 10);
+            int left = (int) (DeviceInfo.getScreenWidth(getContext()) * 0.1);
+            drawable.setBounds(left, (int) AndroidUtils.convertDpToPixel(10), w, h);
+            setBounds(left, 0, w + left, h + (int) AndroidUtils.convertDpToPixel(10));
+            invalidate();
         }
     }
 

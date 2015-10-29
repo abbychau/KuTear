@@ -37,5 +37,7 @@
     <declare-styleable name="RichTextView">
         <attr name="default_drawable" format="reference" />
         <attr name="error_drawable" format="reference" />
+        <attr name="default_drawable_width" format="dimension"/>
+        <attr name="default_drawable_height" format="dimension"/>
     </declare-styleable>
 </resources>

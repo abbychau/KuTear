@@ -81,7 +81,7 @@ public class UserCenterToolBarFragment extends BaseFragment {
     }
 
     private void bindData() {
-        mImageView.setImageUrl(mUserInfo.getAvater(), AppApplication.getImageLoader());
+        mImageView.setImageUrl(mUserInfo.getAvater(), mApp.getImageLoader());
         mCollapsingToolbarLayout.setTitle(mUserInfo.getNickName());
         mMainPager.setText(mUserInfo.getMainPager());
         mMail.setText(mUserInfo.getEMail());
