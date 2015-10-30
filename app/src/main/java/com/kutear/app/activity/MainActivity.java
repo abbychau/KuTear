@@ -42,6 +42,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        if (getSettingTheme() > 0) {
+            setTheme(getSettingTheme());
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
         initView();
@@ -49,6 +53,14 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mSwipeBackLayout = getSwipeBackLayout();
         //禁用滑动
         mSwipeBackLayout.setEnableGesture(false);
+    }
+
+    @Override
+    protected int getSettingTheme() {
+        if (isLightTheme()) {
+            return R.style.AppTheme_Main;
+        }
+        return R.style.AppTheme_Main_Dark;
     }
 
     /**
@@ -211,7 +223,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         }, 300, 200, Bitmap.Config.ARGB_8888, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError arg0) {
-
+                mAvater.setImageResource(R.drawable.kutear_avatar);
             }
         });
         AppApplication.startRequest(imgRequest);

@@ -172,7 +172,9 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     @Override
     public void onError(String msg) {
         hiddenLoadingLayout();
-        showErrorLayout();
+        if(!msg.endsWith(getString(R.string.no_more_article))){
+            showErrorLayout();
+        }
         loading = true;
         if (!isRefresh) {
             pager--;

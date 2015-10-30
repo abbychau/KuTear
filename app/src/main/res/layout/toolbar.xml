@@ -8,4 +8,4 @@
     app:elevation="@dimen/ui_default_elevation"
     app:layout_collapseMode="pin"
     app:layout_scrollFlags="scroll|enterAlways"
-    app:theme="@style/ToolBarStyle" />
+    app:theme="?android:actionBarStyle" />

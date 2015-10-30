@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:layout_margin="5dp"
     android:orientation="horizontal"
-    card_view:cardBackgroundColor="@color/teal_300"
+    card_view:cardBackgroundColor="?attr/colorPrimary"
     card_view:cardCornerRadius="@dimen/ui_cardview_radius">
 
     <TextView

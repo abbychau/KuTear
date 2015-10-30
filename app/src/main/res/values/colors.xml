@@ -7,8 +7,11 @@
     <color name="blue_500">#ff03A9F4</color>
     <color name="gray_500">#ff9E9E9E</color>
     <color name="gray_300">#ffE0E0E0</color>
+    <color name="gray_50">#ffFAFAFA</color>
     <color name="gray_400">#ffBDBDBD</color>
     <color name="gray_800">#ff424242</color>
+    <color name="gray_700">#ff616161</color>
+    <color name="gray_600">#ff757575</color>
     <color name="gray_900">#ff212121</color>
     <color name="green_500">#FF4CAF50</color>
     <color name="red_500">#ffF44336</color>

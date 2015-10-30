@@ -64,6 +64,7 @@ public class Constant {
     public static final String USER = "user";
     public static final String PASS = "pass";
     public static final String COOKIES = "cookies";
+    public static final String THEME_PREFERENCE = "theme_preference";
 
 
     /**************************************

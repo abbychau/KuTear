@@ -3,9 +3,11 @@ package com.kutear.app;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
+import android.preference.PreferenceManager;
 import android.support.v4.util.LruCache;
 
 import com.android.volley.Request;
@@ -36,6 +38,7 @@ public class AppApplication extends Application {
     private static UserManager mUserManager;
     private static UploadManager mUploadManager;
     private static final String APP_PATH = "KuTear";
+    private static SharedPreferences mSharedPreferences;
 
     public static AppApplication getApplication() {
         return app;
@@ -90,6 +93,7 @@ public class AppApplication extends Application {
             }
         });
         mUserManager = new UserManager();
+        mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         initUploadManager();
     }
 
@@ -120,6 +124,10 @@ public class AppApplication extends Application {
         }
         activity.startActivity(intent);
         activity.overridePendingTransition(R.anim.activity_in, R.anim.activity_out);
+    }
+
+    public SharedPreferences getSettingPreference() {
+        return mSharedPreferences;
     }
 
     public UserManager getUserManager() {

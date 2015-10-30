@@ -39,7 +39,7 @@
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:theme="@style/ToolBarStyle" />
+                app:theme="?android:attr/actionBarStyle" />
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
@@ -65,6 +65,7 @@
                 <LinearLayout
                     style="@style/Widget.CardContent"
                     android:layout_width="match_parent"
+                    android:background="?card_bg_color"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -89,6 +90,7 @@
                 <LinearLayout
                     style="@style/Widget.CardContent"
                     android:layout_width="match_parent"
+                    android:background="?card_bg_color"
                     android:layout_height="wrap_content">
 
                     <TextView
@@ -114,6 +116,7 @@
                 <LinearLayout
                     style="@style/Widget.CardContent"
                     android:layout_width="match_parent"
+                    android:background="?card_bg_color"
                     android:layout_height="wrap_content">
 
                     <TextView

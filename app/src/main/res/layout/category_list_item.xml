@@ -16,7 +16,7 @@
             android:id="@+id/manager_category_item_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/gray_800"
+            android:textColor="?attr/manager_list_item_text_color"
             android:singleLine="true"
             android:textSize="@dimen/text_article_item_title" />
 

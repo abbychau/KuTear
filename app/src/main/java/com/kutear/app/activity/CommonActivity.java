@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.fragment.AboutFragment;
 import com.kutear.app.fragment.ArchiveFragment;
@@ -20,10 +19,9 @@ import com.kutear.app.fragment.ManagerCategoryMdFragment;
 import com.kutear.app.fragment.ManagerArticleEditFragment;
 import com.kutear.app.fragment.ManagerPagerEditFragment;
 import com.kutear.app.fragment.SettingFragment;
-import com.kutear.app.fragment.UserCenterToolBarFragment;
+import com.kutear.app.fragment.UserCenterFragment;
 import com.kutear.app.fragment.WebViewFragment;
 import com.kutear.app.utils.Constant;
-import com.kutear.app.utils.L;
 
 /**
  * Created by kutear.guo on 2015/8/4.
@@ -39,11 +37,15 @@ public class CommonActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (getSettingTheme() > 0) {
+            setTheme(getSettingTheme());
+        }
         super.onCreate(savedInstanceState);
         loadLayout();
         initView();
         startFragment();
     }
+
 
     protected void loadLayout() {
         if (isFullScreen) {
@@ -99,7 +101,7 @@ public class CommonActivity extends BaseActivity {
                 }
                 break;
             case Constant.ACTIVITY_USER_CENTER:
-                mFragment = UserCenterToolBarFragment.newInstance();
+                mFragment = UserCenterFragment.newInstance();
                 break;
             case Constant.ACTIVITY_SETTING:
                 mFragment = SettingFragment.newInstance();

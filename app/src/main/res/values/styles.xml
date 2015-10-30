@@ -7,10 +7,40 @@
         <item name="android:windowBackground">@android:color/white</item>
         <item name="colorPrimary">@color/teal_500</item>
         <item name="colorPrimaryDark">@color/teal_500</item>
+        <item name="article_header_title_color">@color/black_000</item>
+        <item name="nav_header_bg_color">@color/teal_500</item>
+        <item name="card_bg_color">@android:color/white</item>
+        <item name="btn_press_bg_color">@color/teal_900</item>
+        <item name="manager_list_item_bg_color_pre">@color/gray_300</item>
+        <item name="manager_list_item_bg_color">@android:color/white</item>
+        <item name="manager_list_item_text_color">@color/gray_800</item>
+        <item name="article_details_text_color">@color/gray_800</item>
+        <item name="article_title_divider_with_content">@android:color/white</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:actionBarStyle">@style/ToolBarStyle.Dark</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@color/gray_800</item>
+        <item name="colorPrimary">@color/gray_600</item>
+        <item name="colorPrimaryDark">@color/gray_600</item>
+        <item name="article_header_title_color">@android:color/white</item>
+        <item name="nav_header_bg_color">@color/gray_600</item>
+        <item name="card_bg_color">@color/gray_700</item>
+        <item name="btn_press_bg_color">@color/gray_800</item>
+        <item name="manager_list_item_bg_color_pre">@color/gray_800</item>
+        <item name="manager_list_item_bg_color">@color/gray_600</item>
+        <item name="manager_list_item_text_color">@android:color/white</item>
+        <item name="article_details_text_color">@color/gray_50</item>
+        <item name="article_title_divider_with_content">@color/gray_800</item>
     </style>
 
     <!-- 用于主页面-->
     <style name="AppTheme.Main" parent="AppTheme">
+        <item name="android:windowIsTranslucent">false</item>
+    </style>
+
+    <style name="AppTheme.Main.Dark" parent="AppTheme.Dark">
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
@@ -23,8 +53,20 @@
         <item name="android:titleTextStyle">@style/ToolBar.TitleTextStyle</item>
     </style>
 
+    <style name="ToolBarStyle.Dark" parent="ToolBarStyle">
+        <item name="colorPrimary">@color/gray_600</item>
+        <!--<item name="android:textColorPrimary">@color/black_000</item>-->
+        <!--<item name="android:textColorSecondary">@color/black_000</item>-->
+        <!--<item name="actionMenuTextColor">@color/black_000</item>-->
+        <item name="android:titleTextStyle">@style/ToolBar.TitleTextStyle.Dark</item>
+    </style>
+
     <style name="ToolBar.TitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="ToolBar.TitleTextStyle.Dark" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/black_000</item>
     </style>
 
     <!--右滑退出-->
@@ -37,10 +79,11 @@
 
     <!--文章详情页面头部-->
     <style name="HeaderTitleStyle" parent="@android:style/TextAppearance">
-        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textColor">?attr/article_header_title_color</item>
         <item name="android:textSize">@dimen/text_article_detail_title</item>
         <item name="android:textStyle">bold</item>
     </style>
+
 
     <style name="Widget.CardContent" parent="android:Widget">
         <item name="android:paddingLeft">16dp</item>

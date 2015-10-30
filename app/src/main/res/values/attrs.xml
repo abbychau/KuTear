@@ -33,6 +33,15 @@
     </declare-styleable>
 
     <attr name="SwipeBackLayoutStyle" format="reference" />
+    <attr name="article_header_title_color" format="color" />
+    <attr name="nav_header_bg_color" format="color" />
+    <attr name="card_bg_color" format="color" />
+    <attr name="btn_press_bg_color" format="color" />
+    <attr name="manager_list_item_bg_color" format="color" />
+    <attr name="manager_list_item_bg_color_pre" format="color" />
+    <attr name="manager_list_item_text_color" format="color" />
+    <attr name="article_details_text_color" format="color" />
+    <attr name="article_title_divider_with_content" format="color" />
 
     <declare-styleable name="RichTextView">
         <attr name="default_drawable" format="reference" />

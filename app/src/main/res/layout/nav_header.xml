@@ -9,7 +9,7 @@
         android:id="@+id/nav_bg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:background="@color/teal_500" />
+        android:background="?attr/nav_header_bg_color" />
 
     <RelativeLayout
         android:layout_width="match_parent"

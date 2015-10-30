@@ -8,4 +8,17 @@
         <item>0</item>
         <item>1</item>
     </string-array>
+    <array name="manager_title">
+        <item>站点管理</item>
+        <item>阅读设置</item>
+        <item>链接设置</item>
+        <item>管理分类</item>
+        <item>独立页面</item>
+        <item>管理文章</item>
+    </array>
+    <array name="category_option">
+        <item>删除</item>
+        <item>修改</item>
+        <item>取消</item>
+    </array>
 </resources>

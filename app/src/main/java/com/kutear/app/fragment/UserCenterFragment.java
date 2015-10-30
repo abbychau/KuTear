@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.NetworkImageView;
-import com.kutear.app.AppApplication;
 import com.kutear.app.R;
 import com.kutear.app.api.ApiUser;
 import com.kutear.app.bean.BaseBean;
@@ -20,8 +19,8 @@ import com.kutear.app.bean.UserInfo;
  * Created by kutear.guo on 2015/8/19.
  * 用户中心
  */
-public class UserCenterToolBarFragment extends BaseFragment {
-    private static final String TAG = UserCenterToolBarFragment.class.getSimpleName();
+public class UserCenterFragment extends BaseFragment {
+    private static final String TAG = UserCenterFragment.class.getSimpleName();
     private NetworkImageView mImageView;
     private CollapsingToolbarLayout mCollapsingToolbarLayout;
     private UserInfo mUserInfo;
@@ -29,9 +28,9 @@ public class UserCenterToolBarFragment extends BaseFragment {
     private TextView mMail;
     private TextView mUserName;
 
-    public static UserCenterToolBarFragment newInstance() {
+    public static UserCenterFragment newInstance() {
         Bundle args = new Bundle();
-        UserCenterToolBarFragment fragment = new UserCenterToolBarFragment();
+        UserCenterFragment fragment = new UserCenterFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -83,6 +82,7 @@ public class UserCenterToolBarFragment extends BaseFragment {
     private void bindData() {
         mImageView.setImageUrl(mUserInfo.getAvater(), mApp.getImageLoader());
         mCollapsingToolbarLayout.setTitle(mUserInfo.getNickName());
+        mCollapsingToolbarLayout.setExpandedTitleColor(mActivity.getResources().getColor(R.color.teal_500));
         mMainPager.setText(mUserInfo.getMainPager());
         mMail.setText(mUserInfo.getEMail());
         mUserName.setText(mUserInfo.getNickName());

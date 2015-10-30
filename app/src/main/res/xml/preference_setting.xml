@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <ListPreference
-        android:defatulvalue="0"
         android:dialogTitle="主题"
         android:entries="@array/theme_name"
         android:entryValues="@array/theme_value"
