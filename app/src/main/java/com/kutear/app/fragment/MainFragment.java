@@ -148,7 +148,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     public void onClick(View v, int position) {
         Bundle bundle = new Bundle();
         bundle.putParcelable(ArticleDetailsFragment.KEY, mLists.get(position));
-        bundle.putBoolean(BaseActivity.SCREEN_FLAG,true);
+        bundle.putBoolean(BaseActivity.SCREEN_FLAG, true);
         mApp.startActivity(mActivity, Constant.ACTIVITY_DETAILS, bundle);
     }
 
@@ -172,6 +172,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
     @Override
     public void onError(String msg) {
         hiddenLoadingLayout();
+        showErrorLayout();
         loading = true;
         if (!isRefresh) {
             pager--;
@@ -180,7 +181,7 @@ public class MainFragment extends BaseNoBarFragment implements SwipeRefreshLayou
             mSwipeRefreshLayout.setRefreshing(false);
         }
         if (!TextUtils.isEmpty(msg)) {
-            Snackbar.make(mSwipeRefreshLayout, msg, Snackbar.LENGTH_SHORT).show();
+            showSnack(mSwipeRefreshLayout, msg);
         }
     }
 }

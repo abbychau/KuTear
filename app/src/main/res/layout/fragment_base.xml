@@ -7,8 +7,7 @@
     <RelativeLayout
         android:id="@+id/loading_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
+        android:layout_height="match_parent">
 
         <ProgressBar
             android:id="@+id/progressBar"
@@ -16,9 +15,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true" />
-    </RelativeLayout>
-    <!--TODO 视图出错部分-->
 
+        <View
+            android:id="@+id/base_load_fialed"
+            android:layout_width="128dp"
+            android:layout_height="128dp"
+            android:layout_centerInParent="true"
+            android:background="@drawable/kutear_fialed"/>
+
+    </RelativeLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

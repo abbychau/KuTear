@@ -4,6 +4,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.kutear.app.AppApplication;
+import com.kutear.app.R;
 import com.kutear.app.callback.ICallBack;
 import com.kutear.app.netutils.KStringRequest;
 import com.kutear.app.utils.L;
@@ -39,7 +40,7 @@ public class BaseRequest {
             public void onErrorResponse(VolleyError volleyError) {
                 L.v(TAG, "请求失败(URL:" + url + "):");
                 if (callBack != null) {
-                    callBack.onError(ICallBack.RESPONSE_FAILED, volleyError.getMessage());
+                    callBack.onError(ICallBack.RESPONSE_FAILED, AppApplication.getKString(R.string.network_error));
                 }
             }
         });

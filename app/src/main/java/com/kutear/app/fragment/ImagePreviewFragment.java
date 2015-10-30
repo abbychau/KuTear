@@ -77,7 +77,7 @@ public class ImagePreviewFragment extends BaseToolBarFragment implements ViewPag
                     }
                     String fileName = System.currentTimeMillis() + urls.get(index).substring(urls.get(index).lastIndexOf("/") + 1, urls.get(index).length());
                     String absPath = SaveData.saveImage(bmp, fileName);
-                    Snackbar.make(mViewPager,mActivity.getString(R.string.save_image_to_sd)+absPath,Snackbar.LENGTH_SHORT).show();
+                    showSnack(mViewPager,mActivity.getString(R.string.save_image_to_sd)+absPath);
                     super.run();
                 }
             }.start();

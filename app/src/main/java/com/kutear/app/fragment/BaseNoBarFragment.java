@@ -16,6 +16,8 @@ import com.kutear.app.bean.BaseBean;
 public abstract class BaseNoBarFragment extends BaseFragment {
     protected ViewGroup loadingLayout;
     protected ViewGroup contentLayout;
+    private View mLoadFailedView;
+    private View mLoadProcessView;
 
 
     protected void hiddenLoadingLayout() {
@@ -30,6 +32,22 @@ public abstract class BaseNoBarFragment extends BaseFragment {
     protected void showLoadingLayout() {
         if (loadingLayout != null) {
             loadingLayout.setVisibility(View.VISIBLE);
+            mLoadProcessView.setVisibility(View.VISIBLE);
+            mLoadFailedView.setVisibility(View.GONE);
+        }
+        if (contentLayout != null) {
+            contentLayout.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 请求失败调用
+     */
+    protected void showErrorLayout() {
+        if (loadingLayout != null) {
+            loadingLayout.setVisibility(View.VISIBLE);
+            mLoadProcessView.setVisibility(View.GONE);
+            mLoadFailedView.setVisibility(View.VISIBLE);
         }
         if (contentLayout != null) {
             contentLayout.setVisibility(View.GONE);
@@ -47,6 +65,8 @@ public abstract class BaseNoBarFragment extends BaseFragment {
         View bodyView = inflater.inflate(R.layout.fragment_nobar_base, container, false);
         loadingLayout = (ViewGroup) bodyView.findViewById(R.id.loading_layout);
         contentLayout = (ViewGroup) bodyView.findViewById(R.id.content_layout);
+        mLoadFailedView = bodyView.findViewById(R.id.base_load_fialed);
+        mLoadProcessView = bodyView.findViewById(R.id.progressBar);
         View view = setContentView();
         if (view != null) {
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
@@ -84,6 +104,6 @@ public abstract class BaseNoBarFragment extends BaseFragment {
     public void onGetError(String error) {
         super.onGetError(error);
         hiddenLoadingLayout();
-        // TODO: 2015/8/25 把加载视图改变为显示失败
+        showErrorLayout();
     }
 }

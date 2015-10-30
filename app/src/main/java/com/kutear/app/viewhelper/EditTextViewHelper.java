@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Environment;
+import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;

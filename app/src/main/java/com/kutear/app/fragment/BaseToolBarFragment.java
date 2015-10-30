@@ -29,6 +29,8 @@ public abstract class BaseToolBarFragment extends BaseFragment implements OnBack
     protected ViewGroup loadingLayout;
     protected ViewGroup contentLayout;
     protected Toolbar mToolBar;
+    private View mLoadFailedView;
+    private View mLoadProcessView;
 
     @Override
     public void onAttach(Activity activity) {
@@ -54,6 +56,22 @@ public abstract class BaseToolBarFragment extends BaseFragment implements OnBack
     protected void showLoadingLayout() {
         if (loadingLayout != null) {
             loadingLayout.setVisibility(View.VISIBLE);
+            mLoadFailedView.setVisibility(View.GONE);
+            mLoadProcessView.setVisibility(View.VISIBLE);
+        }
+        if (contentLayout != null) {
+            contentLayout.setVisibility(View.GONE);
+        }
+    }
+
+    /**
+     * 请求失败调用
+     */
+    protected void showErrorLayout() {
+        if (loadingLayout != null) {
+            loadingLayout.setVisibility(View.VISIBLE);
+            mLoadProcessView.setVisibility(View.GONE);
+            mLoadFailedView.setVisibility(View.VISIBLE);
         }
         if (contentLayout != null) {
             contentLayout.setVisibility(View.GONE);
@@ -75,6 +93,8 @@ public abstract class BaseToolBarFragment extends BaseFragment implements OnBack
         bodyView = inflater.inflate(R.layout.fragment_base, container, false);
         loadingLayout = (ViewGroup) bodyView.findViewById(R.id.loading_layout);
         contentLayout = (ViewGroup) bodyView.findViewById(R.id.content_layout);
+        mLoadFailedView = bodyView.findViewById(R.id.base_load_fialed);
+        mLoadProcessView = bodyView.findViewById(R.id.progressBar);
         mToolBar = (Toolbar) bodyView.findViewById(R.id.toolbar);
         mToolBar.setNavigationIcon(getResources().getDrawable(R.drawable.abc_ic_ab_back_mtrl_am_alpha));
         mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -126,7 +146,7 @@ public abstract class BaseToolBarFragment extends BaseFragment implements OnBack
     @Override
     public void onGetError(String error) {
         super.onGetError(error);
-        // TODO: 2015/8/25 把加载视图改变为显示失败
+        showErrorLayout();
     }
 
     /**

@@ -113,7 +113,7 @@ public class ArticleListFragment extends BaseToolBarFragment implements IGetList
         loading = true;
         pager--;
         if (!TextUtils.isEmpty(msg)) {
-            Snackbar.make(mRecycleView, msg, Snackbar.LENGTH_SHORT).show();
+            showSnack(mRecycleView,msg);
         }
     }
 

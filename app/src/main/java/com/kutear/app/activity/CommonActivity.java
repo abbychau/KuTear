@@ -142,7 +142,6 @@ public class CommonActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        L.v(TAG, "onActivityResult");
         super.onActivityResult(requestCode, resultCode, data);
     }
 }
