@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 
 import com.kutear.app.R;
 import com.kutear.app.activity.MainActivity;
+import com.kutear.app.service.CarouselServices;
 
 /**
  * Created by kutear.guo on 2015/10/21.
@@ -27,6 +28,10 @@ public class LeaderFragment extends BaseNoBarFragment {
     protected View setContentView() {
         View mBodyView = inflate(R.layout.fragment_leader);
         initView(mBodyView);
+        //启动时拉去轮播图
+        Intent carouselIntent = new Intent();
+        carouselIntent.setClass(mActivity, CarouselServices.class);
+        mActivity.startService(carouselIntent);
         return mBodyView;
     }
 

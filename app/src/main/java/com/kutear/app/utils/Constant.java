@@ -10,12 +10,11 @@ public class Constant {
     /*************************************
      * 模式
      *************************************/
-    public static final boolean isDeBug = true;
+    public static final boolean isDeBug = false;
 
     /*************************************
      * URL 相关
      *************************************/
-//    public static final String URI_HOST = "http://192.168.6.121/kutear";
     public static final String URI_HOST = "http://kutearforte.sinaapp.com";
     //登陆接口 post
     public static final String URI_ADMIN = URI_HOST + "/admin";
@@ -49,6 +48,9 @@ public class Constant {
     public static final String URI_ARTICLE_POST = URI_HOST + "/admin/write-post.php";
     //独立页面URL
     public static final String URI_PAGER_DETAILS = URI_HOST + "/admin/write-page.php";
+    //轮播图URL
+    public static final String URI_CAROUSEL = "http://appkutear.sinaapp.com/index.php/Home/Index/index";
+
 
 
     /*************************************

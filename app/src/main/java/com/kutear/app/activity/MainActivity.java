@@ -25,6 +25,7 @@ import com.kutear.app.R;
 import com.kutear.app.fragment.ArchiveFragment;
 import com.kutear.app.fragment.MainFragment;
 import com.kutear.app.utils.Constant;
+import com.kutear.app.utils.L;
 import com.kutear.app.view.CircleImageView;
 
 
@@ -195,6 +196,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         @Override
         public void onReceive(Context context, Intent intent) {
             if (intent.getAction().equals(Constant.BROADCAST_LOGIN) && mApp.getUserManager().getUserInfo() != null) {
+                L.v(TAG,"登陆成功...");
                 if (mAvater == null) {
                     mAvater = (CircleImageView) findViewById(R.id.nav_avatar);
                 }

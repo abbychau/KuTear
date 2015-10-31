@@ -30,7 +30,7 @@ public class QiniuUpload {
     private static final String SecretKey = "8YIxcuQXJTa5dwnfl-M79vFpgusxlhgByRhT5Twr";
     private static final String MAC_NAME = "HmacSHA1";
     private static final String ENCODING = "UTF-8";
-    private static final String QINIU_HOST = "http://kutear.qiniudn.com/";
+    private static final String QINIU_HOST = "http://7oxhy6.com1.z0.glb.clouddn.com/";
     private static final String SCOPE = "kutear";//容器名称
 
     private static final String TAG = QiniuUpload.class.getSimpleName();

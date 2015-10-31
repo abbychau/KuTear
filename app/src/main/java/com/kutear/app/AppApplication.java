@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.kutear.app.activity.CommonActivity;
+import com.kutear.app.manager.CarouselManager;
 import com.kutear.app.manager.UserManager;
 import com.kutear.app.utils.Constant;
 import com.qiniu.android.common.Zone;
@@ -39,6 +40,7 @@ public class AppApplication extends Application {
     private static UploadManager mUploadManager;
     private static final String APP_PATH = "KuTear";
     private static SharedPreferences mSharedPreferences;
+    private static CarouselManager carouselManager;
 
     public static AppApplication getApplication() {
         return app;
@@ -94,7 +96,17 @@ public class AppApplication extends Application {
         });
         mUserManager = new UserManager();
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        carouselManager = new CarouselManager();
         initUploadManager();
+    }
+
+
+    /**
+     * 获取轮播图管理
+     * @return
+     */
+    public CarouselManager getCarouselManager() {
+        return carouselManager;
     }
 
     /**

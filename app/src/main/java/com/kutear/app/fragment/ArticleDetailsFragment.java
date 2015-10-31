@@ -147,7 +147,7 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
     public void onGetSuccess(BaseBean result) {
         super.onGetSuccess(result);
         String str = ((Article) result).getDetail();
-        setFirstImage(str);
+//        setFirstImage(str);
         str += getCssFromAsset();
         mTvContent.setHtml(str);
     }
@@ -170,23 +170,22 @@ public class ArticleDetailsFragment extends BaseFragment implements IGetCallBack
     }
 
     private void loadDefaultBackground() {
-        //TODO 需要添加自己的图片
-        mIvTitleBg.setImageUrl("http://kutearforte-uploads.stor.sinaapp.com/2802316513.png", mApp.getImageLoader());
+        mIvTitleBg.setImageUrl(mApp.getCarouselManager().getRandomUrl(), mApp.getImageLoader());
     }
 
-    private void setFirstImage(String str) {
-        if (TextUtils.isEmpty(str)) {
-            return;
-        }
-        Document document = Jsoup.parse(str);
-        Elements elements = document.getElementsByTag("img");
-        if (elements.first() != null) {
-            String url = elements.first().attr("src");
-            if (!TextUtils.isEmpty(url)) {
-                mIvTitleBg.setImageUrl(url, mApp.getImageLoader());
-            }
-        }
-    }
+//    private void setFirstImage(String str) {
+//        if (TextUtils.isEmpty(str)) {
+//            return;
+//        }
+//        Document document = Jsoup.parse(str);
+//        Elements elements = document.getElementsByTag("img");
+//        if (elements.first() != null) {
+//            String url = elements.first().attr("src");
+//            if (!TextUtils.isEmpty(url)) {
+//                mIvTitleBg.setImageUrl(url, mApp.getImageLoader());
+//            }
+//        }
+//    }
 
     @Override
     public void onDestroy() {
