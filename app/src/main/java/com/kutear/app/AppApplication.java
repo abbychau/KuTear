@@ -15,6 +15,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.kutear.app.activity.CommonActivity;
+import com.kutear.app.cookies.SiCookieStore2;
 import com.kutear.app.manager.CarouselManager;
 import com.kutear.app.manager.UserManager;
 import com.kutear.app.utils.Constant;
@@ -78,7 +79,7 @@ public class AppApplication extends Application {
     public void onCreate() {
         super.onCreate();
         app = this;
-        mCookieManager = new CookieManager(null, CookiePolicy.ACCEPT_ALL);
+        mCookieManager = new CookieManager(new SiCookieStore2(this), CookiePolicy.ACCEPT_ALL);
         CookieHandler.setDefault(mCookieManager);
         mQueue = Volley.newRequestQueue(this);
         mImageLoader = new ImageLoader(mQueue, new ImageLoader.ImageCache() {
@@ -103,6 +104,7 @@ public class AppApplication extends Application {
 
     /**
      * 获取轮播图管理
+     *
      * @return
      */
     public CarouselManager getCarouselManager() {

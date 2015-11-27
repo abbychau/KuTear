@@ -51,7 +51,7 @@ public class CarouselManager {
         int index = 0;
         int total = mList.size();
         index = (int) (total * Math.random());
-        return mList.get(index);
+        return index<mList.size()?mList.get(index):null;
     }
 
     /**
@@ -59,7 +59,7 @@ public class CarouselManager {
      * @return
      */
     public String getRandomUrl(){
-        return getRandomCarousel().getUrl();
+        return getRandomCarousel()!=null?getRandomCarousel().getUrl():"";
     }
 
 

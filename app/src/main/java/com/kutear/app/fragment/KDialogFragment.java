@@ -134,7 +134,7 @@ public class KDialogFragment extends DialogFragment {
      * @param manager
      * @param title      对话框标题
      * @param msg        EditText 默认
-     * @param okListener
+     * @param mIEditTextCallBack
      */
     public static void showEditText(FragmentManager manager, String title, String msg, IEditTextCallBack mIEditTextCallBack) {
         Bundle bundle = new Bundle();
