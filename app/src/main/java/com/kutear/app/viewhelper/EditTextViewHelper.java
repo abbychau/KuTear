@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
-import android.os.Environment;
-import android.preference.PreferenceFragment;
 import android.provider.MediaStore;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
@@ -20,12 +18,9 @@ import com.kutear.app.fragment.BaseFragment;
 import com.kutear.app.fragment.KDialogFragment;
 import com.kutear.app.upload.QiniuUpload;
 import com.kutear.app.utils.ImageCompressUtil;
-import com.kutear.app.utils.L;
 import com.kutear.app.utils.SaveData;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -129,11 +124,11 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
         String res = null;
         String[] proj = {MediaStore.Images.Media.DATA};
         Cursor cursor = mActivity.getContentResolver().query(contentUri, proj, null, null, null);
-        if (cursor.moveToFirst()) {
+        if (cursor != null && cursor.moveToFirst()) {
             int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
             res = cursor.getString(column_index);
+            cursor.close();
         }
-        cursor.close();
         return res;
     }
 
@@ -198,7 +193,7 @@ public class EditTextViewHelper implements View.OnClickListener, IUploadCallBack
     }
 
     private void showUploadDialog() {
-        KDialogFragment.showLoadingDialog(mFragment.getFragmentManager(), "上传中...");
+        KDialogFragment.showLoadingDialog(mFragment.getFragmentManager(), mActivity.getString(R.string.upload));
     }
 
     private void closeUploadDialog() {

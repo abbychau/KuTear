@@ -12,6 +12,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,10 +41,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
     private DrawerLayout mDrawerLayout;
     private TextView mTvNickName;
     private CircleImageView mAvater;
+    private View mHeaderView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         if (getSettingTheme() > 0) {
             setTheme(getSettingTheme());
         }
@@ -54,6 +55,10 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mSwipeBackLayout = getSwipeBackLayout();
         //禁用滑动
         mSwipeBackLayout.setEnableGesture(false);
+        if(mApp.getUserManager().isLogin()){
+            loadImage(mApp.getUserManager().getUserInfo().getAvater());
+        }
+
     }
 
     @Override
@@ -62,6 +67,15 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             return R.style.AppTheme_Main;
         }
         return R.style.AppTheme_Main_Dark;
+    }
+
+    @Override
+    public View findViewById(int id) {
+        View view = super.findViewById(id);
+        if(view == null && mHeaderView!=null){
+            view = mHeaderView.findViewById(id);
+        }
+        return view;
     }
 
     /**
@@ -121,8 +135,8 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         };
         mDrawerLayout.setDrawerListener(actionBarDrawerToggle);
         actionBarDrawerToggle.syncState();
-        View headerView = mNavigationView.inflateHeaderView(R.layout.nav_header);
-        headerView.setOnClickListener(this);
+        mHeaderView = mNavigationView.inflateHeaderView(R.layout.nav_header);
+        mHeaderView.setOnClickListener(this);
         if (mApp.getUserManager().getUserInfo() != null) {
             if (mAvater == null) {
                 mAvater = (CircleImageView) findViewById(R.id.nav_avatar);
@@ -135,7 +149,6 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
             }
             if (mApp.getUserManager().getUserInfo().getNickName() != null) {
                 mTvNickName.setText(mApp.getUserManager().getUserInfo().getNickName());
-
             }
         }
     }
@@ -217,6 +230,7 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
      * @param url 头像URL
      */
     private void loadImage(String url) {
+        L.v(TAG,"function loadImage URL="+url);
         ImageRequest imgRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap arg0) {
