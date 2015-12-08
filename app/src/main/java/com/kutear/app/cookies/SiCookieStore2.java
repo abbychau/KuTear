@@ -55,7 +55,7 @@ public class SiCookieStore2 implements CookieStore {
         cookiePrefs = context.getSharedPreferences(COOKIE_PREFS, 0);
         map = new CookieMap();
 
-        // Load any previously stored domains into the store
+        //获取到主机
         String storedCookieDomains = cookiePrefs.getString(COOKIE_DOMAINS_STORE, null);
         if (storedCookieDomains != null) {
             String[] storedCookieDomainsArray = TextUtils.split(storedCookieDomains, ",");
@@ -65,12 +65,13 @@ public class SiCookieStore2 implements CookieStore {
                         null);
                 //so now we have these cookie names
                 if (storedCookiesNames != null) {
-                    //split these cookie names and get serialized cookie stored
+                    //获取到主机对应的Cookies名字
                     String[] storedCookieNamesArray = TextUtils.split(storedCookiesNames, ",");
                     if (storedCookieNamesArray != null) {
                         //in this list we store all cookies under one URI
                         List<HttpCookie> cookies = new ArrayList<HttpCookie>();
                         for (String cookieName : storedCookieNamesArray) {
+                            //获取到对应的COOKIES值
                             String encCookie = cookiePrefs.getString(COOKIE_NAME_PREFIX + domain
                                     + cookieName, null);
                             //now we deserialize or unserialize (whatever you call it) this cookie
@@ -304,7 +305,7 @@ public class SiCookieStore2 implements CookieStore {
 
     /**
      * A implementation of {@link Map} for utility class for storing URL cookie map
-     *
+     * 以URL为key,Cookies为value 代理模式
      * @author Manish
      */
     private class CookieMap implements Map<URI, List<HttpCookie>> {
