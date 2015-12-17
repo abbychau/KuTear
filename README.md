@@ -1,10 +1,10 @@
 **KuTear**
 APP运行截图
-![APP.gif][pic/APP.gif]
-![t01dcb29e8792387e24.png][pic/1552806800.png]
-![t01e98bec6ff6298bb5.png][pic/2745859753.png]
-![t012a7170cf603ce485.png][pic/298429147.png]
-![t0102c4271a9a1704f3.png][pic/3139037107.png]
+![APP.gif](pic/APP.gif)
+![t01dcb29e8792387e24.png](pic/1552806800.png)
+![t01e98bec6ff6298bb5.png](pic/2745859753.png)
+![t012a7170cf603ce485.png](pic/298429147.png)
+![t0102c4271a9a1704f3.png](pic/3139037107.png)
 **第三方库**
 > * [Support PreferenceFragment](https://github.com/Machinarius/PreferenceFragment-Compat)
 > * [七牛](http://www.qiniu.com/)
