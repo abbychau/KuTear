@@ -33,8 +33,8 @@ APP运行截图
 
 
   [1]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/1548374317.gif
-  [2]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/3254363448.png-logo
-  [3]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/38117401.png-logo
-  [4]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/3554102509.png-logo
-  [5]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/2533546.png-logo
-  [6]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/256533744.png-logo
+  [2]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/3254363448.png
+  [3]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/38117401.png
+  [4]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/3554102509.png
+  [5]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/2533546.png
+  [6]: http://7oxhy6.com1.z0.glb.clouddn.com/2015/12/256533744.png
